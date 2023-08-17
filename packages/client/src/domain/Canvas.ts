@@ -23,6 +23,13 @@ class Canvas {
   public clear() {
     this.ctx.clearRect(0, 0, this.width, this.height)
   }
+
+  public getSizes() {
+    return {
+      width: this.width,
+      height: this.height,
+    }
+  }
 }
 
 export default Canvas

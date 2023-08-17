@@ -1,37 +1,18 @@
 import Canvas from './Canvas'
 import Basket from './Basket'
+import Keyboard from './Keyboard'
 
 class GameEngine {
   private g: Canvas
   private basket: Basket
+  private keyboard: Keyboard
 
   constructor(gameDiv: HTMLDivElement) {
     this.g = new Canvas(gameDiv)
     this.basket = new Basket()
+    this.keyboard = new Keyboard()
     this.draw()
-    this.createKeyListeners()
     this.animate(performance.now())
-  }
-
-  // TODO move listeners to class Keyboard, check key press state
-  private createKeyListeners() {
-    window.addEventListener('keydown', e => {
-      switch (e.key) {
-        case 'd':
-        case 'ArrowRight':
-          this.basket.setDirection(1)
-          break
-        case 'a':
-        case 'ArrowLeft':
-          this.basket.setDirection(-1)
-          break
-        default:
-          break
-      }
-    })
-    window.addEventListener('keyup', () => {
-      this.basket.setDirection(0)
-    })
   }
 
   private draw() {
@@ -40,7 +21,20 @@ class GameEngine {
   }
 
   private drawBackground(g: Canvas) {
-    g.drawRect(0, 0, 800, 600, '#4DC9FF')
+    const { width, height } = this.g.getSizes()
+    g.drawRect(0, 0, width, height, '#4DC9FF')
+  }
+
+  private moveBasket() {
+    if (this.keyboard.isPressed(Keyboard.KEYS.LEFT)) {
+      this.basket.setDirection(-1)
+      return
+    }
+    if (this.keyboard.isPressed(Keyboard.KEYS.RIGHT)) {
+      this.basket.setDirection(1)
+      return
+    }
+    this.basket.setDirection(0)
   }
 
   private animate(last: number) {
@@ -48,6 +42,7 @@ class GameEngine {
     const delay = now - last
     this.g.clear()
     this.basket.animate(delay)
+    this.moveBasket()
     this.draw()
     window.requestAnimationFrame(() => this.animate(now))
   }
