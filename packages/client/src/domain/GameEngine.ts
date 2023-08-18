@@ -3,43 +3,53 @@ import Basket from './Basket'
 import Keyboard from './Keyboard'
 import CollisionEngine from './CollisionEngine'
 import BoxCollider from './BoxCollider'
+import CollectableFactory from './CollectableFactory'
+import Collectable from './Collectable'
 
 class GameEngine {
   private g: Canvas
   private basket: Basket
   private keyboard: Keyboard
-  private collision: CollisionEngine
+  private collisionEngine: CollisionEngine
+  private collectableFactory: CollectableFactory
+  private collectables: Collectable[] = []
 
   constructor(gameDiv: HTMLDivElement) {
     this.g = new Canvas(gameDiv)
-    this.collision = new CollisionEngine()
-    this.basket = new Basket(this.collision)
+    this.collisionEngine = new CollisionEngine()
+    this.basket = new Basket(this.collisionEngine)
     this.keyboard = new Keyboard()
     this.initCollisions()
-    this.draw()
-    this.animate(performance.now())
+    this.render()
+    this.loop(performance.now())
+
+    this.collectableFactory = new CollectableFactory()
+    setInterval(() => {
+      this.collectables.push(this.collectableFactory.createRandomCollectable())
+    }, 2000)
   }
 
   private initCollisions() {
-    this.collision.addToLayer(this.basket, CollisionEngine.LAYERS.BASKET)
+    this.collisionEngine.addToLayer(this.basket, CollisionEngine.LAYERS.BASKET)
     const { x, y, width, height } = this.g.getParams()
-    this.collision.addToLayer(
+    this.collisionEngine.addToLayer(
       new BoxCollider(width, 0, 0, height),
       CollisionEngine.LAYERS.SIDE_BOUNDS
     )
-    this.collision.addToLayer(
+    this.collisionEngine.addToLayer(
       new BoxCollider(0, 0, 0, height),
       CollisionEngine.LAYERS.SIDE_BOUNDS
     )
-    this.collision.addToLayer(
+    this.collisionEngine.addToLayer(
       new BoxCollider(0, height, width, 0),
       CollisionEngine.LAYERS.BOTTOM_BOUNDS
     )
   }
 
-  private draw() {
+  private render() {
     this.drawBackground(this.g)
-    this.basket.draw(this.g)
+    this.collectables.forEach(collectable => collectable.render(this.g))
+    this.basket.render(this.g)
   }
 
   private drawBackground(g: Canvas) {
@@ -47,7 +57,7 @@ class GameEngine {
     g.drawRect(0, 0, width, height, '#4DC9FF')
   }
 
-  private moveBasket() {
+  private handleInput() {
     if (this.keyboard.isPressed(Keyboard.KEYS.LEFT)) {
       this.basket.setDirection(-1)
       return
@@ -59,14 +69,21 @@ class GameEngine {
     this.basket.setDirection(0)
   }
 
-  private animate(last: number) {
+  private animate(delay: number) {
+    this.basket.animate(delay)
+    this.collectables.forEach(collectable => collectable.animate(delay))
+  }
+
+  private loop(last: number) {
     const now = performance.now()
     const delay = now - last
     this.g.clear()
-    this.basket.animate(delay)
-    this.moveBasket()
-    this.draw()
-    window.requestAnimationFrame(() => this.animate(now))
+
+    this.handleInput()
+    this.animate(delay)
+    this.render()
+
+    window.requestAnimationFrame(() => this.loop(now))
   }
 }
 

@@ -13,7 +13,7 @@ export default class Basket implements Collider {
   private direction = 0
 
   constructor(private collision: CollisionEngine) {}
-  public draw(g: Canvas) {
+  public render(g: Canvas) {
     g.drawRect(this.x, this.y, this.width, this.height, this.color)
   }
 
