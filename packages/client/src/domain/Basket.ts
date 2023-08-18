@@ -1,6 +1,9 @@
 import Canvas from './Canvas'
+import { Collider } from './interfaces'
+import CollisionEngine from './CollisionEngine'
+import BoxCollider from './BoxCollider'
 
-export default class Basket {
+export default class Basket implements Collider {
   private x = 0
   private y = 550
   private width = 100
@@ -8,6 +11,8 @@ export default class Basket {
   private color = '#EE6730'
   private velocity = 0.4
   private direction = 0
+
+  constructor(private collision: CollisionEngine) {}
   public draw(g: Canvas) {
     g.drawRect(this.x, this.y, this.width, this.height, this.color)
   }
@@ -17,6 +22,23 @@ export default class Basket {
   }
 
   public animate(dt: number) {
-    this.x = this.x + this.direction * this.velocity * dt
+    const nextX = this.x + this.direction * this.velocity * dt
+    if (
+      this.collision.checkSideBoundsCollision(
+        new BoxCollider(nextX, this.y, this.width, this.height)
+      )
+    ) {
+      return
+    }
+    this.x = nextX
+  }
+
+  public getParams() {
+    return {
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height,
+    }
   }
 }

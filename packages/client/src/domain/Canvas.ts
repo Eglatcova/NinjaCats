@@ -1,4 +1,6 @@
-class Canvas {
+import { Collider } from './interfaces'
+
+class Canvas implements Collider {
   private width = 800
   private height = 600
   private ctx: CanvasRenderingContext2D
@@ -24,8 +26,10 @@ class Canvas {
     this.ctx.clearRect(0, 0, this.width, this.height)
   }
 
-  public getSizes() {
+  public getParams() {
     return {
+      x: 0,
+      y: 0,
       width: this.width,
       height: this.height,
     }

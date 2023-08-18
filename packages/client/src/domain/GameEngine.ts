@@ -1,18 +1,40 @@
 import Canvas from './Canvas'
 import Basket from './Basket'
 import Keyboard from './Keyboard'
+import CollisionEngine from './CollisionEngine'
+import BoxCollider from './BoxCollider'
 
 class GameEngine {
   private g: Canvas
   private basket: Basket
   private keyboard: Keyboard
+  private collision: CollisionEngine
 
   constructor(gameDiv: HTMLDivElement) {
     this.g = new Canvas(gameDiv)
-    this.basket = new Basket()
+    this.collision = new CollisionEngine()
+    this.basket = new Basket(this.collision)
     this.keyboard = new Keyboard()
+    this.initCollisions()
     this.draw()
     this.animate(performance.now())
+  }
+
+  private initCollisions() {
+    this.collision.addToLayer(this.basket, CollisionEngine.LAYERS.BASKET)
+    const { x, y, width, height } = this.g.getParams()
+    this.collision.addToLayer(
+      new BoxCollider(width, 0, 0, height),
+      CollisionEngine.LAYERS.SIDE_BOUNDS
+    )
+    this.collision.addToLayer(
+      new BoxCollider(0, 0, 0, height),
+      CollisionEngine.LAYERS.SIDE_BOUNDS
+    )
+    this.collision.addToLayer(
+      new BoxCollider(0, height, width, 0),
+      CollisionEngine.LAYERS.BOTTOM_BOUNDS
+    )
   }
 
   private draw() {
@@ -21,7 +43,7 @@ class GameEngine {
   }
 
   private drawBackground(g: Canvas) {
-    const { width, height } = this.g.getSizes()
+    const { width, height } = this.g.getParams()
     g.drawRect(0, 0, width, height, '#4DC9FF')
   }
 
