@@ -12,7 +12,6 @@ export default class Basket implements Collider {
   private velocity = 0.4
   private direction = 0
 
-  constructor(private collision: CollisionEngine) {}
   public render(g: Canvas) {
     g.drawRect(this.x, this.y, this.width, this.height, this.color)
   }
@@ -21,10 +20,10 @@ export default class Basket implements Collider {
     this.direction = direction
   }
 
-  public animate(dt: number) {
+  public animate(dt: number, collision: CollisionEngine) {
     const nextX = this.x + this.direction * this.velocity * dt
     if (
-      this.collision.checkSideBoundsCollision(
+      collision.checkSideBoundsCollision(
         new BoxCollider(nextX, this.y, this.width, this.height)
       )
     ) {

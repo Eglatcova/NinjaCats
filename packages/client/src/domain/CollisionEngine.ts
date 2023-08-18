@@ -34,4 +34,19 @@ export default class CollisionEngine {
       return this.checkHorizontalCollision(obj, bound)
     })
   }
+
+  public checkBottomBoundsCollision(obj: Collider) {
+    return this.layers[LAYERS.BOTTOM_BOUNDS]?.some(bound => {
+      return this.checkVerticalCollision(obj, bound)
+    })
+  }
+
+  public checkBasketCollision(obj: Collider) {
+    return this.layers[LAYERS.BASKET]?.some(bound => {
+      return (
+        this.checkVerticalCollision(obj, bound) &&
+        this.checkHorizontalCollision(obj, bound)
+      )
+    })
+  }
 }

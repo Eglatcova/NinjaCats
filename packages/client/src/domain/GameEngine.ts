@@ -4,6 +4,7 @@ import Keyboard from './Keyboard'
 import CollisionEngine from './CollisionEngine'
 import BoxCollider from './BoxCollider'
 import CollectableFactory from './CollectableFactory'
+import Collection from './Collection'
 import Collectable from './Collectable'
 
 class GameEngine {
@@ -12,12 +13,12 @@ class GameEngine {
   private keyboard: Keyboard
   private collisionEngine: CollisionEngine
   private collectableFactory: CollectableFactory
-  private collectables: Collectable[] = []
+  private collectablesList: Collection<Collectable> = new Collection()
 
   constructor(gameDiv: HTMLDivElement) {
     this.g = new Canvas(gameDiv)
     this.collisionEngine = new CollisionEngine()
-    this.basket = new Basket(this.collisionEngine)
+    this.basket = new Basket()
     this.keyboard = new Keyboard()
     this.initCollisions()
     this.render()
@@ -25,13 +26,15 @@ class GameEngine {
 
     this.collectableFactory = new CollectableFactory()
     setInterval(() => {
-      this.collectables.push(this.collectableFactory.createRandomCollectable())
+      this.collectablesList.add(
+        this.collectableFactory.createRandomCollectable()
+      )
     }, 2000)
   }
 
   private initCollisions() {
     this.collisionEngine.addToLayer(this.basket, CollisionEngine.LAYERS.BASKET)
-    const { x, y, width, height } = this.g.getParams()
+    const { width, height } = this.g.getParams()
     this.collisionEngine.addToLayer(
       new BoxCollider(width, 0, 0, height),
       CollisionEngine.LAYERS.SIDE_BOUNDS
@@ -48,7 +51,7 @@ class GameEngine {
 
   private render() {
     this.drawBackground(this.g)
-    this.collectables.forEach(collectable => collectable.render(this.g))
+    this.collectablesList.render(this.g)
     this.basket.render(this.g)
   }
 
@@ -70,8 +73,8 @@ class GameEngine {
   }
 
   private animate(delay: number) {
-    this.basket.animate(delay)
-    this.collectables.forEach(collectable => collectable.animate(delay))
+    this.basket.animate(delay, this.collisionEngine)
+    this.collectablesList.animate(delay, this.collisionEngine)
   }
 
   private loop(last: number) {
