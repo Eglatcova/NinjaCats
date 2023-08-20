@@ -54,6 +54,7 @@ export default class Collection<T extends CollectionObject> {
         this.delete(item)
       }
       if (collision.checkBasketCollision(item)) {
+        item.touchBasket()
         this.delete(item)
       }
       iterator.current()

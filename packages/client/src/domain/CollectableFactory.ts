@@ -5,6 +5,7 @@ import {
   SoaringStrategy,
 } from './AnimateStrategy'
 import { BlueStrategy, FuchsiaStrategy, RenderStrategy } from './RenderStrategy'
+import { Command } from './EffectCommands'
 
 export default class CollectableFactory {
   private availableAnimateStrategies: AnimateStrategy[] = [
@@ -15,6 +16,9 @@ export default class CollectableFactory {
     new FuchsiaStrategy(),
     new BlueStrategy(),
   ]
+
+  constructor(private availableCommands: Command[]) {}
+
   private getRandom(min: number, max: number) {
     return Math.random() * (max - min) + min
   }
@@ -37,6 +41,12 @@ export default class CollectableFactory {
       ) || new FuchsiaStrategy()
     )
   }
+
+  private getRandomCommand() {
+    return this.availableCommands.at(
+      this.getRandomIndex(0, this.availableCommands.length - 1)
+    )!
+  }
   public createRandomCollectable() {
     return new Collectable(
       this.getRandom(0, 750),
@@ -44,7 +54,8 @@ export default class CollectableFactory {
       50,
       50,
       this.getRandomAnimateStrategy(),
-      this.getRandomRenderStrategy()
+      this.getRandomRenderStrategy(),
+      this.getRandomCommand()
     )
   }
 }

@@ -2,6 +2,7 @@ import Canvas from './Canvas'
 import { AnimateStrategy } from './AnimateStrategy'
 import { RenderStrategy } from './RenderStrategy'
 import { CollectionObject } from './interfaces'
+import { Command } from './EffectCommands'
 
 export default class Collectable implements CollectionObject {
   constructor(
@@ -10,7 +11,8 @@ export default class Collectable implements CollectionObject {
     private width: number,
     private height: number,
     private animateStrategy: AnimateStrategy,
-    private renderStrategy: RenderStrategy
+    private renderStrategy: RenderStrategy,
+    private basketCollisionEffect: Command
   ) {}
 
   public render(g: Canvas) {
@@ -21,6 +23,11 @@ export default class Collectable implements CollectionObject {
     const { newX, newY } = this.animateStrategy.animate(this.x, this.y, dt)
     this.y = newY
     this.x = newX
+  }
+
+  public touchBasket() {
+    this.basketCollisionEffect.execute()
+    setTimeout(() => this.basketCollisionEffect.unexecute(), 2000)
   }
 
   public getParams() {

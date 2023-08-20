@@ -12,4 +12,5 @@ export interface Collider {
 export interface CollectionObject extends Collider {
   render: (g: Canvas) => void
   animate: (dt: number) => void
+  touchBasket: () => void
 }

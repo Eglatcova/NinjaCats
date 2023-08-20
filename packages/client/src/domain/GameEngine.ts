@@ -6,6 +6,10 @@ import BoxCollider from './BoxCollider'
 import CollectableFactory from './CollectableFactory'
 import Collection from './Collection'
 import Collectable from './Collectable'
+import {
+  increaseVelocityCommand,
+  reverseDirectionCommand,
+} from './EffectCommands'
 
 class GameEngine {
   private g: Canvas
@@ -24,7 +28,15 @@ class GameEngine {
     this.render()
     this.loop(performance.now())
 
-    this.collectableFactory = new CollectableFactory()
+    const availableCommands = [
+      new increaseVelocityCommand(this.basket),
+      new reverseDirectionCommand(this.basket),
+    ]
+    this.collectableFactory = new CollectableFactory(availableCommands)
+    this.initCollectables()
+  }
+
+  private initCollectables() {
     setInterval(() => {
       this.collectablesList.add(
         this.collectableFactory.createRandomCollectable()

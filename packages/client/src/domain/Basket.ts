@@ -32,6 +32,18 @@ export default class Basket implements Collider {
     this.x = nextX
   }
 
+  public updateVelocity(velocity: number) {
+    if (this.velocity > 0) {
+      this.velocity = this.velocity + velocity
+    } else {
+      this.velocity = this.velocity - velocity
+    }
+  }
+
+  public updateDirection(direction: -1) {
+    this.velocity = this.velocity * direction
+  }
+
   public getParams() {
     return {
       x: this.x,
