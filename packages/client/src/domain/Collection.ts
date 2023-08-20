@@ -1,8 +1,4 @@
-import CollisionEngine from './CollisionEngine'
-import Canvas from './Canvas'
-import { CollectionObject } from './interfaces'
-
-export default class Collection<T extends CollectionObject> {
+export default class Collection<T> {
   public head: CollectionItemDecorator<T> | null = null
   public tail: CollectionItemDecorator<T> | null = null
   public size = 0
@@ -43,35 +39,9 @@ export default class Collection<T extends CollectionObject> {
   public getIterator() {
     return new Iterator<T>(this)
   }
-
-  public animate(delay: number, collision: CollisionEngine) {
-    const iterator = this.getIterator()
-    while (iterator.current()) {
-      const item = iterator.current()
-      if (!item) return
-      item.animate(delay)
-      if (collision.checkBottomBoundsCollision(item)) {
-        this.delete(item)
-      }
-      if (collision.checkBasketCollision(item)) {
-        item.touchBasket()
-        this.delete(item)
-      }
-      iterator.current()
-      iterator.next()
-    }
-  }
-
-  public render(g: Canvas) {
-    const iterator = this.getIterator()
-    while (iterator.current()) {
-      iterator.current()?.render(g)
-      iterator.next()
-    }
-  }
 }
 
-class Iterator<T extends CollectionObject> {
+class Iterator<T> {
   private currentItem: CollectionItemDecorator<T> | null = null
   constructor(private collection: Collection<T>) {
     if (!this.collection.head) return

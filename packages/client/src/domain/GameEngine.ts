@@ -3,21 +3,19 @@ import Basket from './Basket'
 import Keyboard from './Keyboard'
 import CollisionEngine from './CollisionEngine'
 import BoxCollider from './BoxCollider'
-import CollectableFactory from './CollectableFactory'
-import Collection from './Collection'
-import Collectable from './Collectable'
 import {
   increaseVelocityCommand,
+  noEffectCommand,
   reverseDirectionCommand,
 } from './EffectCommands'
+import Collectables from './Collectables'
 
 class GameEngine {
   private g: Canvas
   private basket: Basket
+  private collectables: Collectables
   private keyboard: Keyboard
   private collisionEngine: CollisionEngine
-  private collectableFactory: CollectableFactory
-  private collectablesList: Collection<Collectable> = new Collection()
 
   constructor(gameDiv: HTMLDivElement) {
     this.g = new Canvas(gameDiv)
@@ -25,23 +23,16 @@ class GameEngine {
     this.basket = new Basket()
     this.keyboard = new Keyboard()
     this.initCollisions()
-    this.render()
-    this.loop(performance.now())
 
     const availableCommands = [
       new increaseVelocityCommand(this.basket),
       new reverseDirectionCommand(this.basket),
+      new noEffectCommand(),
     ]
-    this.collectableFactory = new CollectableFactory(availableCommands)
-    this.initCollectables()
-  }
+    this.collectables = new Collectables(availableCommands)
 
-  private initCollectables() {
-    setInterval(() => {
-      this.collectablesList.add(
-        this.collectableFactory.createRandomCollectable()
-      )
-    }, 2000)
+    this.render()
+    this.loop(performance.now())
   }
 
   private initCollisions() {
@@ -63,7 +54,7 @@ class GameEngine {
 
   private render() {
     this.drawBackground(this.g)
-    this.collectablesList.render(this.g)
+    this.collectables.render(this.g)
     this.basket.render(this.g)
   }
 
@@ -86,7 +77,7 @@ class GameEngine {
 
   private animate(delay: number) {
     this.basket.animate(delay, this.collisionEngine)
-    this.collectablesList.animate(delay, this.collisionEngine)
+    this.collectables.animate(delay, this.collisionEngine)
   }
 
   private loop(last: number) {

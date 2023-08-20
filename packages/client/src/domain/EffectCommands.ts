@@ -27,3 +27,12 @@ export class reverseDirectionCommand implements Command {
     this.basket.updateDirection(-1)
   }
 }
+
+export class noEffectCommand implements Command {
+  public execute() {
+    return undefined
+  }
+  public unexecute() {
+    return undefined
+  }
+}

@@ -1,10 +1,9 @@
 import Canvas from './Canvas'
 import { AnimateStrategy } from './AnimateStrategy'
 import { RenderStrategy } from './RenderStrategy'
-import { CollectionObject } from './interfaces'
 import { Command } from './EffectCommands'
 
-export default class Collectable implements CollectionObject {
+export default class Collectable {
   constructor(
     private x: number,
     private y: number,
