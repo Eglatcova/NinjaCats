@@ -1,0 +1,44 @@
+@mixin colors {
+  --text-base-color: #{$dark};
+  --text-hover-color: #{$dark};
+  --text-active-color: #{$dark};
+  --text-disabled-color: #{$grey};
+  --border-base-color: #{$brown};
+  --border-hover-color: #{$orange};
+  --border-active-color: #{$orange};
+  --border-disabled-color: #{$grey};
+}
+
+.input {
+  @include colors;
+
+  height: 32px;
+  outline: none;
+  background-color: var(--bg-base-color);
+  padding: 0 8px;
+  border: 1px solid var(--border-base-color);
+  font-family: $font-roboto;
+  font-size: $font-size-16;
+  font-weight: $font-weight-medium;
+  line-height: 1;
+  color: var(--text-base-color);
+  box-shadow: 0 0 0 0 transparent;
+  transition-property: color, border-color;
+  transition-duration: 0.15s;
+
+  &:hover {
+    color: var(--text-hover-color);
+    border-color: var(--border-hover-color);
+  }
+
+  &:active {
+    border-color: var(--border-active-color);
+    color: var(--text-active-color);
+  }
+
+  &:disabled {
+    color: var(--text-disabled-color);
+    border-color: var(--border-disabled-color);
+    cursor: not-allowed;
+  }
+}
