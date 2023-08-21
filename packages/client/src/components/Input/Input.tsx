@@ -10,7 +10,7 @@ const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
 
     const inputClasses = cn(classes.input, className)
 
-    return <input className={cn(inputClasses)} ref={ref} {...inputProps} />
+    return <input className={inputClasses} ref={ref} {...inputProps} />
   }
 )
 
