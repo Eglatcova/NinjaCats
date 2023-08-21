@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
-import GameEngine from '../domain/GameEngine'
+import GameEngine from '../../domain/Game/GameEngine'
 
-const Game = () => {
+const Game: React.FC = () => {
   const gameDiv = useRef<HTMLDivElement>(null)
   useEffect(() => {
     if (!gameDiv.current) return
@@ -11,4 +11,4 @@ const Game = () => {
   return <div ref={gameDiv} />
 }
 
-export default Game
+export { Game }
