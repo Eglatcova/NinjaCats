@@ -1,7 +1,7 @@
 import { Collider } from './interfaces'
 
 enum LAYERS {
-  BASKET,
+  CATCHER,
   SIDE_BOUNDS,
   BOTTOM_BOUNDS,
 }
@@ -41,8 +41,8 @@ export default class CollisionEngine {
     })
   }
 
-  public checkBasketCollision(obj: Collider) {
-    return this.layers[LAYERS.BASKET]?.some(bound => {
+  public checkCatcherCollision(obj: Collider) {
+    return this.layers[LAYERS.CATCHER]?.some(bound => {
       return (
         this.checkVerticalCollision(obj, bound) &&
         this.checkHorizontalCollision(obj, bound)

@@ -11,7 +11,7 @@ export default class Collectable {
     private height: number,
     private animateStrategy: AnimateStrategy,
     private renderStrategy: RenderStrategy,
-    private basketCollisionEffect: Command
+    private catcherCollisionEffect: Command
   ) {}
 
   public render(g: Canvas) {
@@ -24,9 +24,9 @@ export default class Collectable {
     this.x = newX
   }
 
-  public touchBasket() {
-    this.basketCollisionEffect.execute()
-    setTimeout(() => this.basketCollisionEffect.unexecute(), 2000)
+  public touchCatcher() {
+    this.catcherCollisionEffect.execute()
+    setTimeout(() => this.catcherCollisionEffect.unexecute(), 2000)
   }
 
   public getParams() {

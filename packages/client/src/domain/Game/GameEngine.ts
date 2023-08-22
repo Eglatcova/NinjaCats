@@ -1,5 +1,5 @@
 import Canvas from './Canvas'
-import Basket from './Basket'
+import Catcher from './Catcher'
 import Keyboard from './Keyboard'
 import CollisionEngine from './CollisionEngine'
 import BoxCollider from './BoxCollider'
@@ -12,7 +12,7 @@ import Collectables from './Collectables'
 
 class GameEngine {
   private g: Canvas
-  private basket: Basket
+  private catcher: Catcher
   private collectables: Collectables
   private keyboard: Keyboard
   private collisionEngine: CollisionEngine
@@ -20,23 +20,27 @@ class GameEngine {
   constructor(gameDiv: HTMLDivElement) {
     this.g = new Canvas(gameDiv)
     this.collisionEngine = new CollisionEngine()
-    this.basket = new Basket()
+    this.catcher = new Catcher()
     this.keyboard = new Keyboard()
+    this.collectables = new Collectables(this.createCommands())
     this.initCollisions()
-
-    const availableCommands = [
-      new increaseVelocityCommand(this.basket),
-      new reverseDirectionCommand(this.basket),
-      new noEffectCommand(),
-    ]
-    this.collectables = new Collectables(availableCommands)
-
     this.render()
     this.loop(performance.now())
   }
 
+  private createCommands() {
+    return [
+      new increaseVelocityCommand(this.catcher),
+      new reverseDirectionCommand(this.catcher),
+      new noEffectCommand(),
+    ]
+  }
+
   private initCollisions() {
-    this.collisionEngine.addToLayer(this.basket, CollisionEngine.LAYERS.BASKET)
+    this.collisionEngine.addToLayer(
+      this.catcher,
+      CollisionEngine.LAYERS.CATCHER
+    )
     const { width, height } = this.g.getParams()
     this.collisionEngine.addToLayer(
       new BoxCollider(width, 0, 0, height),
@@ -55,7 +59,7 @@ class GameEngine {
   private render() {
     this.drawBackground(this.g)
     this.collectables.render(this.g)
-    this.basket.render(this.g)
+    this.catcher.render(this.g)
   }
 
   private drawBackground(g: Canvas) {
@@ -65,18 +69,18 @@ class GameEngine {
 
   private handleInput() {
     if (this.keyboard.isPressed(Keyboard.KEYS.LEFT)) {
-      this.basket.setDirection(-1)
+      this.catcher.setDirection(-1)
       return
     }
     if (this.keyboard.isPressed(Keyboard.KEYS.RIGHT)) {
-      this.basket.setDirection(1)
+      this.catcher.setDirection(1)
       return
     }
-    this.basket.setDirection(0)
+    this.catcher.setDirection(0)
   }
 
   private animate(delay: number) {
-    this.basket.animate(delay, this.collisionEngine)
+    this.catcher.animate(delay, this.collisionEngine)
     this.collectables.animate(delay, this.collisionEngine)
   }
 

@@ -3,7 +3,7 @@ import { Collider } from './interfaces'
 import CollisionEngine from './CollisionEngine'
 import BoxCollider from './BoxCollider'
 
-export default class Basket implements Collider {
+export default class Catcher implements Collider {
   private x = 0
   private y = 550
   private width = 100

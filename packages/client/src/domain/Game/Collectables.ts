@@ -31,8 +31,8 @@ export default class Collectables {
       if (collision.checkBottomBoundsCollision(item)) {
         this.collectablesList.delete(item)
       }
-      if (collision.checkBasketCollision(item)) {
-        item.touchBasket()
+      if (collision.checkCatcherCollision(item)) {
+        item.touchCatcher()
         this.collectablesList.delete(item)
       }
       iterator.next()
