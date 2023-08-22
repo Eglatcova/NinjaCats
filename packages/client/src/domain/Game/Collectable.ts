@@ -9,6 +9,7 @@ export default class Collectable {
     private y: number,
     private width: number,
     private height: number,
+    private velocity: number,
     private animateStrategy: AnimateStrategy,
     private renderStrategy: RenderStrategy,
     private catcherCollisionEffect: Command
@@ -19,7 +20,12 @@ export default class Collectable {
   }
 
   public animate(dt: number) {
-    const { newX, newY } = this.animateStrategy.animate(this.x, this.y, dt)
+    const { newX, newY } = this.animateStrategy.animate(
+      this.x,
+      this.y,
+      this.velocity,
+      dt
+    )
     this.y = newY
     this.x = newX
   }

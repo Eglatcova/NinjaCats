@@ -1,14 +1,13 @@
-import { Collider } from './interfaces'
+import Settings from './Settings'
 
-class Canvas implements Collider {
-  private width = 800
-  private height = 600
+class Canvas {
   private ctx: CanvasRenderingContext2D
 
   constructor(parent: HTMLDivElement) {
+    const { width, height } = Settings.getInstance().getSize()
     const canvas = document.createElement('canvas')
-    canvas.height = this.height
-    canvas.width = this.width
+    canvas.height = height
+    canvas.width = width
     parent.appendChild(canvas)
     const ctx = canvas.getContext('2d')
     if (!ctx) {
@@ -23,16 +22,8 @@ class Canvas implements Collider {
   }
 
   public clear() {
-    this.ctx.clearRect(0, 0, this.width, this.height)
-  }
-
-  public getParams() {
-    return {
-      x: 0,
-      y: 0,
-      width: this.width,
-      height: this.height,
-    }
+    const { width, height } = Settings.getInstance().getSize()
+    this.ctx.clearRect(0, 0, width, height)
   }
 }
 

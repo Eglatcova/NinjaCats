@@ -9,6 +9,7 @@ import {
   reverseDirectionCommand,
 } from './EffectCommands'
 import Collectables from './Collectables'
+import Settings from './Settings'
 
 class GameEngine {
   private g: Canvas
@@ -18,6 +19,7 @@ class GameEngine {
   private collisionEngine: CollisionEngine
 
   constructor(gameDiv: HTMLDivElement) {
+    Settings.getInstance().setSize(800, 600)
     this.g = new Canvas(gameDiv)
     this.collisionEngine = new CollisionEngine()
     this.catcher = new Catcher()
@@ -41,7 +43,7 @@ class GameEngine {
       this.catcher,
       CollisionEngine.LAYERS.CATCHER
     )
-    const { width, height } = this.g.getParams()
+    const { width, height } = Settings.getInstance().getSize()
     this.collisionEngine.addToLayer(
       new BoxCollider(width, 0, 0, height),
       CollisionEngine.LAYERS.SIDE_BOUNDS
@@ -63,7 +65,7 @@ class GameEngine {
   }
 
   private drawBackground(g: Canvas) {
-    const { width, height } = this.g.getParams()
+    const { width, height } = Settings.getInstance().getSize()
     g.drawRect(0, 0, width, height, '#4DC9FF')
   }
 

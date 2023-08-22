@@ -2,15 +2,21 @@ import Canvas from './Canvas'
 import { Collider } from './interfaces'
 import CollisionEngine from './CollisionEngine'
 import BoxCollider from './BoxCollider'
+import Settings from './Settings'
 
 export default class Catcher implements Collider {
-  private x = 0
+  private x
   private y = 550
   private width = 100
   private height = 50
   private color = '#EE6730'
   private velocity = 0.4
   private direction = 0
+
+  constructor() {
+    const { width } = Settings.getInstance().getSize()
+    this.x = width / 2 - this.width / 2
+  }
 
   public render(g: Canvas) {
     g.drawRect(this.x, this.y, this.width, this.height, this.color)
