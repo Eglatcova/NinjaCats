@@ -6,7 +6,7 @@ import Settings from './Settings'
 
 export default class Catcher implements Collider {
   private x
-  private y = 550
+  private y
   private width = 100
   private height = 50
   private color = '#EE6730'
@@ -14,8 +14,9 @@ export default class Catcher implements Collider {
   private direction = 0
 
   constructor() {
-    const { width } = Settings.getInstance().getSize()
+    const { width, height } = Settings.getInstance().getSize()
     this.x = width / 2 - this.width / 2
+    this.y = height - this.height
   }
 
   public render(g: Canvas) {
@@ -28,13 +29,9 @@ export default class Catcher implements Collider {
 
   public animate(dt: number, collision: CollisionEngine) {
     const nextX = this.x + this.direction * this.velocity * dt
-    if (
-      collision.checkSideBoundsCollision(
-        new BoxCollider(nextX, this.y, this.width, this.height)
-      )
-    ) {
-      return
-    }
+    const box = new BoxCollider(nextX, this.y, this.width, this.height)
+    const isBoxCollided = collision.checkSideBoundsCollision(box)
+    if (isBoxCollided) return
     this.x = nextX
   }
 
@@ -46,8 +43,8 @@ export default class Catcher implements Collider {
     }
   }
 
-  public updateDirection(direction: -1) {
-    this.velocity = this.velocity * direction
+  public reverseDirection() {
+    this.velocity *= -1
   }
 
   public getParams() {

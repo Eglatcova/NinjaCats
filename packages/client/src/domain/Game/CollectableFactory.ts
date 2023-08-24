@@ -2,7 +2,7 @@ import Collectable from './Collectable'
 import {
   AnimateStrategy,
   FreeFallStrategy,
-  SoaringStrategy,
+  SoaringFallStrategy,
 } from './AnimateStrategy'
 import { BlueStrategy, FuchsiaStrategy, RenderStrategy } from './RenderStrategy'
 import { Command } from './EffectCommands'
@@ -11,7 +11,7 @@ import Settings from './Settings'
 export default class CollectableFactory {
   private availableAnimateStrategies: AnimateStrategy[] = [
     new FreeFallStrategy(),
-    new SoaringStrategy(),
+    new SoaringFallStrategy(),
   ]
   private availableRenderStrategies: RenderStrategy[] = [
     new FuchsiaStrategy(),
@@ -29,24 +29,28 @@ export default class CollectableFactory {
   }
 
   private getRandomAnimateStrategy() {
-    return (
-      this.availableAnimateStrategies.at(
-        this.getRandomIndex(0, this.availableAnimateStrategies.length - 1)
-      ) || new FreeFallStrategy()
+    const randomIndex = this.getRandomIndex(
+      0,
+      this.availableAnimateStrategies.length - 1
     )
+    const strategy = this.availableAnimateStrategies[randomIndex]
+    return strategy || new FreeFallStrategy()
   }
   private getRandomRenderStrategy() {
-    return (
-      this.availableRenderStrategies.at(
-        this.getRandomIndex(0, this.availableAnimateStrategies.length - 1)
-      ) || new FuchsiaStrategy()
+    const randomIndex = this.getRandomIndex(
+      0,
+      this.availableAnimateStrategies.length - 1
     )
+    const strategy = this.availableRenderStrategies[randomIndex]
+    return strategy || new FuchsiaStrategy()
   }
 
   private getRandomCommand() {
-    return this.availableCommands.at(
-      this.getRandomIndex(0, this.availableCommands.length - 1)
-    )!
+    const randomIndex = this.getRandomIndex(
+      0,
+      this.availableAnimateStrategies.length - 1
+    )
+    return this.availableCommands[randomIndex]
   }
 
   private getRandomX() {

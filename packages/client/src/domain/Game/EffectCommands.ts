@@ -21,10 +21,10 @@ export class reverseDirectionCommand implements Command {
   constructor(private catcher: Catcher) {}
 
   public execute() {
-    this.catcher.updateDirection(-1)
+    this.catcher.reverseDirection()
   }
   public unexecute() {
-    this.catcher.updateDirection(-1)
+    this.catcher.reverseDirection()
   }
 }
 

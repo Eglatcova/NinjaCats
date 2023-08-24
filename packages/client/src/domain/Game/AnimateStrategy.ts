@@ -7,7 +7,7 @@ export interface AnimateStrategy {
   ) => { newX: number; newY: number }
 }
 
-export class SoaringStrategy implements AnimateStrategy {
+export class SoaringFallStrategy implements AnimateStrategy {
   public animate(x: number, y: number, velocity: number, dt: number) {
     const newY = y + velocity * dt
     const newX = x + Math.sin(newY / 10) * 5
