@@ -31,8 +31,9 @@ export default class Catcher implements Collider {
     const nextX = this.x + this.direction * this.velocity * dt
     const box = new BoxCollider(nextX, this.y, this.width, this.height)
     const isBoxCollided = collision.checkSideBoundsCollision(box)
-    if (isBoxCollided) return
-    this.x = nextX
+    if (!isBoxCollided) {
+      this.x = nextX
+    }
   }
 
   public updateVelocity(velocity: number) {
