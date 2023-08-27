@@ -1,69 +1,46 @@
 import React, { ChangeEventHandler, useState } from 'react'
-import { Button } from '../../components/Button'
-import { BaseInput } from '../../components/BaseInput'
 import { Wrapper } from '../../components/Wrapper'
 import { Topic } from './components/Topic'
 import { mockTopics } from './mock'
 
 import classes from './Forum.module.scss'
+import { CreationBlock } from './components/CreationBlock/CreationBlock'
+
+const plugTopic = {
+  timestamp: null,
+  author: '-',
+}
 
 const Forum: React.FC = function () {
   const [currentTopics, setTopics] = useState(mockTopics)
-  const [isOpen, setIsOpenState] = useState(false)
-  const [value, setValue] = useState('')
+  const [isCretionOn, setCreationState] = useState(false)
+  const [newTopicLabel, setNewTopicLabel] = useState('')
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
-    setValue(target.value)
+  const onChangeTopicValue: ChangeEventHandler<HTMLInputElement> = event => {
+    const { target } = event
+    setNewTopicLabel(target.value)
   }
 
-  const onCreationButtonClick = () => setIsOpenState(true)
-
-  const closeOnChangeBlock = () => setIsOpenState(false)
+  const onTopicCreation = () => setCreationState(true)
+  const offTopicCreation = () => setCreationState(false)
 
   const createNewTopic = () => {
     const newTopic = {
       [Date.now().toString()]: {
         id: Date.now().toString(),
-        label: value,
+        label: newTopicLabel,
         messages: [],
       },
     }
 
     setTopics(prev => ({ ...prev, ...newTopic }))
-    setValue('')
-    closeOnChangeBlock()
-  }
-
-  const renderCreationBlockContent = () => {
-    if (isOpen) {
-      const isConfirmButtonDisabled = value.length === 0
-      return (
-        <>
-          <div className={classes.inputBlock}>
-            <label htmlFor="creation">Введите название новой темы</label>
-            <BaseInput id="creation" value={value} onChange={onChange} />
-          </div>
-          <div className={classes.controls}>
-            <Button onClick={createNewTopic} disabled={isConfirmButtonDisabled}>
-              OK
-            </Button>
-            <Button onClick={closeOnChangeBlock}>Закрыть</Button>
-          </div>
-        </>
-      )
-    }
-
-    return <Button onClick={onCreationButtonClick}>Создать тему</Button>
+    setNewTopicLabel('')
+    offTopicCreation()
   }
 
   const topics = Object.values(currentTopics).map(topic => {
     const { id, label, messages } = topic
-
     const lastTopic = messages[messages.length - 1]
-    const plugTopic = {
-      timestamp: null,
-      author: '-',
-    }
     const { timestamp, author } = lastTopic || plugTopic
 
     return (
@@ -80,7 +57,14 @@ const Forum: React.FC = function () {
   return (
     <Wrapper>
       <div className={classes.creationBlock}>
-        {renderCreationBlockContent()}
+        <CreationBlock
+          value={newTopicLabel}
+          isCretionOn={isCretionOn}
+          onChange={onChangeTopicValue}
+          onConfirmClick={createNewTopic}
+          onCloseClick={offTopicCreation}
+          onStartClick={onTopicCreation}
+        />
       </div>
       <div className={classes.topics}>
         <div className={classes.topicsHeader}>
