@@ -9,6 +9,12 @@
   --border-disabled-color: #{$grey};
 }
 
+label {
+  font-family: $font-handjet;
+  font-size: $font-size-16;
+  margin-bottom: 8px;
+}
+
 .input {
   @include colors;
 
@@ -40,5 +46,10 @@
     color: var(--text-disabled-color);
     border-color: var(--border-disabled-color);
     cursor: not-allowed;
+  }
+
+  &-container {
+    display: flex;
+    flex-direction: column;
   }
 }
