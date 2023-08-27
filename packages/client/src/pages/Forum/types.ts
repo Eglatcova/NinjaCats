@@ -1,4 +1,4 @@
-export type MessageType = {
+export type Message = {
   id: string
   timestamp: number
   author: string
@@ -8,7 +8,7 @@ export type MessageType = {
 export type Topic = {
   id: string
   label: string
-  messages: MessageType[]
+  messages: Message[]
 }
 
 export type TopicsHash = Record<string, Topic>

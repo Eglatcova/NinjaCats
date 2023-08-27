@@ -1,19 +1,14 @@
 import React, { ChangeEventHandler, useState } from 'react'
 import { Wrapper } from '../../components/Wrapper'
-import { Topic } from './components/Topic'
+import { CreationBlock } from './components/CreationBlock/CreationBlock'
+import { Topics } from './components/Topics'
 import { mockTopics } from './mock'
 
 import classes from './Forum.module.scss'
-import { CreationBlock } from './components/CreationBlock/CreationBlock'
-
-const plugTopic = {
-  timestamp: null,
-  author: '-',
-}
 
 const Forum: React.FC = function () {
   const [currentTopics, setTopics] = useState(mockTopics)
-  const [isCretionOn, setCreationState] = useState(false)
+  const [isTopicCretionOn, setTopicCreationState] = useState(false)
   const [newTopicLabel, setNewTopicLabel] = useState('')
 
   const onChangeTopicValue: ChangeEventHandler<HTMLInputElement> = event => {
@@ -21,8 +16,8 @@ const Forum: React.FC = function () {
     setNewTopicLabel(target.value)
   }
 
-  const onTopicCreation = () => setCreationState(true)
-  const offTopicCreation = () => setCreationState(false)
+  const onTopicCreation = () => setTopicCreationState(true)
+  const offTopicCreation = () => setTopicCreationState(false)
 
   const createNewTopic = () => {
     const newTopic = {
@@ -38,41 +33,23 @@ const Forum: React.FC = function () {
     offTopicCreation()
   }
 
-  const topics = Object.values(currentTopics).map(topic => {
-    const { id, label, messages } = topic
-    const lastTopic = messages[messages.length - 1]
-    const { timestamp, author } = lastTopic || plugTopic
-
-    return (
-      <Topic
-        id={id}
-        label={label}
-        messagesNumber={messages.length}
-        author={author}
-        timestamp={timestamp}
-      />
-    )
-  })
-
   return (
     <Wrapper>
-      <div className={classes.creationBlock}>
-        <CreationBlock
-          value={newTopicLabel}
-          isCretionOn={isCretionOn}
-          onChange={onChangeTopicValue}
-          onConfirmClick={createNewTopic}
-          onCloseClick={offTopicCreation}
-          onStartClick={onTopicCreation}
-        />
-      </div>
+      <CreationBlock
+        value={newTopicLabel}
+        isCretionOn={isTopicCretionOn}
+        onChange={onChangeTopicValue}
+        onConfirm={createNewTopic}
+        onClose={offTopicCreation}
+        onCreation={onTopicCreation}
+      />
       <div className={classes.topics}>
         <div className={classes.topicsHeader}>
           <div className={classes.topicsHeaderColumn}>Название темы</div>
           <div className={classes.topicsHeaderColumn}>Кол-во сообщений</div>
           <div className={classes.topicsHeaderColumn}>Последнее сообщение</div>
         </div>
-        {topics}
+        <Topics topics={Object.values(currentTopics)} />
       </div>
     </Wrapper>
   )
