@@ -11,4 +11,7 @@ export default {
   moduleNameMapper: {
     '^.+\\.(scss)$': 'babel-jest',
   },
+  transform: {
+    '^.+\\.svg$': '<rootDir>/svgTransform.ts',
+  },
 }
