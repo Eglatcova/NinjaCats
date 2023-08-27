@@ -37,7 +37,7 @@ const Forum: React.FC = function () {
     <Wrapper>
       <CreationBlock
         value={newTopicLabel}
-        isCretionOn={isTopicCretionOn}
+        isCreationOn={isTopicCretionOn}
         onChange={onChangeTopicValue}
         onConfirm={createNewTopic}
         onClose={offTopicCreation}

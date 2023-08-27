@@ -14,7 +14,7 @@ const ForumMessages: React.FC = () => {
 
   const { label, messages = [] } = mockTopics[id]
 
-  const [currentMeaasges, setCurrentMessages] = useState(messages)
+  const [currentMessages, setCurrentMessages] = useState(messages)
   const [value, setValue] = useState('')
 
   const onChange: ChangeEventHandler<HTMLTextAreaElement> = ({ target }) => {
@@ -44,7 +44,7 @@ const ForumMessages: React.FC = () => {
         <h2 className={classes.title}>{label}</h2>
       </div>
 
-      <Messages messages={currentMeaasges} />
+      <Messages messages={currentMessages} />
 
       <div className={classes.addBlock}>
         <Textarea

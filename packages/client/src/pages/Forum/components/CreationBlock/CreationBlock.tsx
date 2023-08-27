@@ -1,10 +1,10 @@
-import { ChangeEvent, useEffect } from 'react'
+import { ChangeEvent } from 'react'
 import { Button } from '../../../../components/Button'
 import classes from './CreationBlock.module.scss'
 import { BaseInput } from '../../../../components/BaseInput'
 
 type CreationBlockProps = {
-  isCretionOn: boolean
+  isCreationOn: boolean
   value: string
   onConfirm: () => void
   onClose: () => void
@@ -13,10 +13,11 @@ type CreationBlockProps = {
 }
 
 const CreationBlock: React.FC<CreationBlockProps> = function (props) {
-  const { value, isCretionOn, onConfirm, onClose, onCreation, onChange } = props
+  const { value, isCreationOn, onConfirm, onClose, onCreation, onChange } =
+    props
 
   const renderContent = () => {
-    if (isCretionOn) {
+    if (isCreationOn) {
       const isConfirmButtonDisabled = value.length === 0
 
       return (
