@@ -1,0 +1,47 @@
+.topic {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 80px 160px;
+  gap: 8px;
+  transition: background-color 0.15s;
+  cursor: pointer;
+  color: $white;
+  text-decoration: none;
+
+  &:hover>* {
+    background-color: $yellow;
+  }
+}
+
+%column {
+  padding: 8px;
+  background-color: $orange;
+}
+
+.label {
+  @extend %column;
+
+  padding: 8px;
+  background-color: $orange;
+}
+
+.messages-number {
+  @extend %column;
+
+  padding: 8px;
+  background-color: $orange;
+}
+
+.message-info {
+  @extend %column;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  background-color: $orange;
+}
+
+.timestamp {
+  font-size: $font-size-14;
+}

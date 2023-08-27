@@ -2,7 +2,7 @@ import cn from 'classnames'
 import classes from './Button.module.scss'
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  theme?: 'primary' | 'secondary' | 'text'
+  theme?: 'primary' | 'secondary'
 }
 
 const Button: React.FC<ButtonProps> = props => {

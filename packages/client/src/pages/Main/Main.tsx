@@ -26,6 +26,9 @@ const Main: React.FC = function () {
         <li>
           <Link to="/leaderboard">Leaderboard</Link>
         </li>
+        <li>
+          <Link to="/forum">Forum</Link>
+        </li>
       </ul>
     </nav>
   )

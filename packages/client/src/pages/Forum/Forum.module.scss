@@ -1,0 +1,41 @@
+.topics {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  width: 100%;
+  border: solid 4px $orange;
+}
+
+.topics-header {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 80px 160px;
+  gap: 8px;
+  align-items: center;
+  font-size: $font-size-14;
+  font-weight: $font-weight-medium;
+}
+
+.topics-header-column {
+  text-align: center;
+  color: $dark;
+}
+
+.creation-block {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.input-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.controls {
+  display: flex;
+  gap: 8px
+}
