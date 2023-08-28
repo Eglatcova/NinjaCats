@@ -9,7 +9,6 @@
   background: rgba($beige, 0.75);
 }
 
-
 .message-header {
   width: 100%;
   display: flex;
@@ -20,9 +19,4 @@
 .message-text {
   width: 100%;
   color: $dark;
-}
-
-.empty-block {
-  color: $dark;
-  padding: 16px 0;
 }

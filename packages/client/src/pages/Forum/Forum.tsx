@@ -1,10 +1,15 @@
-import React, { ChangeEventHandler, useState } from 'react'
+import React, { ChangeEventHandler, useMemo, useState } from 'react'
 import { Wrapper } from '../../components/Wrapper'
-import { CreationBlock } from './components/CreationBlock/CreationBlock'
-import { Topics } from './components/Topics'
+import { CreationBlock } from './components/CreationBlock'
+import { Topic } from './components/Topic'
 import { mockTopics } from './mock'
 
 import classes from './Forum.module.scss'
+
+const plugTopic = {
+  timestamp: null,
+  author: '-',
+}
 
 const Forum: React.FC = function () {
   const [currentTopics, setTopics] = useState(mockTopics)
@@ -33,6 +38,26 @@ const Forum: React.FC = function () {
     offTopicCreation()
   }
 
+  const topicItems = useMemo(
+    () =>
+      Object.values(currentTopics).map(topic => {
+        const { id, label, messages } = topic
+        const lastTopic = messages[messages.length - 1]
+        const { timestamp, author } = lastTopic || plugTopic
+
+        return (
+          <Topic
+            id={id}
+            label={label}
+            timestamp={timestamp}
+            author={author}
+            messagesNumber={messages.length}
+          />
+        )
+      }),
+    [currentTopics]
+  )
+
   return (
     <Wrapper>
       <CreationBlock
@@ -49,7 +74,7 @@ const Forum: React.FC = function () {
           <div className={classes.topicsHeaderColumn}>Кол-во сообщений</div>
           <div className={classes.topicsHeaderColumn}>Последнее сообщение</div>
         </div>
-        <Topics topics={Object.values(currentTopics)} />
+        {topicItems}
       </div>
     </Wrapper>
   )

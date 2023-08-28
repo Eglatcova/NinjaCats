@@ -5,7 +5,7 @@ import { Button } from '../../components/Button'
 import { Wrapper } from '../../components/Wrapper'
 import { ReactComponent as ReturnIcon } from '../../icons/return.svg'
 import { mockTopics } from '../Forum/mock'
-import { Messages } from './Components/Messages'
+import { Message } from './Components/Messages'
 
 import classes from './ForumMessages.module.scss'
 
@@ -33,6 +33,19 @@ const ForumMessages: React.FC = () => {
     setValue('')
   }
 
+  const renderMessages = () => {
+    if (currentMessages.length === 0) {
+      return <div className={classes.emptyBlock}>Сообщений нет</div>
+    }
+
+    return currentMessages.map(message => {
+      const { id, timestamp, author, text } = message
+      return (
+        <Message id={id} timestamp={timestamp} author={author} text={text} />
+      )
+    })
+  }
+
   return (
     <Wrapper>
       <div className={classes.header}>
@@ -44,7 +57,7 @@ const ForumMessages: React.FC = () => {
         <h2 className={classes.title}>{label}</h2>
       </div>
 
-      <Messages messages={currentMessages} />
+      {renderMessages()}
 
       <div className={classes.addBlock}>
         <Textarea
