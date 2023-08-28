@@ -1,0 +1,30 @@
+.registration {
+    &-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    &-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &-header {
+        font-family: $font-handjet;
+        font-size: $font-size-48;
+        margin-bottom: 20px;
+    }
+
+    &-input {
+        margin-bottom: 16px;
+    }
+
+    &-button {
+        margin-bottom: 12px;
+    }
+}
