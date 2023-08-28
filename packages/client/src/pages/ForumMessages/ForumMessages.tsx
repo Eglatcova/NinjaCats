@@ -3,9 +3,9 @@ import { Link, useParams } from 'react-router-dom'
 import { Textarea } from '../../components/Textarea'
 import { Button } from '../../components/Button'
 import { Wrapper } from '../../components/Wrapper'
+import { Messages } from './components/Messages'
 import { ReactComponent as ReturnIcon } from '../../icons/return.svg'
 import { mockTopics } from '../Forum/mock'
-import { Messages } from './components/Messages'
 
 import classes from './ForumMessages.module.scss'
 

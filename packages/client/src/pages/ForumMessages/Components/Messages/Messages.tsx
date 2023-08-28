@@ -1,5 +1,4 @@
 import { Message } from './components/Message'
-
 import type { Message as MessageType } from '../../../Forum/types'
 
 import classes from './Messages.module.scss'
