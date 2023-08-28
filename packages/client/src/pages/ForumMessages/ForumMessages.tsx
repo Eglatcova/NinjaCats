@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { Textarea } from '../../components/Textarea'
 import { Button } from '../../components/Button'
 import { Wrapper } from '../../components/Wrapper'
-import { Messages } from './components/Messages'
+import { MessagesItems } from './components/MessagesItems'
 import { ReactComponent as ReturnIcon } from '../../icons/return.svg'
 import { mockTopics } from '../Forum/mock'
 
@@ -44,7 +44,7 @@ const ForumMessages: React.FC = () => {
         <h2 className={classes.title}>{label}</h2>
       </div>
 
-      <Messages messages={currentMessages} />
+      <MessagesItems messages={currentMessages} />
 
       <div className={classes.addBlock}>
         <Textarea

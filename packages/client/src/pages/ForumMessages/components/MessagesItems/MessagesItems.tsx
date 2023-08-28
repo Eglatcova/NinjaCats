@@ -1,13 +1,12 @@
 import { Message } from './components/Message'
 import type { Message as MessageType } from '../../../Forum/types'
-
-import classes from './Messages.module.scss'
+import classes from './MessagesItems.module.scss'
 
 type MessagesProps = {
   messages: MessageType[]
 }
 
-const Messages: React.FC<MessagesProps> = function ({ messages }) {
+const MessagesItems: React.FC<MessagesProps> = function ({ messages }) {
   if (messages.length === 0) {
     return <div className={classes.emptyBlock}>Сообщений нет</div>
   }
@@ -21,4 +20,4 @@ const Messages: React.FC<MessagesProps> = function ({ messages }) {
   )
 }
 
-export { Messages }
+export { MessagesItems }
