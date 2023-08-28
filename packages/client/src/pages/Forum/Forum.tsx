@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, useMemo, useState } from 'react'
 import { Wrapper } from '../../components/Wrapper'
-import { CreationBlock } from './components/CreationBlock'
+import { CreationBlockContent } from './components/CreationBlockContent'
 import { Topic } from './components/Topic'
 import { mockTopics } from './mock'
 
@@ -60,14 +60,16 @@ const Forum: React.FC = function () {
 
   return (
     <Wrapper>
-      <CreationBlock
-        value={newTopicLabel}
-        isCreationOn={isTopicCretionOn}
-        onChange={onChangeTopicValue}
-        onConfirm={createNewTopic}
-        onClose={offTopicCreation}
-        onCreation={onTopicCreation}
-      />
+      <div className={classes.creationBlock}>
+        <CreationBlockContent
+          value={newTopicLabel}
+          isCreationOn={isTopicCretionOn}
+          onChange={onChangeTopicValue}
+          onConfirm={createNewTopic}
+          onClose={offTopicCreation}
+          onCreation={onTopicCreation}
+        />
+      </div>
       <div className={classes.topics}>
         <div className={classes.topicsHeader}>
           <div className={classes.topicsHeaderColumn}>Название темы</div>

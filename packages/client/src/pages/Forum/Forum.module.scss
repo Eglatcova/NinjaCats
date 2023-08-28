@@ -21,3 +21,10 @@
   text-align: center;
   color: $dark;
 }
+
+.creation-block {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
