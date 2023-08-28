@@ -1,4 +1,4 @@
-import { getDateString } from '../../../../utils/getDateString'
+import { getDateString } from '../../../../../../utils/getDateString'
 
 import classes from './Message.module.scss'
 
