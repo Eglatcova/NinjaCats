@@ -11,6 +11,10 @@ export class Score {
   }
 
   public increaseScore(s: number) {
+    if (this.score + s < 0) {
+      this.score = 0
+      return
+    }
     this.score += s
   }
 }

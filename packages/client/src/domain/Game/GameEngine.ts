@@ -4,9 +4,11 @@ import Keyboard from './Keyboard'
 import CollisionEngine from './CollisionEngine'
 import BoxCollider from './BoxCollider'
 import {
-  increaseVelocityCommand,
-  noEffectCommand,
-  reverseDirectionCommand,
+  IncreaseScoreCommand,
+  IncreaseVelocityCommand,
+  MacroCommand,
+  NoEffectCommand,
+  ReverseDirectionCommand,
 } from './EffectCommands'
 import Collectables from './Collectables'
 import Settings from './Settings'
@@ -26,8 +28,8 @@ class GameEngine {
     this.collisionEngine = new CollisionEngine()
     this.catcher = new Catcher()
     this.keyboard = new Keyboard()
-    this.collectables = new Collectables(this.createCommands())
     this.score = new Score()
+    this.collectables = new Collectables(this.createCommands())
     this.initCollisions()
     this.render()
     this.loop(performance.now())
@@ -35,9 +37,15 @@ class GameEngine {
 
   private createCommands() {
     return [
-      new increaseVelocityCommand(this.catcher),
-      new reverseDirectionCommand(this.catcher),
-      new noEffectCommand(),
+      new MacroCommand()
+        .add(new IncreaseVelocityCommand(this.catcher))
+        .add(new IncreaseScoreCommand(this.score, 10)),
+      new MacroCommand()
+        .add(new ReverseDirectionCommand(this.catcher))
+        .add(new IncreaseScoreCommand(this.score, -10)),
+      new MacroCommand()
+        .add(new NoEffectCommand())
+        .add(new IncreaseScoreCommand(this.score, 10)),
     ]
   }
 
