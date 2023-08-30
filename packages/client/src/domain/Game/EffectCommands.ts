@@ -1,5 +1,6 @@
 import Catcher from './Catcher'
-import { Score } from './Score'
+import Score from './Score'
+import Lives from './Lives'
 
 export interface Command {
   execute: () => void
@@ -57,6 +58,17 @@ export class ReverseDirectionCommand implements Command {
 export class NoEffectCommand implements Command {
   public execute() {
     return undefined
+  }
+  public unexecute() {
+    return undefined
+  }
+}
+
+export class LoseLiveCommand implements Command {
+  constructor(private lives: Lives) {}
+
+  public execute() {
+    this.lives.decreaseLives()
   }
   public unexecute() {
     return undefined

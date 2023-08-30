@@ -6,6 +6,7 @@ import BoxCollider from './BoxCollider'
 import {
   IncreaseScoreCommand,
   IncreaseVelocityCommand,
+  LoseLiveCommand,
   MacroCommand,
   NoEffectCommand,
   ReverseDirectionCommand,
@@ -59,6 +60,8 @@ class GameEngine {
           .add(new IncreaseVelocityCommand(this.catcher, -0.1))
           .add(new IncreaseScoreCommand(this.score, -10)),
       ],
+      emptyEffect: new NoEffectCommand(),
+      loseEffect: new LoseLiveCommand(this.lives),
     }
   }
 

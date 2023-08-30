@@ -11,15 +11,13 @@ import Settings from './Settings'
 type CollectableEffects = {
   positiveEffects: Command[]
   negativeEffects: Command[]
+  emptyEffect: Command
+  loseEffect: Command
 }
 export default class CollectableFactory {
   private availableAnimateStrategies: AnimateStrategy[] = [
     new FreeFallStrategy(),
     new SoaringFallStrategy(),
-  ]
-  private availableRenderStrategies: RenderStrategy[] = [
-    new FuchsiaStrategy(),
-    new BlueStrategy(),
   ]
 
   constructor(private availableCommands: CollectableEffects) {}
@@ -39,15 +37,6 @@ export default class CollectableFactory {
     )
     const strategy = this.availableAnimateStrategies[randomIndex]
     return strategy || new FreeFallStrategy()
-  }
-
-  private getRandomRenderStrategy() {
-    const randomIndex = this.getRandomIndex(
-      0,
-      this.availableAnimateStrategies.length - 1
-    )
-    const strategy = this.availableRenderStrategies[randomIndex]
-    return strategy || new FuchsiaStrategy()
   }
 
   private getRandomCommand(positive: boolean) {
@@ -74,7 +63,8 @@ export default class CollectableFactory {
       this.getRandom(0.1, 0.2),
       this.getRandomAnimateStrategy(),
       new FuchsiaStrategy(),
-      this.getRandomCommand(true)
+      this.getRandomCommand(true),
+      this.availableCommands.loseEffect
     )
   }
 
@@ -87,7 +77,8 @@ export default class CollectableFactory {
       this.getRandom(0.1, 0.2),
       this.getRandomAnimateStrategy(),
       new BlueStrategy(),
-      this.getRandomCommand(false)
+      this.getRandomCommand(false),
+      this.availableCommands.emptyEffect
     )
   }
 

@@ -26,6 +26,7 @@ export default class Collectables {
       if (!item) return
       item.animate(delay)
       if (collision.checkBottomBoundsCollision(item)) {
+        item.touchBottomBound()
         this.collectablesList.delete(item)
       }
       if (collision.checkCatcherCollision(item)) {
