@@ -12,7 +12,8 @@ import {
 } from './EffectCommands'
 import Collectables from './Collectables'
 import Settings from './Settings'
-import { Score } from './Score'
+import Score from './Score'
+import Lives from './Lives'
 import CollectableFactory from './CollectableFactory'
 
 class GameEngine {
@@ -20,8 +21,9 @@ class GameEngine {
   private catcher: Catcher
   private collectables: Collectables
   private keyboard: Keyboard
-  private collisionEngine: CollisionEngine
   private score: Score
+  private lives: Lives
+  private collisionEngine: CollisionEngine
 
   constructor(gameDiv: HTMLDivElement) {
     Settings.getInstance().setSize(800, 600)
@@ -30,6 +32,7 @@ class GameEngine {
     this.catcher = new Catcher()
     this.keyboard = new Keyboard()
     this.score = new Score()
+    this.lives = new Lives()
     this.collectables = new Collectables(
       new CollectableFactory(this.createCommands())
     )
@@ -84,6 +87,7 @@ class GameEngine {
     this.collectables.render(this.g)
     this.catcher.render(this.g)
     this.score.render(this.g)
+    this.lives.render(this.g)
   }
 
   private drawBackground(g: Canvas) {

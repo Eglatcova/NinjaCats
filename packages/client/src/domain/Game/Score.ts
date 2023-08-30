@@ -1,6 +1,6 @@
 import canvas from './Canvas'
 
-export class Score {
+export default class Score {
   private score = 0
   private x = 10
   private y = 50
