@@ -8,6 +8,10 @@ import { BlueStrategy, FuchsiaStrategy, RenderStrategy } from './RenderStrategy'
 import { Command } from './EffectCommands'
 import Settings from './Settings'
 
+type CollectableEffects = {
+  positiveEffects: Command[]
+  negativeEffects: Command[]
+}
 export default class CollectableFactory {
   private availableAnimateStrategies: AnimateStrategy[] = [
     new FreeFallStrategy(),
@@ -18,7 +22,7 @@ export default class CollectableFactory {
     new BlueStrategy(),
   ]
 
-  constructor(private availableCommands: Command[]) {}
+  constructor(private availableCommands: CollectableEffects) {}
 
   private getRandom(min: number, max: number) {
     return Math.random() * (max - min) + min
@@ -36,6 +40,7 @@ export default class CollectableFactory {
     const strategy = this.availableAnimateStrategies[randomIndex]
     return strategy || new FreeFallStrategy()
   }
+
   private getRandomRenderStrategy() {
     const randomIndex = this.getRandomIndex(
       0,
@@ -45,12 +50,14 @@ export default class CollectableFactory {
     return strategy || new FuchsiaStrategy()
   }
 
-  private getRandomCommand() {
+  private getRandomCommand(positive: boolean) {
     const randomIndex = this.getRandomIndex(
       0,
       this.availableAnimateStrategies.length - 1
     )
-    return this.availableCommands[randomIndex]
+    return positive
+      ? this.availableCommands.positiveEffects[randomIndex]
+      : this.availableCommands.negativeEffects[randomIndex]
   }
 
   private getRandomX() {
@@ -58,7 +65,7 @@ export default class CollectableFactory {
     return this.getRandom(0, width - 50)
   }
 
-  public createRandomCollectable() {
+  public createPositiveCollectable() {
     return new Collectable(
       this.getRandomX(),
       0,
@@ -66,8 +73,27 @@ export default class CollectableFactory {
       50,
       this.getRandom(0.1, 0.2),
       this.getRandomAnimateStrategy(),
-      this.getRandomRenderStrategy(),
-      this.getRandomCommand()
+      new FuchsiaStrategy(),
+      this.getRandomCommand(true)
     )
+  }
+
+  public createNegativeCollectable() {
+    return new Collectable(
+      this.getRandomX(),
+      0,
+      50,
+      50,
+      this.getRandom(0.1, 0.2),
+      this.getRandomAnimateStrategy(),
+      new BlueStrategy(),
+      this.getRandomCommand(false)
+    )
+  }
+
+  public createRandomCollectable() {
+    return Math.random() > 0.5
+      ? this.createNegativeCollectable()
+      : this.createPositiveCollectable()
   }
 }

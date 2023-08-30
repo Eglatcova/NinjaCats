@@ -33,8 +33,7 @@ export class IncreaseScoreCommand implements Command {
 }
 
 export class IncreaseVelocityCommand implements Command {
-  private velocity = 0.1
-  constructor(private catcher: Catcher) {}
+  constructor(private catcher: Catcher, public velocity: number) {}
 
   public execute() {
     this.catcher.updateVelocity(this.velocity)

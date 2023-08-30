@@ -13,6 +13,7 @@ import {
 import Collectables from './Collectables'
 import Settings from './Settings'
 import { Score } from './Score'
+import CollectableFactory from './CollectableFactory'
 
 class GameEngine {
   private g: Canvas
@@ -29,24 +30,33 @@ class GameEngine {
     this.catcher = new Catcher()
     this.keyboard = new Keyboard()
     this.score = new Score()
-    this.collectables = new Collectables(this.createCommands())
+    this.collectables = new Collectables(
+      new CollectableFactory(this.createCommands())
+    )
     this.initCollisions()
     this.render()
     this.loop(performance.now())
   }
 
   private createCommands() {
-    return [
-      new MacroCommand()
-        .add(new IncreaseVelocityCommand(this.catcher))
-        .add(new IncreaseScoreCommand(this.score, 10)),
-      new MacroCommand()
-        .add(new ReverseDirectionCommand(this.catcher))
-        .add(new IncreaseScoreCommand(this.score, -10)),
-      new MacroCommand()
-        .add(new NoEffectCommand())
-        .add(new IncreaseScoreCommand(this.score, 10)),
-    ]
+    return {
+      positiveEffects: [
+        new MacroCommand()
+          .add(new IncreaseVelocityCommand(this.catcher, 0.1))
+          .add(new IncreaseScoreCommand(this.score, 10)),
+        new MacroCommand()
+          .add(new NoEffectCommand())
+          .add(new IncreaseScoreCommand(this.score, 10)),
+      ],
+      negativeEffects: [
+        new MacroCommand()
+          .add(new ReverseDirectionCommand(this.catcher))
+          .add(new IncreaseScoreCommand(this.score, -10)),
+        new MacroCommand()
+          .add(new IncreaseVelocityCommand(this.catcher, -0.1))
+          .add(new IncreaseScoreCommand(this.score, -10)),
+      ],
+    }
   }
 
   private initCollisions() {

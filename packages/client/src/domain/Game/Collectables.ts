@@ -3,14 +3,11 @@ import Canvas from './Canvas'
 import Collection from './Collection'
 import Collectable from './Collectable'
 import CollectableFactory from './CollectableFactory'
-import { Command } from './EffectCommands'
 
 export default class Collectables {
-  private collectableFactory: CollectableFactory
   private collectablesList: Collection<Collectable> = new Collection()
 
-  constructor(availableCommands: Command[]) {
-    this.collectableFactory = new CollectableFactory(availableCommands)
+  constructor(private collectableFactory: CollectableFactory) {
     this.spawnCollectables()
   }
 
