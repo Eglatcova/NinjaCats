@@ -10,6 +10,7 @@ import {
 } from './EffectCommands'
 import Collectables from './Collectables'
 import Settings from './Settings'
+import { Score } from './Score'
 
 class GameEngine {
   private g: Canvas
@@ -17,6 +18,7 @@ class GameEngine {
   private collectables: Collectables
   private keyboard: Keyboard
   private collisionEngine: CollisionEngine
+  private score: Score
 
   constructor(gameDiv: HTMLDivElement) {
     Settings.getInstance().setSize(800, 600)
@@ -25,6 +27,7 @@ class GameEngine {
     this.catcher = new Catcher()
     this.keyboard = new Keyboard()
     this.collectables = new Collectables(this.createCommands())
+    this.score = new Score()
     this.initCollisions()
     this.render()
     this.loop(performance.now())
@@ -62,6 +65,7 @@ class GameEngine {
     this.drawBackground(this.g)
     this.collectables.render(this.g)
     this.catcher.render(this.g)
+    this.score.render(this.g)
   }
 
   private drawBackground(g: Canvas) {
