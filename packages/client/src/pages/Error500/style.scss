@@ -1,4 +1,4 @@
-.page404 {
+.page500 {
     position: relative;
         
     width: 100%;
@@ -27,23 +27,6 @@
 
                 font-size: $ui-step * 9;
                 font-weight: 800;
-            }
-        }
-        
-        &__homeLink {
-            width: $ui-step * 70;
-
-            padding: $ui-step * 3 0;
-
-            background-color: $grey;
-            border-radius: $ui-step * 2;
-
-            cursor: pointer;
-
-            &:hover {
-                padding: $ui-step * 2.5 0;
-
-                border: 2px solid $brown;
             }
         }
     }
