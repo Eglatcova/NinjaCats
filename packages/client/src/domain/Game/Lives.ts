@@ -10,7 +10,6 @@ export default class Lives {
 
   constructor() {
     this.x = Settings.getInstance().getSize().width
-    console.log(this.y)
   }
 
   public render(g: canvas) {
@@ -26,9 +25,12 @@ export default class Lives {
   }
 
   public decreaseLives() {
-    if (this.lives - 1 <= 0) {
-      console.log('END')
+    if (this.lives - 1 >= 0) {
+      this.lives -= 1
     }
-    this.lives -= 1
+  }
+
+  public isAlive() {
+    return this.lives > 0
   }
 }

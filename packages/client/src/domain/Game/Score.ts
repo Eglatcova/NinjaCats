@@ -17,4 +17,8 @@ export default class Score {
     }
     this.score += s
   }
+
+  public getScore() {
+    return this.score
+  }
 }

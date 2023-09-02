@@ -26,7 +26,10 @@ class GameEngine {
   private lives: Lives
   private collisionEngine: CollisionEngine
 
-  constructor(gameDiv: HTMLDivElement) {
+  constructor(
+    gameDiv: HTMLDivElement,
+    private endGameCallback: (score: number) => void
+  ) {
     Settings.getInstance().setSize(800, 600)
     this.g = new Canvas(gameDiv)
     this.collisionEngine = new CollisionEngine()
@@ -116,6 +119,10 @@ class GameEngine {
   }
 
   private loop(last: number) {
+    if (!this.lives.isAlive()) {
+      this.endGameCallback(this.score.getScore())
+      return
+    }
     const now = performance.now()
     const delay = now - last
     this.g.clear()
