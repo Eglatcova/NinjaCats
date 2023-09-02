@@ -29,6 +29,9 @@ classDiagram
       - catcher : Catcher
       - collectables : Collectables
       - keyboard : Keyboard
+      - lives : Lives
+      - score : Score
+      - collisionFactory : CollisionFactory
       - collisionEngine : CollisionEngine
       + constructor(gameDiv: HTMLDivElement)
       - createCommands() : Command[]
@@ -44,6 +47,7 @@ classDiagram
       - context : CanvasRenderingContext2D
       + constructor(parent: HTMLDivElement)
       + drawRect(x: number, y: number, w: number, h: number, color: string)
+      + drawText(x: number, y: number, text: string, fontSize: number, color: string)
       + clear()
   }
   
@@ -90,14 +94,16 @@ classDiagram
   class CollectableFactory {
       - availableAnimateStrategies: AnimateStrategy[]
       - availableRenderStrategies: RenderStrategy[]
-      - availableCommands: Command[]
+      - availableCommands: CollectableEffects
       + constructor(availableCommands: Command[])
       - getRandom((min: number, max: number): number
       - getRandomIndex(min: number, max: number): number
       - getRandomAnimateStrategy(): AnimateStrategy
       - getRandomRenderStrategy(): RenderStrategy
-      - getRandomCommand(): Command
+      - getRandomCommand(positive: boolean): Command
       - getRandomX(): number
+      + createPositiveCollectable(): Collectable
+      + createNegativeCollectable(): Collectable
       + createRandomCollectable(): Collectable
   }
   
@@ -110,10 +116,12 @@ classDiagram
       - animateStrategy: AnimateStrategy,
       - renderStrategy: RenderStrategy,
       - catcherCollisionEffect: Command
-      + constructor(x: number, y: number, width: number, height: number, velocity: number, animateStrategy: AnimateStrategy, renderStrategy: RenderStrategy, catcherCollisionEffect: Command)
+      - bottomBoundCollisionEffect: Command: Command
+      + constructor(x: number, y: number, width: number, height: number, velocity: number, animateStrategy: AnimateStrategy, renderStrategy: RenderStrategy, catcherCollisionEffect: Command, bottomBoundCollisionEffect: Command)
       + render(g: Canvas)
       + animate(dt: number, collision: CollisionEngine)
       + touchCatcher()
+      + touchBottomBound()
       + getParams(): #123; x: number y: number width: number height: number #125;
   }
   
@@ -174,22 +182,44 @@ classDiagram
       + unexecute()
   }
   
-  class increaseVelocityCommand {
+  class MacroCommand {
+      - commandList: Command[]
+      + add(command: Command)
+      + execute()
+      + unexecute()
+  }
+  
+  class IncreaseVelocityCommand {
       - velocity: number
       - catcher: Catcher
-      + constructor(private catcher: Catcher)
+      + constructor(catcher: Catcher)
+      + execute()
+      + unexecute()
+  }
+
+  class IncreaseScoreCommand {
+      - score: Score
+      - scoreDelta: number
+      + constructor(score: Score, scoreDelta: number)
       + execute()
       + unexecute()
   }
   
-  class reverseDirectionCommand {
+  class ReverseDirectionCommand {
       - catcher: Catcher
-      + constructor(private catcher: Catcher)
+      + constructor(catcher: Catcher)
+      + execute()
+      + unexecute()
+  }
+
+  class LoseLiveCommand {
+      - lives: Lives
+      + constructor(lives: Lives)
       + execute()
       + unexecute()
   }
   
-  class noEffectCommand {
+  class NoEffectCommand {
       + execute()
       + unexecute()
   }
@@ -201,6 +231,30 @@ classDiagram
       - setKey(event: KeyboardEvent, isPressed: boolean)
       + isPressed(key: KEYS): boolean
   }
+  
+  class Lives {
+      - lives
+      - x
+      - y
+      - width
+      - height
+      + constructor()
+      + render(g: Canvas)
+      + decreaseLives()
+      + isAlive(): boolean
+ }
+
+  class Score {
+      - score
+      - x
+      - y
+      - fontSize
+      + constructor()
+      + render(g: Canvas)
+      + increaseScore()
+      + getScore(): number
+  }
+
   
   class CollisionEngine {
       $ LAYERS: LAYERS
@@ -225,7 +279,10 @@ classDiagram
   GameEngine *-- Canvas
   GameEngine *-- Catcher
   GameEngine *-- Collectables
+  GameEngine *-- CollectableFactory
   GameEngine *-- Keyboard
+  GameEngine *-- Score
+  GameEngine *-- Lives
   GameEngine *-- CollisionEngine
   Collectables *-- CollectableFactory
   CollectableFactory *-- RenderStrategy
@@ -235,9 +292,12 @@ classDiagram
   RenderStrategy <|.. BlueStrategy
   AnimateStrategy <|.. SoaringFallStrategy
   AnimateStrategy <|.. FreeFallStrategy
-  Command <|.. increaseVelocityCommand
-  Command <|.. reverseDirectionCommand
-  Command <|.. noEffectCommand
+  Command <|.. IncreaseVelocityCommand
+  Command <|.. ReverseDirectionCommand
+  Command <|.. NoEffectCommand
+  Command <|.. LoseLiveCommand
+  Command <|.. IncreaseScoreCommand
+  Command <|.. MacroCommand
   Collectables *-- Collection
   Collider <|.. Catcher
   Collider <|.. BoxCollider
@@ -260,9 +320,10 @@ classDiagram
 
 Аргументы конструктора
 
-|   Имя   | Описание                                                               |
-|:-------:|:-----------------------------------------------------------------------|
-| gameDiv | Елемент типа `HTMLDivElement` в котором будет инициализирован `canvas` |
+|       Имя       | Описание                                                                                                      |
+|:---------------:|:--------------------------------------------------------------------------------------------------------------|
+|     gameDiv     | Елемент типа `HTMLDivElement` в котором будет инициализирован `canvas`                                        |
+| endGameCallback | Функция которая будет вызвана при завершении игры, в качестве аргумента передается количество набранных очков |
 
 Пример инициализации
 ```react
@@ -270,7 +331,7 @@ const Game: React.FC = () => {
   const gameDiv = useRef<HTMLDivElement>(null)
   useEffect(() => {
     if (gameDiv.current && gameDiv.current.childNodes.length === 0) {
-      new GameEngine(gameDiv.current)
+      new GameEngine(gameDiv.current, window.alert)
     }
   }, [])
   return <div ref={gameDiv} />
@@ -326,6 +387,14 @@ if (this.keyboard.isPressed(Keyboard.KEYS.LEFT)) {
   return
 }
 ```
+
+### Lives
+
+Класс отвечает да подсчет жизней и отображение их на экране
+
+### Score
+
+Класс отвечает да подсчет очков и отображение их на экране
 
 ### Settings
 
