@@ -10,7 +10,27 @@ const validationRules = {
   password: /^(?=.*[A-ZА-Я])(?=.*[0-9]).{8,40}$/,
 }
 
-export const validationSchema = yup.object().shape({
+export const loginSchema = yup.object().shape({
+  login: yup
+    .string()
+    .min(3, 'Не менее 3 символов')
+    .max(20, 'Не более 20 символов')
+    .matches(validationRules.login, {
+      message:
+        'Латиница, может содержать цифры, но не состоять из них, без пробелов, из спецсимволов могут быть дефис и подчеркивание',
+    })
+    .required('Логин обязателен'),
+  password: yup
+    .string()
+    .min(8, 'Не менее 8 символов')
+    .max(40, 'Не более 40 символов')
+    .matches(validationRules.password, {
+      message: 'Обязательно хотя бы одна заглавная буква и цифра',
+    })
+    .required('Пароль обязателен'),
+})
+
+export const registrationSchema = yup.object().shape({
   login: yup
     .string()
     .min(3, 'Не менее 3 символов')
