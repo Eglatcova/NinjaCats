@@ -1,22 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
 import classes from './Registration.module.scss'
 import { useFormik } from 'formik'
-import { validationSchema } from '../../utils/validation'
-
-interface registrationValues {
-  first_name: string
-  second_name: string
-  login: string
-  email: string
-  phone: string
-  password: string
-}
+import { registrationSchema } from '../../utils/validation'
+import { ISignUpData } from '../../api/AuthApi'
+import { authController } from '../../controllers/AuthController'
+import { useNavigate } from 'react-router-dom'
 
 const Registration: React.FC = function () {
-  const onSubmit = (values: registrationValues) => {
-    console.log(values)
+  useEffect(() => {
+    authController.getUser().then(res => {
+      if (res) {
+        navigate('/profile')
+      }
+    })
+  }, [])
+
+  const navigate = useNavigate()
+
+  const onSubmit = (values: ISignUpData) => {
+    authController.signUp(values).then(res => {
+      if (res) navigate('/game')
+    })
   }
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -29,7 +35,7 @@ const Registration: React.FC = function () {
         phone: '',
         password: '',
       },
-      validationSchema,
+      validationSchema: registrationSchema,
       onSubmit,
     })
 
