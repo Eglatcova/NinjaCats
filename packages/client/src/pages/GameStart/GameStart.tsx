@@ -1,5 +1,6 @@
-import React from 'react'
 import './style.scss'
+import React, { useEffect } from 'react'
+import { authController } from '../../controllers/AuthController'
 import { useNavigate } from 'react-router-dom'
 
 const GameStart: React.FC = function () {
@@ -8,6 +9,14 @@ const GameStart: React.FC = function () {
   function startGame() {
     navigate('/game')
   }
+  
+  useEffect(() => {
+    authController.getUser().then(res => {
+      if (!res) {
+        navigate('/')
+      }
+    })
+  }, [])
 
   return (
     <div className="GameStart">
