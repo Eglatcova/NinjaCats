@@ -8,6 +8,7 @@ import { GameOver } from './pages/GameOver'
 import { Game } from './pages/Game'
 import { GameStart } from './pages/GameStart'
 import { Profile } from './pages/Profile'
+import { Landing } from './pages/Landing'
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
   {
     path: '/leaderboard',
     Component: Leaderboard,
+  },
+  {
+    path: '/Landing',
+    Component: Landing,
   },
   {
     path: '*',
