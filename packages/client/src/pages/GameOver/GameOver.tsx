@@ -1,6 +1,6 @@
 import './style.scss'
 import React, { useEffect } from 'react'
-// import { authController } from '../../controllers/AuthController'
+import { authController } from '../../controllers/AuthController'
 import { useNavigate } from 'react-router-dom'
 
 const GameOver: React.FC = function () {
@@ -10,13 +10,13 @@ const GameOver: React.FC = function () {
     navigate('/game')
   }
 
-  // useEffect(() => {
-  //   authController.getUser().then(res => {
-  //     if (!res) {
-  //       navigate('/')
-  //     }
-  //   })
-  // }, [])
+  useEffect(() => {
+   authController.getUser().then(res => {
+     if (!res) {
+       navigate('/')
+     }
+   })
+  }, [])
 
   return (
     <div className="GameOver">
