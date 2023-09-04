@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react'
-// import { authController } from '../../controllers/AuthController';
+import { authController } from '../../controllers/AuthController'
 import './style.scss'
 import { useNavigate } from 'react-router-dom'
 
 const Landing: React.FC = function () {
   const navigate = useNavigate()
 
-  //   useEffect(() => {
-  //     authController.getUser().then(res => {
-  //       if (!res) {
-  //         navigate('/')
-  //       }
-  //     })
-  //   }, [])
+  useEffect(() => {
+    authController.getUser().then(res => {
+      if (!res) {
+        navigate('/')
+      }
+    })
+  }, [])
 
   return (
     <div className="Landing">
