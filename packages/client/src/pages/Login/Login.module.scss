@@ -7,10 +7,17 @@
         height: 100vh;
     }
 
+    &-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
     &-header {
         font-family: $font-handjet;
-        font-size: $font-size-48;
         margin-bottom: 20px;
+        font-size: $font-size-48;
     }
 
     &-input {
@@ -19,5 +26,12 @@
 
     &-button {
         margin-bottom: 12px;
+    }
+
+    &-error {
+        font-family: $font-handjet;
+        font-size: $font-size-12;
+        margin-bottom: 16px;
+        max-width: 187px;
     }
 }
