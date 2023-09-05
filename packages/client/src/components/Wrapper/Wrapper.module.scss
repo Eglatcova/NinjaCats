@@ -1,0 +1,24 @@
+.wrapper {
+  position: relative;
+  height: 100vh;
+  background-color: $beige;
+  font-family: $font-roboto;
+}
+
+.pattern {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color: rgba($pink, 0.5);
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 64px;
+  overflow: scroll;
+}
