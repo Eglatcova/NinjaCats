@@ -4,7 +4,7 @@ import {
   FreeFallStrategy,
   SoaringFallStrategy,
 } from './AnimateStrategy'
-import { BlueStrategy, FuchsiaStrategy, RenderStrategy } from './RenderStrategy'
+import { BlueStrategy, FuchsiaStrategy } from './RenderStrategy'
 import { Command } from './EffectCommands'
 import Settings from './Settings'
 
@@ -44,9 +44,10 @@ export default class CollectableFactory {
       0,
       this.availableAnimateStrategies.length - 1
     )
+    const { positiveEffects, negativeEffects } = this.availableCommands
     return positive
-      ? this.availableCommands.positiveEffects[randomIndex]
-      : this.availableCommands.negativeEffects[randomIndex]
+      ? positiveEffects[randomIndex]
+      : negativeEffects[randomIndex]
   }
 
   private getRandomX() {

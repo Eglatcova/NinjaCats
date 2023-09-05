@@ -25,7 +25,7 @@ export default class Lives {
   }
 
   public decreaseLives() {
-    if (this.lives - 1 >= 0) {
+    if (this.lives >= 1) {
       this.lives -= 1
     }
   }
