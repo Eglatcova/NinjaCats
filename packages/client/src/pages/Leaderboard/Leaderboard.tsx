@@ -45,13 +45,13 @@ const Leaderboard: React.FC = function () {
     'декабря',
   ]
 
-  // useEffect(() => {
-  //   authController.getUser().then(res => {
-  //     if (!res) {
-  //       navigate('/')
-  //     }
-  //   })
-  // }, [])
+  useEffect(() => {
+    authController.getUser().then(res => {
+      if (!res) {
+        navigate('/')
+      }
+    })
+  }, [])
 
   return (
     <div className="Leaderboard">
