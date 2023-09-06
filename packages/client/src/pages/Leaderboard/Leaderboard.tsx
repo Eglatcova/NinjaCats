@@ -2,78 +2,45 @@ import React, { useEffect } from 'react'
 import { authController } from '../../controllers/AuthController'
 import { useNavigate } from 'react-router-dom'
 
-import './style.scss'
+import { mocDataLeaderboard } from '../../utils/mocks/leaderboard'
+import { months } from '../../utils/const/months'
+
+import classes from './style.module.scss'
 
 const Leaderboard: React.FC = function () {
   const navigate = useNavigate()
 
-  const mocDataLeaderboard = [
-    {
-      nickname: 'nickname_1',
-      date: new Date(2023, 8, 10),
-      value: 50,
-    },
-    {
-      nickname: 'nickname_3',
-      date: new Date(2023, 8, 11),
-      value: 30,
-    },
-    {
-      nickname: 'nickname_2',
-      date: new Date(2023, 8, 8),
-      value: 20,
-    },
-    {
-      nickname: 'nickname_4',
-      date: new Date(2023, 8, 14),
-      value: 10,
-    },
-  ]
-
-  const months = [
-    'января',
-    'февраля',
-    'марта',
-    'апреля',
-    'мая',
-    'июня',
-    'июля',
-    'августа',
-    'сентября',
-    'октября',
-    'ноября',
-    'декабря',
-  ]
-
-  useEffect(() => {
-    authController.getUser().then(res => {
-      if (!res) {
-        navigate('/')
-      }
-    })
-  }, [])
+  // useEffect(() => {
+  //   authController.getUser().then(res => {
+  //     if (!res) {
+  //       navigate('/')
+  //     }
+  //   })
+  // }, [])
 
   return (
-    <div className="Leaderboard">
-      <table className="Leaderboard__table">
-        {mocDataLeaderboard.map((el, idx) => {
-          return (
-            <tr className="Leaderboard__table__row">
-              <td className="Leaderboard__table__row__index">№{idx + 1}</td>
+    <div className={classes.Leaderboard}>
+      <table className={classes.LeaderboardTable}>
+        <tbody>
+          {mocDataLeaderboard.map((el, idx) => {
+            return (
+              <tr className={classes.LeaderboardTableRow} key={el.nickname}>
+                <td className={classes.LeaderboardTableRowIndex}>№{idx + 1}</td>
 
-              <td className="Leaderboard__table__row__nickname">
-                {el.nickname}
-              </td>
+                <td className={classes.LeaderboardTableRowNickname}>
+                  {el.nickname}
+                </td>
 
-              <td className="Leaderboard__table__row__date">
-                {el.date.getDate()} {months[el.date.getMonth()]}{' '}
-                {el.date.getFullYear()}
-              </td>
+                <td className={classes.LeaderboardTableRowDate}>
+                  {el.date.getDate()} {months[el.date.getMonth()]}{' '}
+                  {el.date.getFullYear()}
+                </td>
 
-              <td className="Leaderboard__table__row__value">{el.value}</td>
-            </tr>
-          )
-        })}
+                <td className={classes.LeaderboardTableRowValue}>{el.value}</td>
+              </tr>
+            )
+          })}
+        </tbody>
       </table>
     </div>
   )

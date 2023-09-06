@@ -5,27 +5,27 @@
     flex-direction: column;
     gap: $ui-step * 3;
 
-    &__table {
+    &-table {
         width: $ui-step * 70;
 
         border-collapse: collapse;
 
-        &__row {
+        &-row {
             
             td {
                 padding-top: $ui-step * 2;
                 padding-bottom: $ui-step * 2;
             }
 
-            &__nickname {
+            &-nickname {
                 padding-left: $ui-step * 3;
             }
             
-            &__date {
+            &-date {
                 text-align: right;
             }
 
-            &__value {
+            &-value {
                 padding-left: $ui-step * 4;
             }
         }
