@@ -10,13 +10,13 @@ import classes from './style.module.scss'
 const Leaderboard: React.FC = function () {
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   authController.getUser().then(res => {
-  //     if (!res) {
-  //       navigate('/')
-  //     }
-  //   })
-  // }, [])
+  useEffect(() => {
+    authController.getUser().then(res => {
+      if (!res) {
+        navigate('/')
+      }
+    })
+  }, [])
 
   return (
     <div className={classes.Leaderboard}>
