@@ -31,7 +31,7 @@ export const ErrorPage: FC<ErrorPageProps> = props => {
           <div onClick={goHome} className={classes.errorPageContentHomeLink}>
             Можете вернуться
             <br />
-            на гланую страницу
+            на главную страницу
           </div>
         )}
       </div>
