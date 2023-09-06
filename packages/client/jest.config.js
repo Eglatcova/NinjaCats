@@ -9,6 +9,9 @@ export default {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   moduleNameMapper: {
-    '^.+\\.(scss)$': 'babel-jest'
+    '^.+\\.(scss)$': 'babel-jest',
+  },
+  transform: {
+    '^.+\\.svg$': '<rootDir>/svgTransform.ts',
   },
 }
