@@ -9,6 +9,8 @@ import { Game } from './pages/Game'
 import { GameStart } from './pages/GameStart'
 import { Profile } from './pages/Profile'
 import { Error500 } from './pages/Error500'
+import { Forum } from './pages/Forum'
+import { ForumMessages } from './pages/ForumMessages'
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ export const router = createBrowserRouter([
   {
     path: '/error500',
     Component: Error500,
+  },
+  {
+    path: '/forum',
+    Component: Forum,
+  },
+  {
+    path: '/forum/:id',
+    Component: ForumMessages,
   },
   {
     path: '*',

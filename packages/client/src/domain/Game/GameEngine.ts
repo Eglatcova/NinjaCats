@@ -4,38 +4,68 @@ import Keyboard from './Keyboard'
 import CollisionEngine from './CollisionEngine'
 import BoxCollider from './BoxCollider'
 import {
-  increaseVelocityCommand,
-  noEffectCommand,
-  reverseDirectionCommand,
+  IncreaseScoreCommand,
+  IncreaseVelocityCommand,
+  LoseLiveCommand,
+  MacroCommand,
+  NoEffectCommand,
+  ReverseDirectionCommand,
 } from './EffectCommands'
 import Collectables from './Collectables'
 import Settings from './Settings'
+import Score from './Score'
+import Lives from './Lives'
+import CollectableFactory from './CollectableFactory'
 
 class GameEngine {
   private g: Canvas
   private catcher: Catcher
   private collectables: Collectables
   private keyboard: Keyboard
+  private score: Score
+  private lives: Lives
   private collisionEngine: CollisionEngine
 
-  constructor(gameDiv: HTMLDivElement) {
+  constructor(
+    gameDiv: HTMLDivElement,
+    private endGameCallback: (score: number) => void
+  ) {
     Settings.getInstance().setSize(800, 600)
     this.g = new Canvas(gameDiv)
     this.collisionEngine = new CollisionEngine()
     this.catcher = new Catcher()
     this.keyboard = new Keyboard()
-    this.collectables = new Collectables(this.createCommands())
+    this.score = new Score()
+    this.lives = new Lives()
+    this.collectables = new Collectables(
+      new CollectableFactory(this.createCommands())
+    )
     this.initCollisions()
     this.render()
     this.loop(performance.now())
   }
 
   private createCommands() {
-    return [
-      new increaseVelocityCommand(this.catcher),
-      new reverseDirectionCommand(this.catcher),
-      new noEffectCommand(),
-    ]
+    return {
+      positiveEffects: [
+        new MacroCommand()
+          .add(new IncreaseVelocityCommand(this.catcher, 0.1))
+          .add(new IncreaseScoreCommand(this.score, 10)),
+        new MacroCommand()
+          .add(new NoEffectCommand())
+          .add(new IncreaseScoreCommand(this.score, 10)),
+      ],
+      negativeEffects: [
+        new MacroCommand()
+          .add(new ReverseDirectionCommand(this.catcher))
+          .add(new IncreaseScoreCommand(this.score, -10)),
+        new MacroCommand()
+          .add(new IncreaseVelocityCommand(this.catcher, -0.1))
+          .add(new IncreaseScoreCommand(this.score, -10)),
+      ],
+      emptyEffect: new NoEffectCommand(),
+      loseEffect: new LoseLiveCommand(this.lives),
+    }
   }
 
   private initCollisions() {
@@ -62,6 +92,8 @@ class GameEngine {
     this.drawBackground(this.g)
     this.collectables.render(this.g)
     this.catcher.render(this.g)
+    this.score.render(this.g)
+    this.lives.render(this.g)
   }
 
   private drawBackground(g: Canvas) {
@@ -87,6 +119,10 @@ class GameEngine {
   }
 
   private loop(last: number) {
+    if (!this.lives.isAlive()) {
+      this.endGameCallback(this.score.getScore())
+      return
+    }
     const now = performance.now()
     const delay = now - last
     this.g.clear()

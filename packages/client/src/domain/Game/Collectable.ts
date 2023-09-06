@@ -12,7 +12,8 @@ export default class Collectable {
     private velocity: number,
     private animateStrategy: AnimateStrategy,
     private renderStrategy: RenderStrategy,
-    private catcherCollisionEffect: Command
+    private catcherCollisionEffect: Command,
+    private bottomBoundCollisionEffect: Command
   ) {}
 
   public render(g: Canvas) {
@@ -33,6 +34,10 @@ export default class Collectable {
   public touchCatcher() {
     this.catcherCollisionEffect.execute()
     setTimeout(() => this.catcherCollisionEffect.unexecute(), 2000)
+  }
+
+  public touchBottomBound() {
+    this.bottomBoundCollisionEffect.execute()
   }
 
   public getParams() {
