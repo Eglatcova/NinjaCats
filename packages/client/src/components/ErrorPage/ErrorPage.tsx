@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, FC } from 'react'
+import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
-import './style.scss'
+import classes from './style.module.scss'
 
-type ErrorPageType = {
+type ErrorPageProps = {
   errorValue: number
   msg: string
 }
 
-export const ErrorPage: FC<ErrorPageType> = props => {
+export const ErrorPage: FC<ErrorPageProps> = props => {
   const navigate = useNavigate()
 
   function goHome() {
@@ -15,18 +15,20 @@ export const ErrorPage: FC<ErrorPageType> = props => {
   }
 
   return (
-    <div className="errorPage">
-      <div className="errorPage__statusBlock">Ошибка: {props.errorValue}</div>
+    <div className={classes.errorPage}>
+      <div className={classes.errorPageStatusBlock}>
+        Ошибка: {props.errorValue}
+      </div>
 
-      <div className="errorPage__content">
-        <div className="errorPage__content__description">
-          <div className="errorPage__content__description__title">Упс!)</div>
-          <div className="errorPage__content__description__text">
+      <div className={classes.errorPageContent}>
+        <div className={classes.errorPageContentDescription}>
+          <div className={classes.errorPageContentDescriptionTitle}>Упс!)</div>
+          <div className={classes.errorPageContentDescriptionText}>
             {props.msg}
           </div>
         </div>
         {props.errorValue === 404 && (
-          <div onClick={goHome} className="errorPage__content__homeLink">
+          <div onClick={goHome} className={classes.errorPageContentHomeLink}>
             Можете вернуться
             <br />
             на гланую страницу
