@@ -1,4 +1,4 @@
-import './style.scss'
+import classes from './style.module.scss'
 import React, { useEffect } from 'react'
 import { authController } from '../../controllers/AuthController'
 import { useNavigate } from 'react-router-dom'
@@ -9,7 +9,7 @@ const GameStart: React.FC = function () {
   function startGame() {
     navigate('/game')
   }
-  
+
   useEffect(() => {
     authController.getUser().then(res => {
       if (!res) {
@@ -19,8 +19,8 @@ const GameStart: React.FC = function () {
   }, [])
 
   return (
-    <div className="GameStart">
-      <div onClick={startGame} className="GameStart__button">
+    <div className={classes.GameStart}>
+      <div onClick={startGame} className={classes.GameStartButton}>
         Начать
       </div>
     </div>
