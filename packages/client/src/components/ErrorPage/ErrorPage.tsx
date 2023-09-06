@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
-import classes from './style.module.scss'
+import classes from './ErrorPage.module.scss'
 
 type ErrorPageProps = {
   errorValue: number
