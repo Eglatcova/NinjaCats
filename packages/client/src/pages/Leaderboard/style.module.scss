@@ -1,0 +1,34 @@
+.Leaderboard {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: $ui-step * 3;
+
+    &-table {
+        width: $ui-step * 70;
+
+        border-collapse: collapse;
+
+        &-row {
+            
+            td {
+                padding-top: $ui-step * 2;
+                padding-bottom: $ui-step * 2;
+            }
+
+            &-nickname {
+                padding-left: $ui-step * 3;
+            }
+            
+            &-date {
+                text-align: right;
+            }
+
+            &-value {
+                padding-left: $ui-step * 4;
+            }
+        }
+    }
+
+}
