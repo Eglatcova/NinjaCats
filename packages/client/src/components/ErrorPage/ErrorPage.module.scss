@@ -1,0 +1,56 @@
+.errorPage {
+    position: relative;
+        
+    width: 100%;
+    height: 100dvh;
+
+    font-family: $font-roboto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-content {
+        text-align: center;
+
+        display: flex;
+        flex-direction: column;
+        gap: $ui-step * 6;
+
+        &-description {
+            display: flex;
+            flex-direction: column;
+            gap: $ui-step;
+
+            &-title {
+                width: 100%;
+
+                font-size: $ui-step * 9;
+                font-weight: 800;
+            }
+        }
+        
+        &-homeLink {
+            width: $ui-step * 70;
+
+            padding: $ui-step * 3 0;
+
+            background-color: $grey;
+            border-radius: $ui-step * 2;
+
+            cursor: pointer;
+
+            &:hover {
+                padding: $ui-step * 2.5 0;
+
+                border: 2px solid $brown;
+            }
+        }
+    }
+
+    &-statusBlock {
+        position: absolute;
+        top: $ui-step * 4;
+        left: $ui-step * 4;
+    }
+}
