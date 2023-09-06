@@ -1,9 +1,14 @@
+import classes from './style.module.scss'
 import React, { useEffect } from 'react'
 import { authController } from '../../controllers/AuthController'
 import { useNavigate } from 'react-router-dom'
 
 const GameOver: React.FC = function () {
   const navigate = useNavigate()
+
+  function tryAgain() {
+    navigate('/game')
+  }
 
   useEffect(() => {
     authController.getUser().then(res => {
@@ -13,7 +18,13 @@ const GameOver: React.FC = function () {
     })
   }, [])
 
-  return <div>GameOver</div>
+  return (
+    <div className={classes.GameOver}>
+      <div onClick={tryAgain} className={classes.GameOverButton}>
+        Попробовать снова
+      </div>
+    </div>
+  )
 }
 
 export { GameOver }
