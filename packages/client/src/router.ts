@@ -44,7 +44,7 @@ export const router = createBrowserRouter([
     Component: Leaderboard,
   },
   {
-    path: '/Landing',
+    path: '/landing',
     Component: Landing,
   },
   {

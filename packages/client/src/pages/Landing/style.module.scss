@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
 
-    &__welcomeBlock {
+    &-welcomeBlock {
         position: relative;
 
         width: 100%;
@@ -27,7 +27,7 @@
             box-shadow: inset 25px 15px 15px 10px #dce2e2;
         }
 
-        &__text {
+        &-text {
             position: absolute;
             top: 45%;
             left: $ui-step * 45;
@@ -39,7 +39,7 @@
             font-weight: $font-weight-medium;
             text-align: center;
 
-            &__special {
+            &-special {
                 font-size: $font-size-48;
                 font-weight: $font-weight-regular;
                 color: #306ad5;
@@ -47,7 +47,7 @@
         }
     }
 
-    &__contentBlock {
+    &-contentBlock {
         width: 100%;
 
         padding: $ui-step * 8 $ui-step * 16;
@@ -56,7 +56,7 @@
         flex-direction: column;
         gap: $ui-step * 4;
 
-        &__title {
+        &-title {
             width: 100%;
 
             font-size: $font-size-48;
@@ -64,14 +64,14 @@
             text-align: center;
         }
 
-        &__content {
+        &-content {
             width: 100%;
 
             display: flex;
             justify-content: space-between;
             gap: $ui-step * 6;
 
-            &__wrap {
+            &-wrap {
                 padding: 0 $ui-step * 25;
 
                 font-family: $font-roboto;
@@ -82,7 +82,7 @@
                 align-items: center;
             }
             
-            &__imgBlock {
+            &-imgBlock {
                 padding: $ui-step * 6;
     
                 background-color: rgba($pink, .5);
