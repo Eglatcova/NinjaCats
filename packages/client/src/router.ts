@@ -8,6 +8,7 @@ import { GameOver } from './pages/GameOver'
 import { Game } from './pages/Game'
 import { GameStart } from './pages/GameStart'
 import { Profile } from './pages/Profile'
+import { Landing } from './pages/Landing'
 import { Error500 } from './pages/Error500'
 import { Forum } from './pages/Forum'
 import { ForumMessages } from './pages/ForumMessages'
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
   {
     path: '/leaderboard',
     Component: Leaderboard,
+  },
+  {
+    path: '/landing',
+    Component: Landing,
   },
   {
     path: '/error500',
