@@ -10,13 +10,13 @@ enum GameStates {
 
 const Game: React.FC = () => {
   const [score, setScore] = useState(0)
-  const [state, setState] = useState(GameStates.GAME_BEFORE_START)
+  const [gameState, setGameState] = useState(GameStates.GAME_BEFORE_START)
   const gameDiv = useRef<HTMLDivElement>(null)
   const gameEngineRef = useRef<GameEngine>()
 
   const endGameCallback = (points: number) => {
     setScore(points)
-    setState(GameStates.GAME_END)
+    setGameState(GameStates.GAME_END)
   }
 
   useEffect(() => {
@@ -31,12 +31,12 @@ const Game: React.FC = () => {
         <div className={classes.GameGameWrapper}>
           <div ref={gameDiv} />
 
-          {state === GameStates.GAME_BEFORE_START && (
+          {gameState === GameStates.GAME_BEFORE_START && (
             <div className={classes.GameGameWrapperStartGame}>
               <button
                 className={classes.GameGameWrapperStartGameButton}
                 onClick={() => {
-                  setState(GameStates.GAME_START)
+                  setGameState(GameStates.GAME_START)
                   gameEngineRef.current?.gameStart()
                 }}>
                 Начать
@@ -44,12 +44,12 @@ const Game: React.FC = () => {
             </div>
           )}
 
-          {state === GameStates.GAME_END && (
-            <div className={classes.GameGameWrapperStartGame}>
+          {gameState === GameStates.GAME_END && (
+            <div className={classes.GameGameWrapperEndGame}>
               <button
-                className={classes.GameGameWrapperStartGameButton}
+                className={classes.GameGameWrapperEndGameButton}
                 onClick={() => {
-                  setState(GameStates.GAME_START)
+                  setGameState(GameStates.GAME_START)
                   gameEngineRef.current?.retry()
                 }}>
                 Повторить
