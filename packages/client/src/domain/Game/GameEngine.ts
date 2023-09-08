@@ -25,6 +25,7 @@ class GameEngine {
   private score: Score
   private lives: Lives
   private collisionEngine: CollisionEngine
+  private isStarted = false
 
   constructor(
     gameDiv: HTMLDivElement,
@@ -42,7 +43,30 @@ class GameEngine {
     )
     this.initCollisions()
     this.render()
-    this.loop(performance.now())
+  }
+
+  public gameStart() {
+    if (!this.isStarted) {
+      this.isStarted = true
+      this.loop(performance.now())
+    }
+  }
+
+  public retry() {
+    this.isStarted = false
+
+    this.catcher = new Catcher()
+    this.collisionEngine = new CollisionEngine()
+
+    this.score = new Score()
+    this.lives = new Lives()
+
+    this.collectables = new Collectables(
+      new CollectableFactory(this.createCommands())
+    )
+
+    this.initCollisions()
+    this.gameStart()
   }
 
   private createCommands() {

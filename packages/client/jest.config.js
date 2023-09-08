@@ -10,6 +10,7 @@ export default {
   },
   moduleNameMapper: {
     '^.+\\.(scss)$': 'babel-jest',
+    '\\.(jpg|jpeg|png)$': 'identity-obj-proxy',
   },
   transform: {
     '^.+\\.svg$': '<rootDir>/svgTransform.ts',
