@@ -11,6 +11,16 @@ const Game: React.FC = function () {
   const dispatch = useAppDispatch()
   const user = useAppSelector(state => state.user)
 
+  document.addEventListener(
+    'keydown',
+    e => {
+      if (e.key === 'f' && e.ctrlKey) {
+        onFullscreenClick()
+      }
+    },
+    false
+  )
+
   function onExitClick() {
     authController.logout().then(res => {
       if (res) {
@@ -20,6 +30,14 @@ const Game: React.FC = function () {
     })
   }
 
+  function onFullscreenClick() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen()
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen()
+    }
+  }
+
   useEffect(() => {
     if (!user) navigate('/login')
   }, [user])
@@ -27,7 +45,8 @@ const Game: React.FC = function () {
   return (
     <div>
       <GameComponent />
-      <Button onClick={onExitClick}>{'Выйти'}</Button>
+      <Button onClick={onExitClick}>Выйти</Button>
+      <Button onClick={onFullscreenClick}>Fullscreen</Button>
     </div>
   )
 }
