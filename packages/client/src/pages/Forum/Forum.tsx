@@ -1,8 +1,10 @@
-import React, { ChangeEventHandler, useMemo, useState } from 'react'
+import React, { ChangeEventHandler, useMemo, useState, useEffect } from 'react'
 import { Wrapper } from '../../components/Wrapper'
 import { CreationBlockContent } from './components/CreationBlockContent'
 import { Topic } from './components/Topic'
 import { mockTopics } from './mock'
+import { useAppSelector } from '../../store/hooks'
+import { useNavigate } from 'react-router-dom'
 
 import classes from './Forum.module.scss'
 
@@ -12,6 +14,13 @@ const plugTopic = {
 }
 
 const Forum: React.FC = function () {
+  const user = useAppSelector(state => state.user)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!user) navigate('/login')
+  }, [user])
+
   const [currentTopics, setTopics] = useState(mockTopics)
   const [isTopicCretionOn, setTopicCreationState] = useState(false)
   const [newTopicLabel, setNewTopicLabel] = useState('')

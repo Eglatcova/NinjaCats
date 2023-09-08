@@ -7,21 +7,22 @@ import { registrationSchema } from '../../utils/validation'
 import { ISignUpData } from '../../api/AuthApi'
 import { authController } from '../../controllers/AuthController'
 import { useNavigate } from 'react-router-dom'
+import { useAppSelector, useAppDispatch } from '../../store/hooks'
+import { addUser } from '../../store/slices/userSlice'
 
 const Registration: React.FC = function () {
-  useEffect(() => {
-    authController.getUser().then(res => {
-      if (res) {
-        navigate('/profile')
-      }
-    })
-  }, [])
-
+  const dispatch = useAppDispatch()
+  const user = useAppSelector(state => state.user)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (user) navigate('/profile')
+  }, [user])
 
   const onSubmit = (values: ISignUpData) => {
     authController.signUp(values).then(res => {
-      if (res) navigate('/game')
+      dispatch(addUser(res))
+      navigate('/game')
     })
   }
 
