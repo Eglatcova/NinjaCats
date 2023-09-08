@@ -116,7 +116,7 @@ const Registration: React.FC = function () {
         {errors.password && touched.password && (
           <p className={classes.registrationError}>{errors.password}</p>
         )}
-        <Button type="submit">{'Зарегистрироваться'}</Button>
+        <Button type="submit">Зарегистрироваться</Button>
       </form>
     </div>
   )

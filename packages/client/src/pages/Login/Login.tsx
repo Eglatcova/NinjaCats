@@ -65,11 +65,11 @@ const Login: React.FC = function () {
           <p className={classes.loginError}>{errors.password}</p>
         )}
         <Button className={classes.loginButton} type="submit">
-          {'Войти'}
+          Войти
         </Button>
       </form>
       <Link to="/registration">
-        <Button theme="secondary">{'Регистрация'}</Button>
+        <Button theme="secondary">Регистрация</Button>
       </Link>
     </div>
   )
