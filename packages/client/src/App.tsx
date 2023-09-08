@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './router'
+import { startServiceWorker } from './startSW'
 import './App.css'
 
 function App() {
@@ -14,6 +15,11 @@ function App() {
 
     fetchServerData()
   }, [])
+
+  useEffect(() => {
+    startServiceWorker()
+  }, [])
+
   return (
     <div className="App">
       <RouterProvider router={router} />
