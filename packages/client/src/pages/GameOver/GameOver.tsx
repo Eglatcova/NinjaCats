@@ -1,9 +1,10 @@
 import classes from './style.module.scss'
 import React, { useEffect } from 'react'
-import { authController } from '../../controllers/AuthController'
 import { useNavigate } from 'react-router-dom'
+import { useAppSelector } from '../../store/hooks'
 
 const GameOver: React.FC = function () {
+  const user = useAppSelector(state => state.user)
   const navigate = useNavigate()
 
   function tryAgain() {
@@ -11,12 +12,8 @@ const GameOver: React.FC = function () {
   }
 
   useEffect(() => {
-    authController.getUser().then(res => {
-      if (!res) {
-        navigate('/')
-      }
-    })
-  }, [])
+    if (!user) navigate('/login')
+  }, [user])
 
   return (
     <div className={classes.GameOver}>

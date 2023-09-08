@@ -1,19 +1,16 @@
 import React, { useEffect } from 'react'
-import { authController } from '../../controllers/AuthController'
 import classes from './style.module.scss'
 import { useNavigate } from 'react-router-dom'
 import exampleImage from '../../assets/landingImage.png'
+import { useAppSelector } from '../../store/hooks'
 
 const Landing: React.FC = function () {
+  const user = useAppSelector(state => state.user)
   const navigate = useNavigate()
 
   useEffect(() => {
-    authController.getUser().then(res => {
-      if (!res) {
-        navigate('/')
-      }
-    })
-  }, [])
+    if (!user) navigate('/login')
+  }, [user])
 
   return (
     <div className={classes.Landing}>

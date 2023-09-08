@@ -1,9 +1,10 @@
 import classes from './style.module.scss'
 import React, { useEffect } from 'react'
-import { authController } from '../../controllers/AuthController'
 import { useNavigate } from 'react-router-dom'
+import { useAppSelector } from '../../store/hooks'
 
 const GameStart: React.FC = function () {
+  const user = useAppSelector(state => state.user)
   const navigate = useNavigate()
 
   function startGame() {
@@ -11,12 +12,8 @@ const GameStart: React.FC = function () {
   }
 
   useEffect(() => {
-    authController.getUser().then(res => {
-      if (!res) {
-        navigate('/')
-      }
-    })
-  }, [])
+    if (!user) navigate('/login')
+  }, [user])
 
   return (
     <div className={classes.GameStart}>
