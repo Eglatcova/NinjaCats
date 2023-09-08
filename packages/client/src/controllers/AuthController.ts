@@ -4,25 +4,37 @@ import { ISignInData, ISignUpData } from '../api/AuthApi'
 class AuthController {
   signIn = (data: ISignInData) => {
     return authAPI.makeRequest('/signin', 'POST', data).then(res => {
-      return res && res.ok ? true : false
+      if (res?.ok) {
+        return this.getUser()
+          .then(res => {
+            if (res) return res.json()
+          })
+          .then(res => res)
+      }
     })
   }
 
   signUp = (data: ISignUpData) => {
     return authAPI.makeRequest('/signup', 'POST', data).then(res => {
-      return res && res.ok ? true : false
+      if (res?.ok) {
+        return this.getUser()
+          .then(res => {
+            if (res) return res.json()
+          })
+          .then(res => res)
+      }
     })
   }
 
   logout = () => {
     return authAPI.makeRequest('/logout', 'POST').then(res => {
-      return res && res.ok ? true : false
+      return res?.ok ? true : false
     })
   }
 
   getUser = () => {
     return authAPI.makeRequest('/user', 'GET').then(res => {
-      return res && res.ok ? true : false
+      return res?.ok ? res : false
     })
   }
 }

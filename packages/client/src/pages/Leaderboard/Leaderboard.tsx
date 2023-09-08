@@ -1,22 +1,17 @@
 import React, { useEffect } from 'react'
-import { authController } from '../../controllers/AuthController'
 import { useNavigate } from 'react-router-dom'
-
+import { useAppSelector } from '../../store/hooks'
 import { mocDataLeaderboard } from '../../utils/mocks/leaderboard'
 import { months } from '../../utils/const/months'
-
 import classes from './style.module.scss'
 
 const Leaderboard: React.FC = function () {
   const navigate = useNavigate()
+  const user = useAppSelector(state => state.user)
 
   useEffect(() => {
-    authController.getUser().then(res => {
-      if (!res) {
-        navigate('/')
-      }
-    })
-  }, [])
+    if (!user) navigate('/login')
+  }, [user])
 
   return (
     <div className={classes.Leaderboard}>

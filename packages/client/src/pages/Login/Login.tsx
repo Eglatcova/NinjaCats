@@ -1,28 +1,28 @@
 import React, { useEffect } from 'react'
 import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import classes from './Login.module.scss'
 import { useFormik } from 'formik'
 import { loginSchema } from '../../utils/validation'
 import { ISignInData } from '../../api/AuthApi'
 import { authController } from '../../controllers/AuthController'
-import { useNavigate } from 'react-router-dom'
+import { addUser } from '../../store/slices/userSlice'
+import { useAppSelector, useAppDispatch } from '../../store/hooks'
 
 const Login: React.FC = function () {
-  useEffect(() => {
-    authController.getUser().then(res => {
-      if (res) {
-        navigate('/profile')
-      }
-    })
-  }, [])
-
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const user = useAppSelector(state => state.user)
+
+  useEffect(() => {
+    if (user) navigate('/profile')
+  }, [user])
 
   const onSubmit = (values: ISignInData) => {
     authController.signIn(values).then(res => {
-      if (res) navigate('/game')
+      dispatch(addUser(res))
+      navigate('/game')
     })
   }
 
