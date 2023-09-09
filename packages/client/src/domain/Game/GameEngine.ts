@@ -122,7 +122,8 @@ class GameEngine {
 
   private drawBackground(g: Canvas) {
     const { width, height } = Settings.getInstance().getSize()
-    g.drawRect(0, 0, width, height, '#4DC9FF')
+    g.drawImage(0, 0, width, height, 'src/assets/windows.jpeg')
+    g.drawRect(0, 0, width, height, '#ffffff4D')
   }
 
   private handleInput() {
