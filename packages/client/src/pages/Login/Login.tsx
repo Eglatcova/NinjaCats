@@ -1,30 +1,15 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import classes from './Login.module.scss'
 import { useFormik } from 'formik'
 import { loginSchema } from '../../utils/validation'
-import { ISignInData } from '../../api/AuthApi'
-import { authController } from '../../controllers/AuthController'
-import { addUser } from '../../store/slices/userSlice'
-import { useAppSelector, useAppDispatch } from '../../store/hooks'
+import { useAuth } from '../../hooks/useAuth'
 
 const Login: React.FC = function () {
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-  const user = useAppSelector(state => state.user)
-
-  useEffect(() => {
-    if (user) navigate('/profile')
-  }, [user])
-
-  const onSubmit = (values: ISignInData) => {
-    authController.signIn(values).then(res => {
-      dispatch(addUser(res))
-      navigate('/game')
-    })
-  }
+  const [checkAuth, auth] = useAuth()
+  checkAuth('public')
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
@@ -33,7 +18,7 @@ const Login: React.FC = function () {
         password: '',
       },
       validationSchema: loginSchema,
-      onSubmit,
+      onSubmit: auth.login,
     })
 
   return (

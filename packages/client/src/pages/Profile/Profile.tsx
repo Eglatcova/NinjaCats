@@ -1,14 +1,9 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '../../store/hooks'
+import React from 'react'
+import { useAuth } from '../../hooks/useAuth'
 
 const Profile: React.FC = function () {
-  const navigate = useNavigate()
-  const user = useAppSelector(state => state.user)
-
-  useEffect(() => {
-    if (!user) navigate('/login')
-  }, [user])
+  const [checkAuth] = useAuth()
+  checkAuth('private')
 
   return <div>Profile</div>
 }

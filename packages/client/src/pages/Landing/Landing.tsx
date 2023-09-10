@@ -1,16 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import classes from './style.module.scss'
-import { useNavigate } from 'react-router-dom'
 import exampleImage from '../../assets/landingImage.png'
-import { useAppSelector } from '../../store/hooks'
+import { useAuth } from '../../hooks/useAuth'
 
 const Landing: React.FC = function () {
-  const user = useAppSelector(state => state.user)
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!user) navigate('/login')
-  }, [user])
+  const [checkAuth] = useAuth()
+  checkAuth('private')
 
   return (
     <div className={classes.Landing}>

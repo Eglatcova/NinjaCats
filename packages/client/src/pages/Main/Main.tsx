@@ -1,7 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
 
 const Main: React.FC = function () {
+  const [checkAuth] = useAuth()
+  checkAuth('private')
+
   return (
     <nav>
       <ul>
