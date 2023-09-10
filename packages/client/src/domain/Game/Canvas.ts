@@ -48,87 +48,42 @@ class Canvas {
 
   public drawHeart(x: number, y: number, color: string) {
     const { ctx } = this
-    const step = 5
 
-    let currnetX = x
-    let currnetY = y
+    const STEP_IN_PX = 5
 
-    const drawLine = () => ctx.lineTo(currnetX, currnetY)
+    const absCoordinates = [
+      [0, -1],
+      [-2, -1],
+      [-2, 0],
+      [-3, 0],
+      [-3, 2],
+      [-2, 2],
+      [-2, 3],
+      [-1, 3],
+      [-1, 4],
+      [0, 4],
+      [0, 5],
+      [1, 5],
+      [1, 4],
+      [2, 4],
+      [2, 3],
+      [3, 3],
+      [3, 2],
+      [4, 2],
+      [4, 0],
+      [3, 0],
+      [3, -1],
+      [1, -1],
+      [1, 0],
+      [0, 0],
+    ]
 
     ctx.beginPath()
-    ctx.moveTo(currnetX, currnetY)
+    ctx.moveTo(x, y)
 
-    currnetY -= step
-    drawLine()
-
-    currnetX -= step * 2
-    drawLine()
-
-    currnetY += step
-    drawLine()
-
-    currnetX -= step
-    drawLine()
-
-    currnetY += step * 2
-    drawLine()
-
-    currnetX += step
-    drawLine()
-
-    currnetY += step
-    drawLine()
-
-    currnetX += step
-    drawLine()
-
-    currnetY += step
-    drawLine()
-
-    currnetX += step
-    drawLine()
-
-    currnetY += step
-    drawLine()
-
-    currnetX += step
-    drawLine()
-
-    currnetY -= step
-    drawLine()
-
-    currnetX += step
-    drawLine()
-
-    currnetY -= step
-    drawLine()
-
-    currnetX += step
-    drawLine()
-
-    currnetY -= step
-    drawLine()
-
-    currnetX += step
-    drawLine()
-
-    currnetY -= step * 2
-    drawLine()
-
-    currnetX -= step
-    drawLine()
-
-    currnetY -= step
-    drawLine()
-
-    currnetX -= step * 2
-    drawLine()
-
-    currnetY += step
-    drawLine()
-
-    currnetX -= step
-    drawLine()
+    absCoordinates.forEach(([absX, absY]) => {
+      ctx.lineTo(x + absX * STEP_IN_PX, y + absY * STEP_IN_PX)
+    })
 
     ctx.fillStyle = color
     ctx.fill()
