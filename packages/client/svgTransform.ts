@@ -6,5 +6,3 @@ module.exports = {
     return { code: 'module.exports = svgTransform;' }
   },
 }
-
-export {}
