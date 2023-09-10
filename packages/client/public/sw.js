@@ -1,4 +1,4 @@
-const sw = self as unknown as ServiceWorkerGlobalScope
+const sw = self
 
 const CACHE_NAME = 'game-cache-v3'
 

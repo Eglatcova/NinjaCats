@@ -3,6 +3,8 @@ module.exports = {
     return { code: 'module.exports = {};' }
   },
   getCacheKey() {
-    return 'svgTransform'
+    return { code: 'module.exports = svgTransform;' }
   },
 }
+
+export {}
