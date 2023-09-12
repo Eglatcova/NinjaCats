@@ -1,19 +1,16 @@
 import classes from './style.module.scss'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '../../store/hooks'
+import { useAuth } from '../../hooks/useAuth'
 
 const GameOver: React.FC = function () {
-  const user = useAppSelector(state => state.user)
+  const [checkAuth] = useAuth()
+  checkAuth('private')
   const navigate = useNavigate()
 
   function tryAgain() {
     navigate('/game')
   }
-
-  useEffect(() => {
-    if (!user) navigate('/login')
-  }, [user])
 
   return (
     <div className={classes.GameOver}>
