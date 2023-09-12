@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './router'
+import { startServiceWorker } from './startSW'
 import './App.css'
 import { Provider } from 'react-redux'
 import { persistor, store } from './store'
@@ -17,6 +18,11 @@ function App() {
 
     fetchServerData()
   }, [])
+
+  useEffect(() => {
+    startServiceWorker()
+  }, [])
+
   return (
     <div className="App">
       <Provider store={store}>
