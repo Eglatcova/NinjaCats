@@ -1,3 +1,16 @@
+## DEMO
+
+### Запуск
+
+[Ссылка на видео-презентацию проекта](https://disk.yandex.ru/i/KZYlAc7xaeA9jg)
+
+```shell
+yarn bootstrap
+yarn dev --scope=client
+```
+Запуск будет произведен по адресу http://127.0.0.1:3000/
+
+
 ### Как запускать?
 
 1. Убедитесь что у вас установлен `node` и `docker`
