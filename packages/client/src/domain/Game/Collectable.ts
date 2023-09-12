@@ -13,11 +13,19 @@ export default class Collectable {
     private animateStrategy: AnimateStrategy,
     private renderStrategy: RenderStrategy,
     private catcherCollisionEffect: Command,
-    private bottomBoundCollisionEffect: Command
+    private bottomBoundCollisionEffect: Command,
+    private text: string
   ) {}
 
   public render(g: Canvas) {
-    this.renderStrategy.render(g, this.x, this.y, this.width, this.height)
+    this.renderStrategy.render(
+      g,
+      this.x,
+      this.y,
+      this.width,
+      this.height,
+      this.text
+    )
   }
 
   public animate(dt: number) {

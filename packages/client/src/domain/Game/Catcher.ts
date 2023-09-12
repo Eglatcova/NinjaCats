@@ -7,9 +7,8 @@ import Settings from './Settings'
 export default class Catcher implements Collider {
   private x
   private y
-  private width = 100
-  private height = 50
-  private color = '#EE6730'
+  private width = 128
+  private height = 128
   private velocity = 0.4
   private direction = 0
 
@@ -20,7 +19,7 @@ export default class Catcher implements Collider {
   }
 
   public render(g: Canvas) {
-    g.drawRect(this.x, this.y, this.width, this.height, this.color)
+    g.drawImage(this.x, this.y, this.width, this.height, 'src/assets/geek.png')
   }
 
   public setDirection(direction: -1 | 0 | 1) {

@@ -31,11 +31,62 @@ class Canvas {
     y: number,
     text: string,
     fontSize: number,
-    color: string
+    color: string,
+    textAlign: CanvasTextAlign = 'left'
   ) {
     this.ctx.font = `${fontSize}px Handjet`
     this.ctx.fillStyle = color
+    this.ctx.textAlign = textAlign
     this.ctx.fillText(text, x, y)
+  }
+
+  public drawImage(x: number, y: number, w: number, h: number, imgURL: string) {
+    const image = new Image()
+    image.src = imgURL
+    this.ctx.drawImage(image, x, y, w, h)
+  }
+
+  public drawHeart(x: number, y: number, color: string) {
+    const { ctx } = this
+
+    const STEP_IN_PX = 5
+
+    const absCoordinates = [
+      [0, -1],
+      [-2, -1],
+      [-2, 0],
+      [-3, 0],
+      [-3, 2],
+      [-2, 2],
+      [-2, 3],
+      [-1, 3],
+      [-1, 4],
+      [0, 4],
+      [0, 5],
+      [1, 5],
+      [1, 4],
+      [2, 4],
+      [2, 3],
+      [3, 3],
+      [3, 2],
+      [4, 2],
+      [4, 0],
+      [3, 0],
+      [3, -1],
+      [1, -1],
+      [1, 0],
+      [0, 0],
+    ]
+
+    ctx.beginPath()
+    ctx.moveTo(x, y)
+
+    absCoordinates.forEach(([absX, absY]) => {
+      ctx.lineTo(x + absX * STEP_IN_PX, y + absY * STEP_IN_PX)
+    })
+
+    ctx.fillStyle = color
+    ctx.fill()
   }
 }
 
