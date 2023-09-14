@@ -26,40 +26,38 @@ const Game: React.FC = () => {
   }, [])
 
   return (
-    <>
-      <div className={classes.Game}>
-        <div className={classes.GameGameWrapper}>
-          <div ref={gameDiv} />
+    <div className={classes.Game}>
+      <h1 className={classes.score}>You last score: {score}</h1>
+      <div className={classes.GameGameWrapper}>
+        <div ref={gameDiv} />
 
-          {gameState === GameStates.GAME_BEFORE_START && (
-            <div className={classes.GameGameWrapperStartGame}>
-              <button
-                className={classes.GameGameWrapperStartGameButton}
-                onClick={() => {
-                  setGameState(GameStates.GAME_START)
-                  gameEngineRef.current?.gameStart()
-                }}>
-                Начать
-              </button>
-            </div>
-          )}
+        {gameState === GameStates.GAME_BEFORE_START && (
+          <div className={classes.GameGameWrapperStartGame}>
+            <button
+              className={classes.GameGameWrapperStartGameButton}
+              onClick={() => {
+                setGameState(GameStates.GAME_START)
+                gameEngineRef.current?.gameStart()
+              }}>
+              Начать
+            </button>
+          </div>
+        )}
 
-          {gameState === GameStates.GAME_END && (
-            <div className={classes.GameGameWrapperEndGame}>
-              <button
-                className={classes.GameGameWrapperEndGameButton}
-                onClick={() => {
-                  setGameState(GameStates.GAME_START)
-                  gameEngineRef.current?.retry()
-                }}>
-                Повторить
-              </button>
-            </div>
-          )}
-        </div>
-        <h1>You last score: {score}</h1>
+        {gameState === GameStates.GAME_END && (
+          <div className={classes.GameGameWrapperEndGame}>
+            <button
+              className={classes.GameGameWrapperEndGameButton}
+              onClick={() => {
+                setGameState(GameStates.GAME_START)
+                gameEngineRef.current?.retry()
+              }}>
+              Повторить
+            </button>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   )
 }
 
