@@ -1,0 +1,42 @@
+.title {
+  height: 48px;
+  font-family: $font-handjet;
+  font-size: $font-size-32;
+  color: $dark;
+}
+
+
+.link-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+.link-item {
+  list-style-type: none;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  color: $white;
+  background-color: $orange;
+  height: 48px;
+  border: 1px solid var(--border-base-color);
+  box-shadow: 0 0 0 0 transparent;
+  transition-property: background-color, color, border-color, box-shadow;
+  transition-duration: 0.3s;
+
+
+  &:hover {
+    background-color: $yellow;
+  }
+
+  &:active {
+    background-color: $yellow;
+    box-shadow: 2px 2px 4px 0px rgba($dark, 0.6) inset;
+  }
+}

@@ -42,7 +42,7 @@ sw.addEventListener('fetch', event => {
 
     const fetchRequest = request.clone()
     const response = await fetch(fetchRequest)
-    if (!response || response.status !== 200) {
+    if (request.method !== 'GET' || !response || response.status !== 200) {
       return response
     }
 

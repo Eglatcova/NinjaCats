@@ -2,6 +2,7 @@ import React from 'react'
 import { Game as GameComponent } from '../../components/Game'
 import { Button } from '../../components/Button'
 import { useAuth } from '../../hooks/useAuth'
+import classes from './Game.module.scss'
 
 const Game: React.FC = function () {
   const [checkAuth, auth] = useAuth()
@@ -26,10 +27,12 @@ const Game: React.FC = function () {
   }
 
   return (
-    <div>
+    <div className={classes.wrapper}>
       <GameComponent />
-      <Button onClick={auth.exit}>Выйти</Button>
-      <Button onClick={onFullscreenClick}>Fullscreen</Button>
+      <div className={classes.buttons}>
+        <Button onClick={auth.exit}>Выйти</Button>
+        <Button onClick={onFullscreenClick}>Fullscreen</Button>
+      </div>
     </div>
   )
 }

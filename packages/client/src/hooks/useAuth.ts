@@ -19,7 +19,7 @@ export const useAuth = () => {
         break
       case 'public':
         useEffect(() => {
-          if (user) navigate('/profile')
+          if (user) navigate('/')
         }, [user])
         break
     }
