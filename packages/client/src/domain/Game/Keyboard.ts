@@ -16,7 +16,38 @@ export default class Keyboard {
     window.addEventListener('blur', () => {
       this.pressedKeys = {}
     })
+    this.registerGamepad()
   }
+
+  private registerGamepad() {
+    const update = () => {
+      const gamepad = navigator.getGamepads()[0]
+      if (!gamepad) return
+      this.setAxes(gamepad)
+      setTimeout(() => {
+        update()
+      }, 100)
+    }
+
+    window.addEventListener('gamepadconnected', update)
+  }
+
+  private setAxes(gamepad: Gamepad) {
+    const axis = gamepad.axes[0] || 0
+    const leftArrow = gamepad.buttons[14].pressed || false
+    const rightArrow = gamepad.buttons[15].pressed || false
+    if (axis >= 0.1 || rightArrow) {
+      this.pressedKeys[Keyboard.KEYS.RIGHT] = true
+      this.pressedKeys[Keyboard.KEYS.LEFT] = false
+    } else if (axis <= -0.1 || leftArrow) {
+      this.pressedKeys[Keyboard.KEYS.RIGHT] = false
+      this.pressedKeys[Keyboard.KEYS.LEFT] = true
+    } else {
+      this.pressedKeys[Keyboard.KEYS.RIGHT] = false
+      this.pressedKeys[Keyboard.KEYS.LEFT] = false
+    }
+  }
+
   private setKey(event: KeyboardEvent, isPressed: boolean) {
     let key
     switch (event.key) {
