@@ -48,6 +48,7 @@ class GameEngine {
   public gameStart() {
     if (!this.isStarted) {
       this.isStarted = true
+      this.collectables.spawnCollectables()
       this.loop(performance.now())
     }
   }

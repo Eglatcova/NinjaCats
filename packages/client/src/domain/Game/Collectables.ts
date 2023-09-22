@@ -7,11 +7,9 @@ import CollectableFactory from './CollectableFactory'
 export default class Collectables {
   private collectablesList: Collection<Collectable> = new Collection()
 
-  constructor(private collectableFactory: CollectableFactory) {
-    this.spawnCollectables()
-  }
+  constructor(private collectableFactory: CollectableFactory) {}
 
-  private spawnCollectables() {
+  public spawnCollectables() {
     setInterval(() => {
       this.collectablesList.add(
         this.collectableFactory.createRandomCollectable()
