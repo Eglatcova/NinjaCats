@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import GameEngine from '../../domain/Game/GameEngine'
 import classes from './Game.module.scss'
+import { leaderboardController } from '../../controllers/LeaderboardController'
+import { useAppSelector } from '../../store/hooks'
 
 enum GameStates {
   GAME_BEFORE_START,
@@ -14,7 +16,24 @@ const Game: React.FC = () => {
   const gameDiv = useRef<HTMLDivElement>(null)
   const gameEngineRef = useRef<GameEngine>()
 
+  const user = useAppSelector(state => state.user)
+
   const endGameCallback = (points: number) => {
+    const now = new Date()
+    const month = now.getMonth() + 1
+    const date =
+      now.getDate() +
+      '.' +
+      (month < 10 ? '0' + month : month) +
+      '.' +
+      now.getFullYear()
+    leaderboardController.addToLeaderboard({
+      data: {
+        codeNinjasScore: points,
+        login: user?.login,
+        date,
+      },
+    })
     setScore(points)
     setGameState(GameStates.GAME_END)
   }
