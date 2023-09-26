@@ -1,33 +1,46 @@
 import { leaderboardAPI } from '../api/LeaderboardApi'
+import { useAppSelector } from '../store/hooks'
+import { IUser } from '../store/slices/userSlice'
 
-interface IAddToLeaderboardDataFromComponent {
+export interface IAddToLeaderboard {
   data: {
     codeNinjasScore: number
     login?: string
     date: string
   }
-}
-
-interface IGetLeaderboardDataFromComponent {
-  cursor: number
-  limit: number
-}
-
-export interface IAddToLeaderboard extends IAddToLeaderboardDataFromComponent {
   ratingFieldName: string
   teamName: string
 }
 
-export interface IGetLeaderboard extends IGetLeaderboardDataFromComponent {
+export interface IGetLeaderboard {
   ratingFieldName: string
+  cursor: number
+  limit: number
 }
 
 class LeaderboardController {
-  addToLeaderboard = (
-    dataFromComponent: IAddToLeaderboardDataFromComponent
-  ) => {
+  user: IUser | null
+
+  constructor() {
+    this.user = useAppSelector(state => state.user)
+  }
+
+  addToLeaderboard = (points: number) => {
+    const now = new Date()
+    const month = now.getMonth() + 1
+    const date =
+      now.getDate() +
+      '.' +
+      (month < 10 ? '0' + month : month) +
+      '.' +
+      now.getFullYear()
+
     const dataToPass: IAddToLeaderboard = {
-      ...dataFromComponent,
+      data: {
+        codeNinjasScore: points,
+        login: this.user?.login,
+        date,
+      },
       ratingFieldName: 'codeNinjasScore',
       teamName: 'codeNinjas',
     }
@@ -39,10 +52,11 @@ class LeaderboardController {
     })
   }
 
-  getLeaderboard = (data: IGetLeaderboardDataFromComponent) => {
+  getLeaderboard = (cursor: number, limit: number) => {
     const dataToPass: IGetLeaderboard = {
       ratingFieldName: 'codeNinjasScore',
-      ...data,
+      cursor,
+      limit,
     }
 
     return leaderboardAPI.makeRequest(dataToPass, '/all').then(res => {

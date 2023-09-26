@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-interface IUser {
+export interface IUser {
   id: number
   first_name: string
   second_name: string

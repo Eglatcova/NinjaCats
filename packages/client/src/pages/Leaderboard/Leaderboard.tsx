@@ -19,12 +19,7 @@ const Leaderboard: React.FC = function () {
   checkAuth('private')
 
   useEffect(() => {
-    leaderboardController
-      .getLeaderboard({
-        cursor: 0,
-        limit: 10,
-      })
-      .then(res => setLeaderboard(res))
+    leaderboardController.getLeaderboard(0, 10).then(res => setLeaderboard(res))
   }, [])
 
   return (
