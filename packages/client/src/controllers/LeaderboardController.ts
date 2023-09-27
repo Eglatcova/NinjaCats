@@ -1,6 +1,4 @@
 import { leaderboardAPI } from '../api/LeaderboardApi'
-import { useAppSelector } from '../store/hooks'
-import { IUser } from '../store/slices/userSlice'
 
 export interface IAddToLeaderboard {
   data: {
@@ -18,14 +16,16 @@ export interface IGetLeaderboard {
   limit: number
 }
 
-class LeaderboardController {
-  user: IUser | null
-
-  constructor() {
-    this.user = useAppSelector(state => state.user)
+export interface ILeaderboardData {
+  data: {
+    codeNinjasScore: number
+    login: string
+    date: string
   }
+}
 
-  addToLeaderboard = (points: number) => {
+class LeaderboardController {
+  addToLeaderboard = (points: number, login: string | undefined) => {
     const now = new Date()
     const month = now.getMonth() + 1
     const date =
@@ -38,7 +38,7 @@ class LeaderboardController {
     const dataToPass: IAddToLeaderboard = {
       data: {
         codeNinjasScore: points,
-        login: this.user?.login,
+        login,
         date,
       },
       ratingFieldName: 'codeNinjasScore',

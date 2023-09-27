@@ -2,16 +2,11 @@ import React, { useEffect, useState } from 'react'
 import classes from './style.module.scss'
 import forumClasses from '../Forum/Forum.module.scss'
 import { useAuth } from '../../hooks/useAuth'
-import { leaderboardController } from '../../controllers/LeaderboardController'
+import {
+  leaderboardController,
+  ILeaderboardData,
+} from '../../controllers/LeaderboardController'
 import { Wrapper } from '../../components/Wrapper'
-
-interface ILeaderboardData {
-  data: {
-    codeNinjasScore: number
-    login: string
-    date: string
-  }
-}
 
 const Leaderboard: React.FC = function () {
   const [checkAuth] = useAuth()

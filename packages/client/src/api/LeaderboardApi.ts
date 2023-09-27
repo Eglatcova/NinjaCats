@@ -1,7 +1,3 @@
-import {
-  IAddToLeaderboard,
-  IGetLeaderboard,
-} from '../controllers/LeaderboardController'
 class LeaderboardAPI {
   baseApiUrl: string
 
@@ -9,7 +5,7 @@ class LeaderboardAPI {
     this.baseApiUrl = 'https://ya-praktikum.tech/api/v2/leaderboard'
   }
 
-  makeRequest = (data: IAddToLeaderboard | IGetLeaderboard, path?: string) => {
+  makeRequest = <Type>(data: Type, path?: string) => {
     return fetch(path ? this.baseApiUrl + path : this.baseApiUrl, {
       method: 'POST',
       credentials: 'include',
