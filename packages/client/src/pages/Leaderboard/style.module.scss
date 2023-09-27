@@ -1,20 +1,25 @@
 .Leaderboard {
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    gap: $ui-step * 3;
-
     &-table {
-        width: $ui-step * 70;
-
         border-collapse: collapse;
 
         &-row {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 80px 1fr 160px 100px;
+            gap: 8px;
+            transition: background-color 0.15s;
+            cursor: pointer;
+            color: $white;
+            text-decoration: none;
+            padding: 8px;
+
+            &:hover>* {
+                background-color: $yellow;
+            }
             
             td {
-                padding-top: $ui-step * 2;
-                padding-bottom: $ui-step * 2;
+                padding: $ui-step * 2;
+                background-color: $orange;
             }
 
             &-nickname {

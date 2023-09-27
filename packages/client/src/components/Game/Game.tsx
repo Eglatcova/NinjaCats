@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import GameEngine from '../../domain/Game/GameEngine'
 import classes from './Game.module.scss'
+import { leaderboardController } from '../../controllers/LeaderboardController'
+import { useAppSelector } from '../../store/hooks'
 
 enum GameStates {
   GAME_BEFORE_START,
@@ -13,8 +15,10 @@ const Game: React.FC = () => {
   const [gameState, setGameState] = useState(GameStates.GAME_BEFORE_START)
   const gameDiv = useRef<HTMLDivElement>(null)
   const gameEngineRef = useRef<GameEngine>()
+  const user = useAppSelector(state => state.user)
 
   const endGameCallback = (points: number) => {
+    leaderboardController.addToLeaderboard(points, user?.login)
     setScore(points)
     setGameState(GameStates.GAME_END)
   }
