@@ -7,16 +7,35 @@ export default class Keyboard {
   private pressedKeys: Partial<Record<ENABLED_KEYS, boolean>> = {}
 
   constructor() {
-    window.addEventListener('keydown', e => {
-      this.setKey(e, true)
-    })
-    window.addEventListener('keyup', e => {
-      this.setKey(e, false)
-    })
-    window.addEventListener('blur', () => {
-      this.pressedKeys = {}
-    })
+    this.registerKeyboardListeners()
     this.registerGamepad()
+  }
+
+  private registerKeyboardListeners() {
+    const setTrue = (e: KeyboardEvent) => {
+      this.setKey(e, true)
+    }
+
+    const setFalse = (e: KeyboardEvent) => {
+      this.setKey(e, false)
+    }
+
+    const blur = () => {
+      this.pressedKeys = {}
+    }
+
+    window.addEventListener('keydown', setTrue)
+    window.addEventListener('keyup', setFalse)
+    window.addEventListener('blur', blur)
+    window.addEventListener(
+      'unload',
+      () => {
+        window.removeEventListener('keydown', setTrue)
+        window.removeEventListener('keyup', setFalse)
+        window.removeEventListener('blur', blur)
+      },
+      { once: true }
+    )
   }
 
   private registerGamepad() {
@@ -24,18 +43,31 @@ export default class Keyboard {
       const gamepad = navigator.getGamepads()[0]
       if (!gamepad) return
       this.setAxes(gamepad)
-      setTimeout(() => {
-        update()
-      }, 100)
+      window.requestAnimationFrame(update)
     }
 
     window.addEventListener('gamepadconnected', update)
+    window.addEventListener(
+      'unload',
+      () => {
+        window.removeEventListener('gamepadconnected', update)
+      },
+      { once: true }
+    )
   }
 
   private setAxes(gamepad: Gamepad) {
     const axis = gamepad.axes[0] || 0
-    const leftArrow = gamepad.buttons[14].pressed || false
-    const rightArrow = gamepad.buttons[15].pressed || false
+    let leftArrow
+    let rightArrow
+    if (gamepad.axes.length === 7) {
+      const axis6 = gamepad.axes[6] || 0
+      leftArrow = axis6 === 0.7142857142857142 || false
+      rightArrow = axis6 === -0.4285714285714286 || false
+    } else {
+      leftArrow = gamepad.buttons[14].pressed || false
+      rightArrow = gamepad.buttons[15].pressed || false
+    }
     if (axis >= 0.1 || rightArrow) {
       this.pressedKeys[Keyboard.KEYS.RIGHT] = true
       this.pressedKeys[Keyboard.KEYS.LEFT] = false
