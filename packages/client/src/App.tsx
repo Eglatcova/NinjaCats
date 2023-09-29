@@ -20,7 +20,9 @@ function App() {
   }, [])
 
   useEffect(() => {
-    startServiceWorker()
+    if (process.env.NODE_ENV !== 'development') {
+      startServiceWorker()
+    }
   }, [])
 
   return (

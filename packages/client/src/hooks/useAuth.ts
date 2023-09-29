@@ -26,25 +26,27 @@ export const useAuth = () => {
   }
 
   const exit = () => {
-    authController.logout().then(res => {
-      if (res) {
-        dispatch(deleteUser())
-        navigate('/login')
-      }
+    authController.logout().then(_res => {
+      dispatch(deleteUser())
+      navigate('/login')
     })
   }
 
   const login = (values: ISignInData) => {
     authController.signIn(values).then(res => {
-      dispatch(addUser(res))
-      navigate('/game')
+      if (res) {
+        dispatch(addUser(res))
+        navigate('/game')
+      }
     })
   }
 
   const register = (values: ISignUpData) => {
     authController.signUp(values).then(res => {
-      dispatch(addUser(res))
-      navigate('/game')
+      if (res) {
+        dispatch(addUser(res))
+        navigate('/game')
+      }
     })
   }
 
