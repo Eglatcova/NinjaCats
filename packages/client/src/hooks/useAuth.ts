@@ -18,14 +18,7 @@ export const useAuth = () => {
     switch (permission) {
       case 'private':
         useEffect(() => {
-          const code = new URLSearchParams(window.location.search).get('code')
-          if (!user && code) {
-            const data = {
-              code,
-              redirect_uri: redirectUri,
-            }
-            enterWithYandexCode(data)
-          } else if (!user) navigate('/login')
+          if (!user) navigate('/login')
         }, [user])
         break
       case 'public':
@@ -68,6 +61,12 @@ export const useAuth = () => {
     })
   }
 
+  const getTokenInfo = (data: ISignUpWithYandexData) => {
+    if (!user && data.code) {
+      enterWithYandexCode(data)
+    }
+  }
+
   const enterWithYandexCode = (data: ISignUpWithYandexData) => {
     oauthController.signUpWithYandex(data).then(res => {
       if (res?.ok) {
@@ -84,6 +83,7 @@ export const useAuth = () => {
     login,
     register,
     loginWithYandex,
+    getTokenInfo,
   }
 
   return [checkAuth, auth] as const

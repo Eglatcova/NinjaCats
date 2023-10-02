@@ -1,7 +1,7 @@
 import { baseRequest } from '../utils/baseRequest'
 
 export interface ISignUpWithYandexData {
-  code: string
+  code: string | null
   redirect_uri: string
 }
 

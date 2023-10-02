@@ -20,7 +20,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    startServiceWorker()
+    // startServiceWorker()
   }, [])
 
   return (

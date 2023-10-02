@@ -5,11 +5,7 @@ class AuthController {
   signIn = (data: ISignInData) => {
     return authAPI.makeRequest('/signin', 'POST', data).then(res => {
       if (res?.ok) {
-        return this.getUser()
-          .then(res => {
-            if (res) return res.json()
-          })
-          .then(res => res)
+        return this.getUser().then(res => res)
       }
     })
   }
@@ -17,11 +13,7 @@ class AuthController {
   signUp = (data: ISignUpData) => {
     return authAPI.makeRequest('/signup', 'POST', data).then(res => {
       if (res?.ok) {
-        return this.getUser()
-          .then(res => {
-            if (res) return res.json()
-          })
-          .then(res => res)
+        return this.getUser().then(res => res)
       }
     })
   }
@@ -34,7 +26,7 @@ class AuthController {
 
   getUser = () => {
     return authAPI.makeRequest('/user', 'GET').then(res => {
-      return res?.ok ? res : false
+      if (res) return res.json()
     })
   }
 }
