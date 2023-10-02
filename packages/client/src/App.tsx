@@ -9,17 +9,6 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 function App() {
   useEffect(() => {
-    const fetchServerData = async () => {
-      const url = `http://localhost:${__SERVER_PORT__}`
-      const response = await fetch(url)
-      const data = await response.json()
-      console.log(data)
-    }
-
-    fetchServerData()
-  }, [])
-
-  useEffect(() => {
     if (process.env.NODE_ENV !== 'development') {
       startServiceWorker()
     }
@@ -29,7 +18,7 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <RouterProvider router={router} />
+          {router && <RouterProvider router={router} />}
         </PersistGate>
       </Provider>
     </div>

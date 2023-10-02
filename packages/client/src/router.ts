@@ -13,57 +13,62 @@ import { Error500 } from './pages/Error500'
 import { Forum } from './pages/Forum'
 import { ForumMessages } from './pages/ForumMessages'
 
-export const router = createBrowserRouter([
-  {
-    path: '/',
-    Component: Main,
-  },
-  {
-    path: '/login',
-    Component: Login,
-  },
-  {
-    path: '/registration',
-    Component: Registration,
-  },
-  {
-    path: '/profile',
-    Component: Profile,
-  },
-  {
-    path: '/game',
-    Component: Game,
-  },
-  {
-    path: '/game-start',
-    Component: GameStart,
-  },
-  {
-    path: '/game-over',
-    Component: GameOver,
-  },
-  {
-    path: '/leaderboard',
-    Component: Leaderboard,
-  },
-  {
-    path: '/landing',
-    Component: Landing,
-  },
-  {
-    path: '/error500',
-    Component: Error500,
-  },
-  {
-    path: '/forum',
-    Component: Forum,
-  },
-  {
-    path: '/forum/:id',
-    Component: ForumMessages,
-  },
-  {
-    path: '*',
-    Component: Error404,
-  },
-])
+const getRouter = () =>
+  createBrowserRouter([
+    {
+      path: '/',
+      Component: Main,
+    },
+    {
+      path: '/login',
+      Component: Login,
+    },
+    {
+      path: '/registration',
+      Component: Registration,
+    },
+    {
+      path: '/profile',
+      Component: Profile,
+    },
+    {
+      path: '/game',
+      Component: Game,
+    },
+    {
+      path: '/game-start',
+      Component: GameStart,
+    },
+    {
+      path: '/game-over',
+      Component: GameOver,
+    },
+    {
+      path: '/leaderboard',
+      Component: Leaderboard,
+    },
+    {
+      path: '/landing',
+      Component: Landing,
+    },
+    {
+      path: '/error500',
+      Component: Error500,
+    },
+    {
+      path: '/forum',
+      Component: Forum,
+    },
+    {
+      path: '/forum/:id',
+      Component: ForumMessages,
+    },
+    {
+      path: '*',
+      Component: Error404,
+    },
+  ])
+
+const router = typeof window !== 'undefined' ? getRouter() : null
+
+export { router }
