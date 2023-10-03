@@ -39,14 +39,14 @@ async function startServer() {
     app.use(vite.middlewares)
   }
 
-  app.get('/api', (_, res) => {
-    res.json('👋 Howdy from the server :)')
-  })
-
   if (!isDev) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
     app.use('/sw.js', express.static(path.resolve(distPath, 'sw.js')))
   }
+
+  app.get('/api', (_, res) => {
+    res.json('👋 Howdy from the server :)')
+  })
 
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
