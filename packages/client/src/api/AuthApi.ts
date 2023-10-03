@@ -1,3 +1,5 @@
+import { baseRequest } from '../utils/baseRequest'
+
 export interface ISignUpData {
   first_name: string
   second_name: string
@@ -16,7 +18,7 @@ class AuthAPI {
   baseApiUrl: string
 
   constructor() {
-    this.baseApiUrl = 'https://ya-praktikum.tech/api/v2/auth'
+    this.baseApiUrl = '/auth'
   }
 
   makeRequest = (
@@ -24,16 +26,7 @@ class AuthAPI {
     method: string,
     data: ISignUpData | ISignInData | null = null
   ) => {
-    return fetch(this.baseApiUrl + path, {
-      method,
-      credentials: 'include',
-      body: data ? JSON.stringify(data) : data,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res)
-      .catch(error => console.log(error))
+    return baseRequest(`${this.baseApiUrl}${path}`, method, data)
   }
 }
 

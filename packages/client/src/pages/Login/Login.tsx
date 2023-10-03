@@ -54,8 +54,13 @@ const Login: React.FC = function () {
         </Button>
       </form>
       <Link to="/registration">
-        <Button theme="secondary">Регистрация</Button>
+        <Button className={classes.loginButton} theme="secondary">
+          Регистрация
+        </Button>
       </Link>
+      <Button theme="secondary" onClick={auth.loginWithYandex}>
+        Войти с помощью Яндекса
+      </Button>
     </div>
   )
 }

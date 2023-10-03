@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Wrapper } from '../../components/Wrapper'
 import { useAuth } from '../../hooks/useAuth'
 import geekImage from '../../assets/geek.png'
 
 import classes from './Main.module.scss'
+import { redirectUri } from '../../constants/redirectUri'
 
 const Main: React.FC = function () {
-  const [checkAuth] = useAuth()
+  const [checkAuth, auth] = useAuth()
+  const code = new URLSearchParams(window.location.search).get('code')
   checkAuth('private')
+
+  useEffect(() => {
+    auth.getTokenInfo({ code, redirect_uri: redirectUri })
+  }, [])
 
   return (
     <Wrapper>
