@@ -3,6 +3,7 @@ import { Collider } from './interfaces'
 import CollisionEngine from './CollisionEngine'
 import BoxCollider from './BoxCollider'
 import Settings from './Settings'
+import geekImage from '../../assets/geek.png'
 
 export default class Catcher implements Collider {
   private x
@@ -19,7 +20,7 @@ export default class Catcher implements Collider {
   }
 
   public render(g: Canvas) {
-    g.drawImage(this.x, this.y, this.width, this.height, 'src/assets/geek.png')
+    g.drawImage(this.x, this.y, this.width, this.height, geekImage)
   }
 
   public setDirection(direction: -1 | 0 | 1) {

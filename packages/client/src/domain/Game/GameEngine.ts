@@ -16,6 +16,7 @@ import Settings from './Settings'
 import Score from './Score'
 import Lives from './Lives'
 import CollectableFactory from './CollectableFactory'
+import windowsImage from '../../assets/windows.jpeg'
 
 class GameEngine {
   private g: Canvas
@@ -123,7 +124,7 @@ class GameEngine {
 
   private drawBackground(g: Canvas) {
     const { width, height } = Settings.getInstance().getSize()
-    g.drawImage(0, 0, width, height, 'src/assets/windows.jpeg')
+    g.drawImage(0, 0, width, height, windowsImage)
     g.drawRect(0, 0, width, height, '#ffffff4D')
   }
 
