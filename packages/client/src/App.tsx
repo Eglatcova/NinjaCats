@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { RouterProvider } from 'react-router-dom'
-import { router } from './router'
+import { clientRouter } from './router'
 import { startServiceWorker } from './startSW'
 import './App.css'
 import { Provider } from 'react-redux'
@@ -18,7 +18,7 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          {router && <RouterProvider router={router} />}
+          {clientRouter && <RouterProvider router={clientRouter} />}
         </PersistGate>
       </Provider>
     </div>

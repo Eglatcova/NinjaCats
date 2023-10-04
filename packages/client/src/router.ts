@@ -69,6 +69,6 @@ const getRouter = () =>
     },
   ])
 
-const router = typeof window !== 'undefined' ? getRouter() : null
+const clientRouter = typeof window !== 'undefined' ? getRouter() : null
 
-export { router }
+export { clientRouter }
