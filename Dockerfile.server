@@ -3,7 +3,7 @@ ARG SERVER_PORT=3001
 
 FROM node:$NODE_VERSION-buster as base
 
-#WORKDIR /app
+WORKDIR /app
 
 FROM base as builder
 
