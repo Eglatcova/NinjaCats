@@ -55,7 +55,7 @@ export const useAuth = () => {
   }
 
   const loginWithYandex = () => {
-    oauthController.getServiceId().then(res => {
+    oauthController.getServiceId(redirectUri).then(res => {
       const serviceId = res.service_id
       window.location.replace(
         `${oauthYandexUri}?response_type=code&client_id=${serviceId}&redirect_uri=${redirectUri}`

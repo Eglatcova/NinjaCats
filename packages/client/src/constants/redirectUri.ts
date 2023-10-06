@@ -1,1 +1,1 @@
-export const redirectUri = `http://localhost:${__SERVER_PORT__}`
+export const redirectUri = __REDIRECT_URI__

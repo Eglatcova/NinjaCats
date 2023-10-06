@@ -4,11 +4,16 @@
 
 [Ссылка на видео-презентацию проекта](https://disk.yandex.ru/i/KZYlAc7xaeA9jg)
 
+#### Production сборка
 ```shell
-docker-compose up
+docker compose up
 ```
-Запуск будет произведен по адресу http://127.0.0.1:3000/
 
+#### БД для разработки
+ 
+```shell
+docker compose up postgres
+```
 
 ### Как запускать?
 

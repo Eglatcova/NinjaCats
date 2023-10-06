@@ -20,6 +20,8 @@ RUN yarn build:ssr
 FROM node:$NODE_VERSION-buster-slim as production
 WORKDIR /app
 
+ENV NODE_ENV=production
+
 RUN apt-get -q update && apt-get -qy install netcat
 
 COPY --from=builder /app/packages/client/ /app/client/

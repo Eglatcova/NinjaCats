@@ -7,6 +7,9 @@ import * as path from 'path'
 dotenv.config()
 
 export default defineConfig({
+  define: {
+    __REDIRECT_URI__: process.env.REDIRECT_URI,
+  },
   plugins: [svgr(), react()],
   css: {
     preprocessorOptions: {
