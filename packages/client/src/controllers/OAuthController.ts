@@ -5,12 +5,14 @@ class OAuthController {
     return oauthAPI.makeRequest('POST', '', data)
   }
 
-  getServiceId = () => {
-    return oauthAPI.makeRequest('GET', '/service-id').then(res => {
-      if (res?.ok) {
-        return res.json()
-      }
-    })
+  getServiceId = (redirectUri: string) => {
+    return oauthAPI
+      .makeRequest('GET', `/service-id?redirect_uri=${redirectUri}`)
+      .then(res => {
+        if (res?.ok) {
+          return res.json()
+        }
+      })
   }
 }
 export const oauthController = new OAuthController()

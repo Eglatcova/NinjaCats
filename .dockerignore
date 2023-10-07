@@ -1,0 +1,10 @@
+.github/
+docker/
+docs/
+memoryleaks/
+node_modules/
+tmp/
+**/dist/
+README.md
+Dockerfile.*
+docker-compose.yml
