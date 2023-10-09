@@ -12,6 +12,12 @@ import {
   REGISTER,
 } from 'redux-persist'
 
+declare global {
+  interface Window {
+    localSsrStorage: object
+  }
+}
+
 const persistConfig = {
   key: 'root',
   storage,
@@ -27,7 +33,6 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-  // @ts-ignore
   preloadedState:
     typeof window !== 'undefined' ? window?.localSsrStorage : undefined,
 })
