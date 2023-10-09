@@ -27,6 +27,9 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
+  // @ts-ignore
+  preloadedState:
+    typeof window !== 'undefined' ? window?.localSsrStorage : undefined,
 })
 
 export type RootState = ReturnType<typeof store.getState>

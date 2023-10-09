@@ -6,16 +6,26 @@ import { store, persistor } from './src/store'
 import { addUser } from './src/store/slices/userSlice'
 
 export function render(url: string) {
-  store.dispatch(
-    addUser({
-      value: 'asdf',
-    })
-  )
+  // store.dispatch(
+  //   addUser({
+  //     value: 'asdf',
+  //   })
+  // )
   console.log(store.getState())
 
   return ReactDomServer.renderToString(
     <StaticRouter location={url}>
       <App />
+      <script
+        lang="javascript"
+        dangerouslySetInnerHTML={{
+          __html: `
+        window.localSsrStorage = JSON.parse(\`${JSON.stringify(
+          store.getState()
+        )}\`)
+        console.log(window.localSsrStorage);
+        `,
+        }}></script>
     </StaticRouter>
   )
 }
