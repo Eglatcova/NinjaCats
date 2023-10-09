@@ -24,7 +24,15 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     addUser: (state, action) => {
-      return { ...state, user: { ...state.user, ...action.payload } }
+      const user = { ...state.user, ...action.payload }
+
+      if (typeof window !== 'undefined') {
+        document.cookie += `userData=${encodeURIComponent(
+          JSON.stringify(user)
+        )};`
+      }
+
+      return { ...state, user }
     },
     deleteUser: state => {
       state.user = null

@@ -5,6 +5,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
+import cookieParser from 'cookie-parser'
 
 dotenv.config()
 
@@ -13,6 +14,7 @@ const isDev = process.env.NODE_ENV === 'development'
 async function startServer() {
   const app = express()
   app.use(cors())
+  app.use(cookieParser())
 
   const port = Number(process.env.SERVER_PORT) || 3001
 
@@ -64,7 +66,7 @@ async function startServer() {
         )
       }
 
-      let render: (ulr: string) => Promise<string>
+      let render: (ulr: string, user: object | null) => Promise<string>
 
       if (isDev) {
         const ssrPath = path.resolve(srcPath, 'ssr.tsx')
@@ -74,7 +76,8 @@ async function startServer() {
         render = (await import(ssrPath)).render
       }
 
-      const appHtml = await render(url)
+      const user = JSON.parse(req.cookies['userData'] ?? 'null')
+      const appHtml = await render(url, user)
 
       const html = template.replace(`<!--ssr-outlet-->`, appHtml)
 

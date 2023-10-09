@@ -3,14 +3,12 @@ import { Provider } from 'react-redux'
 import ReactDomServer from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom/server'
 import { store, persistor } from './src/store'
-import { addUser } from './src/store/slices/userSlice'
+import { IUser, addUser } from './src/store/slices/userSlice'
 
-export function render(url: string) {
-  // store.dispatch(
-  //   addUser({
-  //     value: 'asdf',
-  //   })
-  // )
+export function render(url: string, user: IUser | null) {
+  if (user) {
+    store.dispatch(addUser(user))
+  }
   console.log(store.getState())
 
   return ReactDomServer.renderToString(
