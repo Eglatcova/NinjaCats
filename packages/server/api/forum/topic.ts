@@ -1,9 +1,11 @@
-import express, { type Request, type Response, Router } from 'express'
+import express, { Router } from 'express'
 import { sanitize, sanitizerErrorHandler } from '../../middlewares/sanitizer'
 import { Topic } from '../../db'
 import { checkAuth } from '../../middlewares/checkAuth'
 import { Message } from '../../db'
 import { Sequelize } from 'sequelize-typescript'
+
+import type { Request, Response } from 'express'
 
 export const topicRoute = Router()
   .use(express.json())
