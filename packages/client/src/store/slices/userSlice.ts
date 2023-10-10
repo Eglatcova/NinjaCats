@@ -27,9 +27,13 @@ const userSlice = createSlice({
       const user = { ...state.user, ...action.payload }
 
       if (typeof window !== 'undefined') {
+        const expirationDate = new Date()
+        expirationDate.setMonth(expirationDate.getMonth() + 1)
+
         document.cookie += `userData=${encodeURIComponent(
           JSON.stringify(user)
-        )};`
+        )}; expires=${expirationDate.toUTCString()}; path=/;
+        `
       }
 
       return { ...state, user }

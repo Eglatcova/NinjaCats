@@ -2,7 +2,9 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import './style/index.scss'
-import { persistor } from './store'
+import { createStore } from './store'
+
+const { persistor, store } = createStore()
 
 persistor.subscribe(() => {
   const { bootstrapped } = persistor.getState()
@@ -11,7 +13,7 @@ persistor.subscribe(() => {
     ReactDOM.hydrateRoot(
       document.getElementById('root') as HTMLElement,
       <BrowserRouter>
-        <App />
+        <App store={store} />
       </BrowserRouter>
     )
   }

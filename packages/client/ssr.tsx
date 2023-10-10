@@ -1,11 +1,12 @@
 import App from './src/App'
-import { Provider } from 'react-redux'
 import ReactDomServer from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom/server'
-import { store, persistor } from './src/store'
+import { createStore } from './src/store'
 import { IUser, addUser } from './src/store/slices/userSlice'
 
 export function render(url: string, user: IUser | null) {
+  const { store } = createStore()
+
   if (user) {
     store.dispatch(addUser(user))
   }
@@ -13,7 +14,7 @@ export function render(url: string, user: IUser | null) {
 
   return ReactDomServer.renderToString(
     <StaticRouter location={url}>
-      <App />
+      <App store={store} />
       <script
         lang="javascript"
         dangerouslySetInnerHTML={{

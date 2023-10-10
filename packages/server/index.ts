@@ -6,6 +6,7 @@ import * as path from 'path'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
 import cookieParser from 'cookie-parser'
+import userMiddleware from './middleware/user'
 
 dotenv.config()
 
@@ -46,6 +47,8 @@ async function startServer() {
     app.use('/sw.js', express.static(path.resolve(distPath, 'sw.js')))
   }
 
+  app.use(userMiddleware())
+
   app.get('/api', (_, res) => {
     res.json('👋 Howdy from the server :)')
   })
@@ -76,8 +79,7 @@ async function startServer() {
         render = (await import(ssrPath)).render
       }
 
-      const user = JSON.parse(req.cookies['userData'] ?? 'null')
-      const appHtml = await render(url, user)
+      const appHtml = await render(url, req.user)
 
       const html = template.replace(`<!--ssr-outlet-->`, appHtml)
 
