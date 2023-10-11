@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Wrapper } from '../../components/Wrapper'
 import { useAuth } from '../../hooks/useAuth'
 import geekImage from '../../assets/geek.png'
@@ -9,7 +9,8 @@ import { redirectUri } from '../../constants/redirectUri'
 
 const Main: React.FC = function () {
   const [checkAuth, auth] = useAuth()
-  const code = new URLSearchParams(window.location.search).get('code')
+  const [params, setParams] = useSearchParams()
+  const code = params.get('code')
   checkAuth('private')
 
   useEffect(() => {

@@ -3,10 +3,9 @@ import { Router } from './Router'
 import { startServiceWorker } from './startSW'
 import './App.css'
 import { Provider } from 'react-redux'
-import { persistor, store } from './store'
-import { PersistGate } from 'redux-persist/integration/react'
+import { Store } from './store'
 
-function App() {
+function App(prop: { store: Store }) {
   useEffect(() => {
     if (process.env.NODE_ENV !== 'development') {
       startServiceWorker()
@@ -15,10 +14,8 @@ function App() {
 
   return (
     <div className="App">
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <Router />
-        </PersistGate>
+      <Provider store={prop.store}>
+        <Router />
       </Provider>
     </div>
   )

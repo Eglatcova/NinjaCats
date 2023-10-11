@@ -5,6 +5,8 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
+import cookieParser from 'cookie-parser'
+import userMiddleware from './middleware/user'
 
 dotenv.config()
 
@@ -13,6 +15,7 @@ const isDev = process.env.NODE_ENV === 'development'
 async function startServer() {
   const app = express()
   app.use(cors())
+  app.use(cookieParser())
 
   const port = Number(process.env.SERVER_PORT) || 3001
 
@@ -44,6 +47,8 @@ async function startServer() {
     app.use('/sw.js', express.static(path.resolve(distPath, 'sw.js')))
   }
 
+  app.use(userMiddleware())
+
   app.get('/api', (_, res) => {
     res.json('👋 Howdy from the server :)')
   })
@@ -64,7 +69,11 @@ async function startServer() {
         )
       }
 
-      let render: (ulr: string) => Promise<string>
+      let render: (
+        ulr: string,
+        user: object | null,
+        callback: (state: object) => void
+      ) => Promise<string>
 
       if (isDev) {
         const ssrPath = path.resolve(srcPath, 'ssr.tsx')
@@ -74,9 +83,23 @@ async function startServer() {
         render = (await import(ssrPath)).render
       }
 
-      const appHtml = await render(url)
+      let state
+      const appHtml = await render(url, req.user, _state => {
+        state = _state
+      })
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+      const html = template.replace(`<!--ssr-outlet-->`, appHtml).replace(
+        `<!--redux-outlet-->`,
+        `
+        <script lang="javascript" id="reduxScript">
+          window.localSsrStorage = JSON.parse(\`${JSON.stringify(state).replace(
+            /</g,
+            '\\u003c'
+          )}\`)
+          document.getElementById("reduxScript").remove();
+        </script>
+      `
+      )
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {

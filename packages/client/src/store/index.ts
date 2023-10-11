@@ -12,24 +12,40 @@ import {
   REGISTER,
 } from 'redux-persist'
 
+declare global {
+  interface Window {
+    localSsrStorage: object
+  }
+}
+
 const persistConfig = {
   key: 'root',
   storage,
 }
-
 const persistedReducer = persistReducer(persistConfig, userReducer)
 
-export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
-})
+export function createStore() {
+  const store = configureStore({
+    reducer: persistedReducer,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
+    preloadedState:
+      typeof window !== 'undefined' ? window?.localSsrStorage : undefined,
+  })
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+  const persistor = persistStore(store)
 
-export const persistor = persistStore(store)
+  return {
+    store,
+    persistor,
+  }
+}
+
+export type Store = ReturnType<typeof createStore>['store']
+
+export type RootState = ReturnType<Store['getState']>
+export type AppDispatch = Store['dispatch']
