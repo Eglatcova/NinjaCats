@@ -91,12 +91,12 @@ async function startServer() {
       const html = template.replace(`<!--ssr-outlet-->`, appHtml).replace(
         `<!--redux-outlet-->`,
         `
-        <script lang="javascript">
+        <script lang="javascript" id="reduxScript">
           window.localSsrStorage = JSON.parse(\`${JSON.stringify(state).replace(
             /</g,
             '\\u003c'
           )}\`)
-          console.log(window.localSsrStorage)
+          document.getElementById("reduxScript").remove();
         </script>
       `
       )
