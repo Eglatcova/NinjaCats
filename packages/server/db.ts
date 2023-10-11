@@ -20,8 +20,8 @@ const client = new Client({
 })
 
 const sequelizeOptions: SequelizeOptions = {
-  host: 'localhost',
-  port: 5432,
+  host: POSTGRES_HOST,
+  port: Number(POSTGRES_PORT),
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
@@ -40,8 +40,13 @@ export const dbConnect = async (): Promise<Client | null> => {
   try {
     await client.connect()
 
-    await sequelize.authenticate()
-    await sequelize.sync()
+    try {
+      await sequelize.authenticate()
+      console.log('Connection has been established successfully.')
+      await sequelize.sync()
+    } catch (error) {
+      console.error('Unable to connect to the database:', error)
+    }
 
     const res = await client.query('SELECT NOW()')
     console.log('  ➜ 🎸 Connected to the database at:', res?.rows?.[0].now)

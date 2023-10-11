@@ -2,8 +2,6 @@ import type { RequestHandler } from 'express'
 import fetch from 'cross-fetch'
 
 export const checkAuth: RequestHandler = async (req, res) => {
-  console.log('req.headers.cookie', req.originalUrl, req.headers.cookie)
-
   if (req.headers.cookie) {
     fetch('https://ya-praktikum.tech/api/v2/auth/user', {
       headers: {
