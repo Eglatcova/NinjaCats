@@ -4,27 +4,21 @@ import { StaticRouter } from 'react-router-dom/server'
 import { createStore } from './src/store'
 import { IUser, addUser } from './src/store/slices/userSlice'
 
-export function render(url: string, user: IUser | null) {
+export function render(
+  url: string,
+  user: IUser | null,
+  callback: (state: object) => void
+) {
   const { store } = createStore()
-
+  // redux-outlet
   if (user) {
     store.dispatch(addUser(user))
   }
-  console.log(store.getState())
+  callback(store.getState())
 
   return ReactDomServer.renderToString(
     <StaticRouter location={url}>
       <App store={store} />
-      <script
-        lang="javascript"
-        dangerouslySetInnerHTML={{
-          __html: `
-        window.localSsrStorage = JSON.parse(\`${JSON.stringify(
-          store.getState()
-        )}\`)
-        console.log(window.localSsrStorage);
-        `,
-        }}></script>
     </StaticRouter>
   )
 }

@@ -69,7 +69,11 @@ async function startServer() {
         )
       }
 
-      let render: (ulr: string, user: object | null) => Promise<string>
+      let render: (
+        ulr: string,
+        user: object | null,
+        callback: (state: object) => void
+      ) => Promise<string>
 
       if (isDev) {
         const ssrPath = path.resolve(srcPath, 'ssr.tsx')
@@ -79,9 +83,23 @@ async function startServer() {
         render = (await import(ssrPath)).render
       }
 
-      const appHtml = await render(url, req.user)
+      let state
+      const appHtml = await render(url, req.user, _state => {
+        state = _state
+      })
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+      const html = template.replace(`<!--ssr-outlet-->`, appHtml).replace(
+        `<!--redux-outlet-->`,
+        `
+        <script lang="javascript">
+          window.localSsrStorage = JSON.parse(\`${JSON.stringify(state).replace(
+            /</g,
+            '\\u003c'
+          )}\`)
+          console.log(window.localSsrStorage)
+        </script>
+      `
+      )
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
