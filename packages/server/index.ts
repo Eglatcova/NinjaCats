@@ -5,6 +5,10 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
+import cookieParser from 'cookie-parser'
+import { createProxyMiddleware } from 'http-proxy-middleware'
+import { api } from './api'
+import { dbConnect } from './db'
 
 dotenv.config()
 
@@ -13,6 +17,20 @@ const isDev = process.env.NODE_ENV === 'development'
 async function startServer() {
   const app = express()
   app.use(cors())
+
+  app.use(
+    '/api/v2',
+    createProxyMiddleware({
+      changeOrigin: true,
+      cookieDomainRewrite: { '*': '' },
+      target: 'https://ya-praktikum.tech',
+    })
+  )
+  app.use('/api', api)
+
+  app.use(cookieParser())
+
+  await dbConnect()
 
   const port = Number(process.env.SERVER_PORT) || 3001
 
@@ -43,10 +61,6 @@ async function startServer() {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
     app.use('/sw.js', express.static(path.resolve(distPath, 'sw.js')))
   }
-
-  app.get('/api', (_, res) => {
-    res.json('👋 Howdy from the server :)')
-  })
 
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
