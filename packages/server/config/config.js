@@ -18,8 +18,6 @@ const config = {
   dialect: 'postgres',
 }
 
-console.log(config)
-
 module.exports = {
   "development": { ...config, host: 'localhost' },
   "production": config

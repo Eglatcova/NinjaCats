@@ -28,6 +28,7 @@ COPY --from=builder /app/packages/client/ /app/client/
 COPY --from=builder /app/packages/server/dist/ /app/
 COPY --from=builder /app/packages/server/migrations/ /app/migrations/
 COPY --from=builder /app/packages/server/config/ /app/config/
+COPY --from=builder /app/packages/server/seeders/ /app/seeders/
 COPY --from=builder /app/packages/server/package.json /app/package.json
 RUN yarn install --production=true
 
