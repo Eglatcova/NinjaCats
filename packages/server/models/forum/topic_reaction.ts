@@ -7,7 +7,7 @@ export interface TopicReaction {
 
 export const TopicReactionModel: ModelAttributes<Model, TopicReaction> = {
   count: {
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
     allowNull: false,
     defaultValue: 0,
   },

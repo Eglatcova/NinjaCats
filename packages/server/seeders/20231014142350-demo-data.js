@@ -36,7 +36,7 @@ module.exports = {
       updatedAt: new Date()
     }]);
 
-    await queryInterface.bulkInsert('topic_reaction', [
+    await queryInterface.bulkInsert('topic_reactions', [
       {
         count: 10,
         TopicId: 1,
@@ -99,6 +99,6 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Topics', null, {});
     await queryInterface.bulkDelete('Messages', null, {});
-    await queryInterface.bulkDelete('topic_reaction', null, {});
+    await queryInterface.bulkDelete('topic_reactions', null, {});
   }
 };

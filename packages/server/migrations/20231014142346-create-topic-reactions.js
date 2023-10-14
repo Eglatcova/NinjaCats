@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('topic_reaction', {
+    await queryInterface.createTable('topic_reactions', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -30,7 +30,7 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
-    await queryInterface.addConstraint('topic_reaction', {
+    await queryInterface.addConstraint('topic_reactions', {
       type: 'foreign key',
       name: 'topic_id_fk',
       fields: ['TopicId'],
@@ -42,7 +42,7 @@ module.exports = {
       onUpdate: 'cascade'
     })
     await queryInterface.addConstraint(
-      'topic_reaction', {
+      'topic_reactions', {
         type: 'foreign key',
         name: 'reaction_id_fk',
         fields: ['ReactionId'],
@@ -56,6 +56,6 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('topic_reaction');
+    await queryInterface.dropTable('topic_reactions');
   }
 };

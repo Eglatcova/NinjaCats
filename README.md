@@ -14,7 +14,7 @@ docker compose up
 ```shell
 docker compose up postgres
 sequelize-cli db:migrate
-sequelize-cli db:seed:all
+docker compose exec server node ./node_modules/.bin/sequelize-cli db:seed:all
 ```
 
 ### Как запускать?

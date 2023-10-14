@@ -3,6 +3,8 @@ import { TopicModel } from './models/forum/topic'
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import dotenv from 'dotenv'
 import * as path from 'path'
+import { ReactionModel } from './models/forum/reactions'
+import { TopicReactionModel } from './models/forum/topic_reaction'
 
 dotenv.config({ path: path.resolve('../../.env') })
 
@@ -27,9 +29,18 @@ const sequelize = new Sequelize(sequelizeOptions)
 
 export const Topic = sequelize.define('Topic', TopicModel, {})
 export const Message = sequelize.define('Message', MessageModel, {})
+export const Reaction = sequelize.define('Reaction', ReactionModel, {})
+export const Topic_Reaction = sequelize.define(
+  'topic_reactions',
+  TopicReactionModel,
+  {}
+)
 
 Topic.hasMany(Message)
 Message.belongsTo(Topic)
+
+Topic.belongsToMany(Reaction, { through: Topic_Reaction })
+Reaction.belongsToMany(Topic, { through: Topic_Reaction })
 
 export const dbConnect = async () => {
   try {
@@ -39,6 +50,4 @@ export const dbConnect = async () => {
   } catch (error) {
     console.error('Unable to connect to the database:', error)
   }
-
-  return null
 }
