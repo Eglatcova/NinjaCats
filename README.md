@@ -13,6 +13,7 @@ docker compose up
  
 ```shell
 docker compose up postgres
+sequelize-cli db:migrate
 ```
 
 ### Как запускать?

@@ -1,6 +1,10 @@
 import { MessageModel } from './models/forum/message'
 import { TopicModel } from './models/forum/topic'
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
+import dotenv from 'dotenv'
+import * as path from 'path'
+
+dotenv.config({ path: path.resolve('../../.env') })
 
 const {
   POSTGRES_USER,
