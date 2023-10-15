@@ -21,7 +21,7 @@ services:
         command: ./wait-for.sh postgres:${POSTGRES_PORT} -- node /app/index.js
 
     postgres:
-      image: postgres:14-bullseye     
+      image: postgres:14     
       ports:
         - "${POSTGRES_PORT}:${POSTGRES_PORT}"
       networks:
