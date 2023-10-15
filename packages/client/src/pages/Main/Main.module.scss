@@ -2,7 +2,7 @@
   height: 48px;
   font-family: $font-handjet;
   font-size: $font-size-32;
-  color: $dark;
+  color: var(--dark);
 }
 
 
@@ -22,8 +22,8 @@
   align-items: center;
   justify-content: center;
   padding: 0 8px;
-  color: $white;
-  background-color: $orange;
+  color: var(--white);
+  background-color: var(--orange);
   height: 48px;
   border: 1px solid var(--border-base-color);
   box-shadow: 0 0 0 0 transparent;
@@ -32,11 +32,11 @@
 
 
   &:hover {
-    background-color: $yellow;
+    background-color: var(--yellow);
   }
 
   &:active {
-    background-color: $yellow;
-    box-shadow: 2px 2px 4px 0px rgba($dark, 0.6) inset;
+    background-color: var(--yellow);
+    box-shadow: 2px 2px 4px 0px rgba(var(--dark), 0.6) inset;
   }
 }

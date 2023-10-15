@@ -4,7 +4,7 @@
   align-items: flex-start;
   gap: 16px;
   height: 100vh;
-  background-color: $beige;
+  background-color: var(--beige);
   font-family: $font-roboto;
   padding: 64px;
   overflow: scroll;
@@ -18,7 +18,7 @@
 
 .title {
   font-size: $font-size-24;
-  color: $dark;
+  color: var(--dark);
 }
 
 .textarea {
@@ -33,6 +33,6 @@
 }
 
 .empty-block {
-  color: $dark;
+  color: var(--dark);
   padding: 16px 0;
 }

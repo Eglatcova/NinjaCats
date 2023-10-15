@@ -85,7 +85,7 @@
             &-imgBlock {
                 padding: $ui-step * 6;
     
-                background-color: rgba($pink, .5);
+                background-color: rgba(var(--pink), .5);
                 border-radius: $ui-step * 4;
             }
         }
