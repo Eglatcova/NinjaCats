@@ -1,9 +1,9 @@
 import { Message } from './components/Message'
-import type { Message as MessageType } from '../../../Forum/types'
 import classes from './MessagesItems.module.scss'
+import { IMessage } from '../../../../controllers/ForumController'
 
 type MessagesProps = {
-  messages: MessageType[]
+  messages: IMessage[]
 }
 
 const MessagesItems: React.FC<MessagesProps> = function ({ messages }) {
@@ -14,7 +14,7 @@ const MessagesItems: React.FC<MessagesProps> = function ({ messages }) {
   return (
     <>
       {messages.map(message => {
-        return <Message {...message} />
+        return <Message key={message.id} {...message} />
       })}
     </>
   )

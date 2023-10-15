@@ -1,24 +1,28 @@
-import React, { ChangeEventHandler, useMemo, useState } from 'react'
+import React, { ChangeEventHandler, useEffect, useMemo, useState } from 'react'
 import { Wrapper } from '../../components/Wrapper'
 import { CreationBlockContent } from './components/CreationBlockContent'
 import { Topic } from './components/Topic'
-import { mockTopics } from './mock'
 import { useAuth } from '../../hooks/useAuth'
 
 import classes from './Forum.module.scss'
+import { IFormData, forumController } from '../../controllers/ForumController'
 
 const plugTopic = {
-  timestamp: null,
-  author: '-',
+  createdAt: null,
+  userName: '-',
 }
 
 const Forum: React.FC = function () {
   const [checkAuth] = useAuth()
   checkAuth('private')
 
-  const [currentTopics, setTopics] = useState(mockTopics)
+  const [currentTopics, setTopics] = useState<IFormData[]>([])
   const [isTopicCretionOn, setTopicCreationState] = useState(false)
   const [newTopicLabel, setNewTopicLabel] = useState('')
+
+  useEffect(() => {
+    forumController.getForumTopics().then(res => setTopics(res))
+  }, [])
 
   const onChangeTopicValue: ChangeEventHandler<HTMLInputElement> = event => {
     const { target } = event
@@ -29,33 +33,30 @@ const Forum: React.FC = function () {
   const offTopicCreation = () => setTopicCreationState(false)
 
   const createNewTopic = () => {
-    const newTopic = {
-      [Date.now().toString()]: {
-        id: Date.now().toString(),
-        label: newTopicLabel,
-        messages: [],
-      },
-    }
-
-    setTopics(prev => ({ ...prev, ...newTopic }))
-    setNewTopicLabel('')
-    offTopicCreation()
+    forumController.saveForumTopic({ label: newTopicLabel }).then(res => {
+      setTopics(res)
+      setNewTopicLabel('')
+      offTopicCreation()
+    })
   }
 
   const topicItems = useMemo(
     () =>
       Object.values(currentTopics).map(topic => {
-        const { id, label, messages } = topic
-        const lastTopic = messages[messages.length - 1]
-        const { timestamp, author } = lastTopic || plugTopic
+        const { id, label, Messages } = topic
+        const lastTopic = Messages.length
+          ? Messages[Messages.length - 1]
+          : plugTopic
+        const { createdAt, userName } = lastTopic
 
         return (
           <Topic
+            key={id}
             id={id}
             label={label}
-            timestamp={timestamp}
-            author={author}
-            messagesNumber={messages.length}
+            timestamp={createdAt}
+            author={userName}
+            messagesNumber={Messages.length}
           />
         )
       }),

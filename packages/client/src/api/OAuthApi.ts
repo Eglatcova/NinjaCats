@@ -1,3 +1,4 @@
+import { baseUrl } from '../constants/baseUrl'
 import { baseRequest } from '../utils/baseRequest'
 
 export interface ISignUpWithYandexData {
@@ -18,7 +19,7 @@ class OAuthAPI {
     data?: ISignUpWithYandexData | null
   ) => {
     const url = path ? `${this.baseApiUrl}${path}` : this.baseApiUrl
-    return baseRequest(url, method, data)
+    return baseRequest(`${baseUrl}${url}`, method, data)
   }
 }
 

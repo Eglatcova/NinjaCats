@@ -1,7 +1,5 @@
-import { baseUrl } from '../constants/baseUrl'
-
 export const baseRequest = (url: string, method: string, data: any = null) => {
-  return fetch(`${baseUrl}${url}`, {
+  return fetch(`${url}`, {
     method,
     credentials: 'include',
     body: data ? JSON.stringify(data) : data,

@@ -1,22 +1,20 @@
-import { getDateString } from '../../../../../../utils/getDateString'
-
+import { formatDate } from '../../../../../../utils/formatDate'
 import classes from './Message.module.scss'
 
 type MessageProps = {
-  id: string
-  author: string
-  timestamp: number
+  userName: string
+  createdAt: string
   text: string
 }
 
 const Message: React.FC<MessageProps> = function (props) {
-  const { id, author, timestamp, text } = props
+  const { userName, createdAt, text } = props
 
   return (
-    <div key={id} className={classes.message} id={id}>
+    <div className={classes.message}>
       <div className={classes.messageHeader}>
-        <div>{author}</div>
-        <div>{getDateString(timestamp)}</div>
+        <div>{userName}</div>
+        <div>{formatDate(createdAt)}</div>
       </div>
       <div className={classes.messageText}>{text}</div>
     </div>
