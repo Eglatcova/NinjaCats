@@ -25,7 +25,7 @@ const ForumMessages: React.FC = () => {
 
   useEffect(() => {
     forumController.getForumTopic(Number(id)).then(res => {
-      const topic = res.topic
+      const { topic } = res
       setTopic(topic)
       setCurrentMessages(topic.Messages)
     })
@@ -40,7 +40,7 @@ const ForumMessages: React.FC = () => {
       forumController
         .sendMessage({ userName: user.login, text: value, TopicId: id })
         .then(res => {
-          const topic = res.topic
+          const { topic } = res
           setTopic(topic)
           setCurrentMessages(topic.Messages)
           setValue('')
