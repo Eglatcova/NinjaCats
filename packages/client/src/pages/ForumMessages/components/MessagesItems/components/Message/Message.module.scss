@@ -5,18 +5,18 @@
   align-items: center;
   gap: 16px;
   padding: 8px;
-  border: solid 4px $orange;
-  background: rgba($beige, 0.75);
+  border: solid 4px var(--orange);
+  background: rgba(var(--beige), 0.75);
 }
 
 .message-header {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  color: $orange;
+  color: var(--orange);
 }
 
 .message-text {
   width: 100%;
-  color: $dark;
+  color: var(--dark);
 }

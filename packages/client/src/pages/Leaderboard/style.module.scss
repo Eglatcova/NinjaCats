@@ -9,17 +9,17 @@
             gap: 8px;
             transition: background-color 0.15s;
             cursor: pointer;
-            color: $white;
+            color: var(--white);
             text-decoration: none;
             padding: 8px;
 
             &:hover>* {
-                background-color: $yellow;
+                background-color: var(--yellow);
             }
             
             td {
                 padding: $ui-step * 2;
-                background-color: $orange;
+                background-color: var(--orange);
             }
 
             &-nickname {

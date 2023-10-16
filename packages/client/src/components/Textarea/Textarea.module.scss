@@ -1,12 +1,12 @@
 @mixin colors {
-  --text-base-color: #{$dark};
-  --text-hover-color: #{$dark};
-  --text-active-color: #{$dark};
-  --text-disabled-color: #{$grey};
-  --border-base-color: #{$brown};
-  --border-hover-color: #{$orange};
-  --border-active-color: #{$orange};
-  --border-disabled-color: #{$grey};
+  --text-base-color: #{var(--dark)};
+  --text-hover-color: #{var(--dark)};
+  --text-active-color: #{var(--dark)};
+  --text-disabled-color: #{var(--grey)};
+  --border-base-color: #{var(--brown)};
+  --border-hover-color: #{var(--orange)};
+  --border-active-color: #{var(--orange)};
+  --border-disabled-color: #{var(--grey)};
 }
 
 .textarea {

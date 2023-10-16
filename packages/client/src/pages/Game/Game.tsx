@@ -26,12 +26,21 @@ const Game: React.FC = function () {
     }
   }
 
+  function onChangeThemeClick() {
+    if (document.documentElement.hasAttribute('theme')) {
+      document.documentElement.removeAttribute('theme')
+    } else {
+      document.documentElement.setAttribute('theme', 'black-and-white')
+    }
+  }
+
   return (
     <div className={classes.wrapper}>
       <GameComponent />
       <div className={classes.buttons}>
         <Button onClick={auth.exit}>Выйти</Button>
         <Button onClick={onFullscreenClick}>Fullscreen</Button>
+        <Button onClick={onChangeThemeClick}>Сменить тему</Button>
       </div>
     </div>
   )
