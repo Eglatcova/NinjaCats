@@ -1,0 +1,48 @@
+'use strict';
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('Messages', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      text: {
+        type: Sequelize.STRING
+      },
+      userName: {
+        type: Sequelize.STRING
+      },
+      TopicId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
+    })
+    await queryInterface.addConstraint(
+      'Messages', {
+        type: 'foreign key',
+        name: 'parent_id_fk',
+        fields: ['TopicId'],
+        references: {
+          table: 'Topics',
+          field: 'id'
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
+      }
+    );
+  },
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('Messages');
+  }
+};

@@ -10,7 +10,7 @@ import { createProxyMiddleware } from 'http-proxy-middleware'
 import { api } from './api'
 import { dbConnect } from './db'
 
-dotenv.config()
+dotenv.config({ path: path.resolve('../../.env') })
 
 const isDev = process.env.NODE_ENV === 'development'
 
