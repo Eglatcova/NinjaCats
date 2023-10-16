@@ -68,28 +68,29 @@ export const topicRoute = Router()
     sanitizerErrorHandler,
     async (req: Request, res: Response) => {
       const { id } = req.params
-      const { reaction } = req.body
+      const { reaction: reactionName } = req.body
 
-      const r = await Reaction.findOne({
-        where: { name: reaction },
+      const reaction = await Reaction.findOne({
+        where: { name: reactionName },
       })
-      if (r === null) {
+      if (reaction === null) {
         return res.status(400).json({ error: 'Wrong Reaction' })
       }
 
-      const tr: Model<any, any> | null = await Topic_Reaction.findOne({
-        where: { TopicId: id, ReactionId: r.id },
-      })
-      if (tr === null) {
+      const topicReaction: Model<any, any> | null =
+        await Topic_Reaction.findOne({
+          where: { TopicId: id, ReactionId: reaction.id },
+        })
+      if (topicReaction === null) {
         const tr = await Topic_Reaction.create({
           TopicId: id,
-          ReactionId: r.id,
+          ReactionId: reaction.id,
           count: 1,
         })
         return res.status(200).json(tr)
       }
 
-      await tr.update({ count: tr.toJSON().count + 1 })
-      return res.status(200).json(tr)
+      await topicReaction.update({ count: topicReaction.toJSON().count + 1 })
+      return res.status(200).json(topicReaction)
     }
   )
