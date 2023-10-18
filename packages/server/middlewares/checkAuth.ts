@@ -1,7 +1,7 @@
 import type { RequestHandler } from 'express'
 import fetch from 'cross-fetch'
 
-export const checkAuth: RequestHandler = async (req, res) => {
+export const checkAuth: RequestHandler = async (req, res, next) => {
   if (req.headers.cookie) {
     fetch('https://ya-praktikum.tech/api/v2/auth/user', {
       headers: {
@@ -10,9 +10,10 @@ export const checkAuth: RequestHandler = async (req, res) => {
     })
       .then(res => {
         if (res.ok) {
-          return res.json()
+          next()
+        } else {
+          throw new Error(res.statusText)
         }
-        throw new Error(res.statusText)
       })
       .catch(error => {
         res.status(403).json({ reason: error })

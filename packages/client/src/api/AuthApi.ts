@@ -1,3 +1,4 @@
+import { baseUrl } from '../constants/baseUrl'
 import { baseRequest } from '../utils/baseRequest'
 
 export interface ISignUpData {
@@ -26,7 +27,7 @@ class AuthAPI {
     method: string,
     data: ISignUpData | ISignInData | null = null
   ) => {
-    return baseRequest(`${this.baseApiUrl}${path}`, method, data)
+    return baseRequest(`${baseUrl}${this.baseApiUrl}${path}`, method, data)
   }
 }
 

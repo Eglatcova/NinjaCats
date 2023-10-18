@@ -1,3 +1,4 @@
+import { baseUrl } from '../constants/baseUrl'
 import { baseRequest } from '../utils/baseRequest'
 
 class LeaderboardAPI {
@@ -9,7 +10,7 @@ class LeaderboardAPI {
 
   makeRequest = <Type>(data: Type, path?: string) => {
     const url = path ? `${this.baseApiUrl}${path}` : this.baseApiUrl
-    return baseRequest(url, 'POST', data)
+    return baseRequest(`${baseUrl}${url}`, 'POST', data)
   }
 }
 
