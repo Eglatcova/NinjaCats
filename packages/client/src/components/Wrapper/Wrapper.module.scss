@@ -1,7 +1,7 @@
 .wrapper {
   position: relative;
   height: 100vh;
-  background-color: $beige;
+  background-color: var(--beige);
   font-family: $font-roboto;
 }
 
@@ -9,7 +9,7 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  color: rgba($pink, 0.5);
+  color: rgba(var(--pink), 0.5);
 }
 
 .content {

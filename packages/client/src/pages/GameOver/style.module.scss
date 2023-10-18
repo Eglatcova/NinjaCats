@@ -9,8 +9,8 @@
     &-button {
         padding: $ui-step * 6 $ui-step * 8;
 
-        background-color: $green-light;
-        border: $ui-step solid $green-dark;
+        background-color: var(--green-light);
+        border: $ui-step solid var(--green-dark);
         border-radius: $ui-step * 8;
 
         font-family: $font-roboto;
@@ -21,7 +21,7 @@
         transition: all .3s;
 
         &:hover {
-            background-color: rgba($green-light, .6);
+            background-color: rgba(var(--green-light), .6);
             transform: scale(1.04);
         }
 
