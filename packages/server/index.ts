@@ -32,7 +32,7 @@ async function startServer() {
 
   await dbConnect()
 
-  const port = Number(process.env.SERVER_PORT) || 3001
+  const port = Number(process.env.SERVER_PORT) || 5000
 
   let vite: ViteDevServer
   const distPath = path.dirname(require.resolve('client/dist/index.html'))
