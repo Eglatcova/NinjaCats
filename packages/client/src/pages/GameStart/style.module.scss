@@ -1,0 +1,32 @@
+.GameStart {
+    width: 100%;
+    height: 100dvh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-button {
+        padding: $ui-step * 6 $ui-step * 8;
+
+        background-color: var(--green-light);
+        border: $ui-step solid var(--green-dark);
+        border-radius: $ui-step * 8;
+
+        font-family: $font-roboto;
+        font-size: $ui-step * 16;
+        line-height: $ui-step * 17;
+
+        cursor: pointer;
+        transition: all .3s;
+
+        &:hover {
+            background-color: rgba(var(--green-light), .6);
+            transform: scale(1.04);
+        }
+
+        &:active {
+            transform: scale(1.02);
+        }
+    }
+}

@@ -1,0 +1,22 @@
+.message {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 8px;
+  border: solid 4px var(--orange);
+  background: rgba(var(--beige), 0.75);
+}
+
+.message-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: var(--orange);
+}
+
+.message-text {
+  width: 100%;
+  color: var(--dark);
+}

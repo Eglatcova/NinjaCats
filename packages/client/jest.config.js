@@ -8,4 +8,11 @@ export default {
   globals: {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
+  moduleNameMapper: {
+    '^.+\\.(scss)$': 'babel-jest',
+    '\\.(jpg|jpeg|png)$': 'identity-obj-proxy',
+  },
+  transform: {
+    '^.+\\.svg$': '<rootDir>/svgTransform.ts',
+  },
 }

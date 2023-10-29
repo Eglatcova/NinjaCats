@@ -1,13 +1,13 @@
 @mixin colors {
   &-primary {
-    --bg-base-color: #{$orange};
-    --bg-hover-color: #{$yellow};
-    --bg-active-color: #{$yellow};
-    --bg-disabled-color: #{$grey};
-    --text-base-color: #{$white};
-    --text-hover-color: #{$white};
-    --text-active-color: #{$white};
-    --text-disabled-color:#{$white};
+    --bg-base-color: #{var(--orange)};
+    --bg-hover-color: #{var(--yellow)};
+    --bg-active-color: #{var(--yellow)};
+    --bg-disabled-color: #{var(--grey)};
+    --text-base-color: #{var(--white)};
+    --text-hover-color: #{var(--white)};
+    --text-active-color: #{var(--white)};
+    --text-disabled-color:#{var(--white)};
   }
 
   &-secondary {
@@ -15,14 +15,14 @@
     --bg-hover-color: transparent;
     --bg-active-color: transparent;
     --bg-disabled-color: transparent;
-    --text-base-color: #{$orange};
-    --text-hover-color: #{$yellow};
-    --text-active-color: #{$brown};
-    --text-disabled-color: #{$grey};
-    --border-base-color: #{$orange};
-    --border-hover-color: #{$yellow};
-    --border-active-color: #{$brown};
-    --border-disabled-color: #{$grey};
+    --text-base-color: #{var(--orange)};
+    --text-hover-color: #{var(--yellow)};
+    --text-active-color: #{var(--brown)};
+    --text-disabled-color: #{var(--grey)};
+    --border-base-color: #{var(--orange)};
+    --border-hover-color: #{var(--yellow)};
+    --border-active-color: #{var(--brown)};
+    --border-disabled-color: #{var(--grey)};
   }
 }
 
@@ -39,7 +39,7 @@
   padding: 0 8px;
   border: 1px solid var(--border-base-color);
   border-color: var(--border-base-color);
-  font-family: $font-pixel;
+  font-family: $font-handjet;
   font-size: $font-size-20;
   line-height: 1;
   color: var(--text-base-color);
@@ -72,7 +72,7 @@
     border: none;
 
     &:active {
-      box-shadow: 2px 2px 4px 0px rgba($dark, 0.6) inset;
+      box-shadow: 2px 2px 4px 0px rgba(var(--dark), 0.6) inset;
     }
 
     &:disabled {

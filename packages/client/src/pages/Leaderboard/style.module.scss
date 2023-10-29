@@ -1,0 +1,39 @@
+.Leaderboard {
+    &-table {
+        border-collapse: collapse;
+
+        &-row {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 80px 1fr 160px 100px;
+            gap: 8px;
+            transition: background-color 0.15s;
+            cursor: pointer;
+            color: var(--white);
+            text-decoration: none;
+            padding: 8px;
+
+            &:hover>* {
+                background-color: var(--yellow);
+            }
+            
+            td {
+                padding: $ui-step * 2;
+                background-color: var(--orange);
+            }
+
+            &-nickname {
+                padding-left: $ui-step * 3;
+            }
+            
+            &-date {
+                text-align: right;
+            }
+
+            &-value {
+                padding-left: $ui-step * 4;
+            }
+        }
+    }
+
+}

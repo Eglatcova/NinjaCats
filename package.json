@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "bootstrap": "yarn && node init.js && lerna clean && yarn && lerna bootstrap",
-    "build": "lerna run build",
+    "build": "lerna run build --scope=client && lerna run build --scope=server",
+    "build:ssr": "lerna run build:ssr",
     "dev:client": "lerna run dev  --scope=client",
     "dev:server": "lerna run dev --scope=server",
     "dev": "lerna run dev",
@@ -21,6 +22,17 @@
   },
   "devDependencies": {
     "@evilmartians/lefthook": "^1.3.9",
+    "@types/react-redux": "^7.1.26",
+    "@types/redux": "^3.6.0",
+    "identity-obj-proxy": "^3.0.0",
     "lerna": "^5.4.3"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "formik": "^2.4.3",
+    "react-redux": "^8.1.2",
+    "redux": "^4.2.1",
+    "redux-persist": "^6.0.0",
+    "yup": "^1.2.0"
   }
 }

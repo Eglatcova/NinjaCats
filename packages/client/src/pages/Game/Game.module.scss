@@ -1,0 +1,14 @@
+.wrapper {
+  min-height: 100vh;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background-color: var(--grey-light);
+}
+
+.buttons {
+  display: flex;
+  gap: 16px
+}

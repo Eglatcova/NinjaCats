@@ -2,13 +2,9 @@ $font-roboto-styles: 'Regular'400,
 'Medium'500,
 'Bold'700;
 
-@font-face {
-  font-family: 'Pixel';
-  src: url('./fonts/Pixel/Pixel.woff2') format('woff2'),
-    url('./fonts/Pixel/Pixel.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-}
+$font-handjet-styles: 'Regular'400,
+'Medium'500,
+'Bold'700;
 
 @each $type,
 $weight in $font-roboto-styles {
@@ -19,4 +15,19 @@ $weight in $font-roboto-styles {
     font-weight: $weight;
     font-style: normal;
   }
+}
+
+@each $type,
+$weight in $font-handjet-styles {
+  @font-face {
+    font-family: 'Handjet';
+    src: url('./fonts/Handjet/Handjet-#{$type}.woff2') format('woff2'),
+    url('./fonts/Handjet/Handjet-#{$type}.woff2') format('woff2');
+    font-weight: $weight;
+    font-style: normal;
+  }
+}
+
+.handjetText {
+  font-family: $font-handjet;
 }
