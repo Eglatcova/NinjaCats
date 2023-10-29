@@ -30,4 +30,4 @@ jobs:
           context: .
           file: Dockerfile.server
           push: true
-          tags: ghcr.io/${{ env.OWNER_LC }}/${{ github.event.repository.name.lowercase }}/server:${{ github.sha }}
+          tags: ghcr.io/${{ env.OWNER_LC }}/ninjacats/server:${{ github.sha }}
