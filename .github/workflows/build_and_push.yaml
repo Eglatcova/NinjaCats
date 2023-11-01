@@ -35,5 +35,5 @@ jobs:
           file: Dockerfile.server
           push: true
           tags: ghcr.io/${{ env.OWNER_LC }}/ninjacats/server:${{ github.sha }}
-        env:
-          REDIRECT_URI: ${{ env.redirect_uri }}
+          build-args: |
+            "REDIRECT_URI=${{ env.redirect_uri }}"
