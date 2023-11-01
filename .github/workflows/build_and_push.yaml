@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  REDIRECT_URI: ${{ vars.REDIRECT_URI }}
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -24,6 +27,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - run: echo 'Set REDIRECT_URI to ${{ env.REDIRECT_URI }}'
       - name: Build and push server image
         uses: docker/build-push-action@v2
         with:
@@ -31,3 +35,5 @@ jobs:
           file: Dockerfile.server
           push: true
           tags: ghcr.io/${{ env.OWNER_LC }}/ninjacats/server:${{ github.sha }}
+        env:
+          REDIRECT_URI: ${{ env.REDIRECT_URI }}
